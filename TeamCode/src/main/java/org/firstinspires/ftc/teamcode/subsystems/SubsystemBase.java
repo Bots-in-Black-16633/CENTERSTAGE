@@ -24,5 +24,10 @@ public abstract class SubsystemBase {
      */
     public abstract void printTelemetry(ColorfulTelemetry t);
 
+    /**
+     * method which will be called repeatedly whenever the subsystem is create
+     */
+    public abstract void periodic();
+
 
 }
