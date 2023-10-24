@@ -5,12 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
-import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.util.List;
 
-@TeleOp(name = "Claw Tester", group = "helper")
-public class ServoTester extends LinearOpMode {
+@TeleOp(name = "Servo Diagnostic", group = "helper")
+public class ServoDiagnostic extends LinearOpMode {
     ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry);
     List<Servo> servos;
     int curServo = 0;
@@ -26,7 +25,7 @@ public class ServoTester extends LinearOpMode {
 
         servos = hardwareMap.getAll(Servo.class);
         for (Servo s:servos){
-            telemetry.addLine("Name:"  + s.getDeviceName() + " Port: " + s.getPortNumber() + " Position: " + s.getController());
+            telemetry.addLine("Name:"  + s.getDeviceName() + " Port: " + s.getPortNumber() + "Connection: " + s.getConnectionInfo() + " Position: " + s.getPosition());
         }
         telemetry.update();
         waitForStart();
@@ -44,7 +43,7 @@ public class ServoTester extends LinearOpMode {
                 //Print out Info about all the servos
                 for (int i = 0; i < servos.size(); i++){
                     Servo s = servos.get(i);
-                    telemetry.addLine((i==curServo?"!ENABLED! ":"disabled ")+ "---Name:"  + s.getDeviceName() + "---Port: " + s.getPortNumber() + "---Position: " + s.getController());
+                    pen.addLine((i==curServo?"!ENABLED! ":"disabled ")+ "---Name:"  + s.getDeviceName() + "---Port: " + s.getPortNumber() + "---Position: " + s.getController());
                 }
 
                 //SELECTING SERVO
@@ -69,9 +68,10 @@ public class ServoTester extends LinearOpMode {
                 prevDDOWN = gamepad1.dpad_down;
 
                 //MOVING SERVO
-                curServoPosition += gamepad1.left_stick_y*.05;
+                curServoPosition += gamepad1.left_stick_y*.005;
                 if(cur != null){cur.setPosition(curServoPosition);}
                 pen.addLine("TARGET: " + curServoPosition);
+                pen.update();
 
             }
 
