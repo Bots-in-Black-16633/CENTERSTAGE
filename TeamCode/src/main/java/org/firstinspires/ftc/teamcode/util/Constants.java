@@ -17,8 +17,8 @@ public final class Constants{
     @Config
     public static final class SliderConstants{
 
-        public static  double kP = .5;
-        public static  double sliderTolerance=5;
+        public static  double kP = .1;
+        public static  double sliderTolerance=20;
         public static  double sliderPower = .5;
         public static int sliderMaxPosition = 3000;
         public static int sliderMinPosition = 0;

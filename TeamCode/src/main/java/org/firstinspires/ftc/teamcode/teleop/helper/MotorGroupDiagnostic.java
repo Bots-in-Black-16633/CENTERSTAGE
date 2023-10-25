@@ -36,7 +36,6 @@ public class MotorGroupDiagnostic extends LinearOpMode {
 
         g1 = new GamepadEx(gamepad1);
 
-        g1.getGamepadButton(GamepadKeys.Button.A).whenActive(()->switchEncoderControl());
 
 
         waitForStart();
@@ -45,7 +44,7 @@ public class MotorGroupDiagnostic extends LinearOpMode {
         while(!isStopRequested() && opModeIsActive()){
 
             if(encoderControl){
-                sliderPos += gamepad1.left_stick_y*1;
+                sliderPos += gamepad1.left_stick_y*10;
                 if(sliderPos > Constants.SliderConstants.sliderMaxPosition)sliderPos = Constants.SliderConstants.sliderMaxPosition;
                 if(sliderPos < Constants.SliderConstants.sliderMinPosition)sliderPos = Constants.SliderConstants.sliderMinPosition;
                 s.runToPosition(sliderPos);
