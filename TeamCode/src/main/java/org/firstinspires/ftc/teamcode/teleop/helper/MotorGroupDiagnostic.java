@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.teamcode.subsystems.Slider;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.util.Set;
 
@@ -45,6 +46,8 @@ public class MotorGroupDiagnostic extends LinearOpMode {
 
             if(encoderControl){
                 sliderPos += gamepad1.left_stick_y*1;
+                if(sliderPos > Constants.SliderConstants.sliderMaxPosition)sliderPos = Constants.SliderConstants.sliderMaxPosition;
+                if(sliderPos < Constants.SliderConstants.sliderMinPosition)sliderPos = Constants.SliderConstants.sliderMinPosition;
                 s.runToPosition(sliderPos);
                 pen.addLine("SLIDER TARGET:"  + sliderPos);
             }

@@ -21,13 +21,14 @@ public class Slider extends SubsystemBase{
         follower = new Motor(hwMap, "slider2");
         leader.setInverted(true);
         slider = new MotorGroup(leader, follower);
-        slider.setPositionCoefficient(Constants.SliderConstants.kP);
 
     }
 
     public void runToPosition(double pos){
         if(pos > Constants.SliderConstants.sliderMaxPosition)pos = Constants.SliderConstants.sliderMaxPosition;
         if(pos < Constants.SliderConstants.sliderMinPosition)pos = Constants.SliderConstants.sliderMinPosition;
+        slider.setPositionCoefficient(Constants.SliderConstants.kP);
+        slider.setPositionTolerance(Constants.SliderConstants.sliderTolerance);
         slider.setRunMode(Motor.RunMode.PositionControl);
         slider.setTargetPosition((int)pos);
         slider.set(Constants.SliderConstants.sliderPower);
