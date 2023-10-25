@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop.helper;
 
+import androidx.core.math.MathUtils;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -25,7 +27,7 @@ public class ServoDiagnostic extends LinearOpMode {
 
         servos = hardwareMap.getAll(Servo.class);
         for (Servo s:servos){
-            telemetry.addLine("Name:"  + s.getDeviceName() + " Port: " + s.getPortNumber() + "Connection: " + s.getConnectionInfo() + " Position: " + s.getPosition());
+            telemetry.addLine("Name:"  + s.getDeviceName() + " Port: " + s.getPortNumber()  + " Position: " + round(s.getPosition()));
         }
         telemetry.update();
         waitForStart();
@@ -43,16 +45,16 @@ public class ServoDiagnostic extends LinearOpMode {
                 //Print out Info about all the servos
                 for (int i = 0; i < servos.size(); i++){
                     Servo s = servos.get(i);
-                    pen.addLine((i==curServo?"!ENABLED! ":"disabled ")+ "---Name:"  + s.getDeviceName() + "---Port: " + s.getPortNumber() + "---Position: " + s.getController());
+                    pen.addLine((i==curServo?"!ENABLED! ":"disabled ")+ "---Name:"  + s.getDeviceName() + "---Port: " + s.getPortNumber() + "---Position: " + s.getPosition());
                 }
 
                 //SELECTING SERVO
                 if(gamepad1.dpad_up || gamepad1.dpad_down){
                     if(gamepad1.dpad_up && gamepad1.dpad_up !=prevDUP){
-                        curServo +=1;
+                        curServo -=1;
                     }
                     if(gamepad1.dpad_down && gamepad1.dpad_down !=prevDDOWN){
-                        curServo-=1;
+                        curServo+=1;
                     }
 
                     if(curServo > servos.size()-1 && curServo!=0){curServo=0;}
@@ -68,7 +70,8 @@ public class ServoDiagnostic extends LinearOpMode {
                 prevDDOWN = gamepad1.dpad_down;
 
                 //MOVING SERVO
-                curServoPosition += gamepad1.left_stick_y*.005;
+                curServoPosition += gamepad1.left_stick_y*.0005;
+                curServoPosition = MathUtils.clamp(curServoPosition, 0, 1);
                 if(cur != null){cur.setPosition(curServoPosition);}
                 pen.addLine("TARGET: " + curServoPosition);
                 pen.update();
@@ -77,6 +80,11 @@ public class ServoDiagnostic extends LinearOpMode {
 
         }
     }
+    private double round(double t){
+        return ((int)t*100)/100.0;
+
+    }
+
 
 
 
