@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 
 import androidx.core.math.MathUtils;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @TeleOp(name = "Servo Diagnostic", group = "helper")
 public class ServoDiagnostic extends LinearOpMode {
-    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry);
+    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
     List<Servo> servos;
     int curServo = 0;
     Servo cur = null;

@@ -32,6 +32,7 @@ public final class Constants{
 
     }@Config
     public static final class HopperConstants{
+        public static double hopperPower = .5;
 
     }@Config
     public static final class ClimberConstants{

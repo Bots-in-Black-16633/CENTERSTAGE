@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public class ColorfulTelemetry  {
-   private Telemetry telemetry;
+   private MultipleTelemetry telemetry;
 
    //Constants
    public static final String Red  = "Red";
@@ -21,9 +25,12 @@ public class ColorfulTelemetry  {
    public boolean isItalic = false;
    public boolean isUnderline = false;
 
+   FtcDashboard dash;
 
-    public ColorfulTelemetry(Telemetry telemetry){
-        this.telemetry=telemetry;
+
+
+    public ColorfulTelemetry(Telemetry telemetry, FtcDashboard dash){
+        this.telemetry=new MultipleTelemetry(telemetry, dash.getTelemetry());
         telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
         telemetry.setItemSeparator("");
 
@@ -111,5 +118,9 @@ public class ColorfulTelemetry  {
     public ColorfulTelemetry update(){
         telemetry.update();
         return this;
+    }
+
+    public void setCamera(CameraStreamSource camera){
+        dash.startCameraStream(camera, 0);
     }
 }
