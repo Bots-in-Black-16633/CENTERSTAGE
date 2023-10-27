@@ -20,6 +20,7 @@ public class Hopper extends SubsystemBase{
         super("Hopper", hwMap);
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
+        leftHopper.setInverted(true);
     }
 
     public void intake(int type){
@@ -39,7 +40,8 @@ public class Hopper extends SubsystemBase{
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
-
+        t.addLine("LEFT HOPPER: " + leftHopper.toString());
+        t.addLine("RIGHT HOPPER: " + rightHopper.toString());
     }
 
     @Override

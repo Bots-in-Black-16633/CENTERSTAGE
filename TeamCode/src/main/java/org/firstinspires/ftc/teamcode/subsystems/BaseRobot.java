@@ -16,13 +16,13 @@ public class BaseRobot extends SubsystemBase{
     public MecanumDrive drive;
     public BaseRobot(HardwareMap hwMap){
         super("BaseRobot", hwMap);
-        slider = new Slider(hwMap);
+        //slider = new Slider(hwMap);
         hopper = new Hopper(hwMap);
         //drive = new MecanumDrive(hwMap, new Pose2d(0,0,0));
 
 
 
-        addSubsystems(slider, hopper);
+        addSubsystems( hopper);
     }
 
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 
 import android.widget.ToggleButton;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.button.Trigger;
@@ -20,7 +21,7 @@ import java.util.Set;
 
 @TeleOp(name = "MotorGroup Diagnostic", group = "helper")
 public class MotorGroupDiagnostic extends LinearOpMode {
-    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry);
+    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
     Slider s;
     double sliderPos = 0;
     boolean encoderControl = false;

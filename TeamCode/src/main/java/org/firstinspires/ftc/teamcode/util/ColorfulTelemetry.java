@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public class ColorfulTelemetry  {
    private MultipleTelemetry telemetry;
+   private Telemetry t;
 
    //Constants
    public static final String Red  = "Red";
@@ -31,6 +32,7 @@ public class ColorfulTelemetry  {
 
     public ColorfulTelemetry(Telemetry telemetry, FtcDashboard dash){
         this.telemetry=new MultipleTelemetry(telemetry, dash.getTelemetry());
+        t = telemetry;
         telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
         telemetry.setItemSeparator("");
 
@@ -47,6 +49,7 @@ public class ColorfulTelemetry  {
     }
     public ColorfulTelemetry addLine(String message){
         telemetry.addLine(format(message));
+        t.addLine(format(message));
         return this;
     }
     public ColorfulTelemetry addData(String title, Object data){
@@ -117,6 +120,7 @@ public class ColorfulTelemetry  {
 
     public ColorfulTelemetry update(){
         telemetry.update();
+        t.update();
         return this;
     }
 

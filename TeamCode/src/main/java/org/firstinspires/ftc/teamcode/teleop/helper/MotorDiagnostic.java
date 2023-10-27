@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 
 import androidx.core.math.MathUtils;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @TeleOp(name = "Motor Diagnostic", group = "helper")
 public class MotorDiagnostic extends LinearOpMode {
-    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry);
+    ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
     List<DcMotor> motors;
     int curMotor = 0;
     DcMotor cur = null;

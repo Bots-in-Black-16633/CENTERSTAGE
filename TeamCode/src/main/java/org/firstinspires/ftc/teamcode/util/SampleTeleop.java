@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode.util;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public abstract class SampleTeleop extends LinearOpMode {
+    public ColorfulTelemetry pen;
     @Override
     public void runOpMode() throws InterruptedException {
-        init();
+        pen = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
+        onInit();
         waitForStart();
         while(opModeIsActive() && !isStopRequested()){
             loop();
