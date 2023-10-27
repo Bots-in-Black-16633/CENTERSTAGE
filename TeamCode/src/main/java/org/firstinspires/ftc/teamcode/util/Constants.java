@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.geometry.Translation2d;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.IMU;
 
 public final class Constants{
     @Config
@@ -13,6 +15,8 @@ public final class Constants{
         public static Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
         public static Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
         public Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
+
+        public IMU.Parameters imuParam = new IMU.Parameters( new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
     }
     @Config
     public static final class SliderConstants{

@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 import java.lang.Math;
 import java.util.Arrays;
@@ -97,6 +98,7 @@ public final class MecanumDrive {
     public final VoltageSensor voltageSensor;
 
     public final IMU imu;
+    public double imuOffset = 0;
 
     public final Localizer localizer;
     public Pose2d pose;
@@ -434,4 +436,13 @@ public final class MecanumDrive {
                 0.25, 0.1
         );
     }
+    public double getOrientation(){
+        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
+        return orientation.getYaw(AngleUnit.DEGREES)-imuOffset;
+    }
+    public double resetImu(){
+        imuOffset= imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES));
+        return imuOffset;
+    }
+
 }
