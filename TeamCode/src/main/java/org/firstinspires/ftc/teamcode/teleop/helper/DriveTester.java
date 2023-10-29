@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 import androidx.core.math.MathUtils;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -62,18 +63,20 @@ public class DriveTester extends LinearOpMode {
             rotPow = gamepad1.right_stick_x;
 
 
-            double gamepadTheta = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
-            Double diffTheta = gamepadTheta - Math.toDegrees(drive.getOrientation());
 
-             xPow= Math.cos(diffTheta)  *DRIVE_SPEED;
-             yPow= Math.sin(diffTheta)*DRIVE_SPEED;
+
+            double gamepadTheta = Math.atan2(Math.toRadians(yPow), Math.toRadians(xPow));
+            double diffTheta = Math.toDegrees(gamepadTheta) - Math.toDegrees(drive.updatePoseEstimate().angVel);
+            telemetry.addLine("heading: "+drive.pose.heading.component1());
+            telemetry.addLine("Gamepad Target: " + round(yPow) + "/" + round(xPow) + " " + Math.toDegrees(gamepadTheta));
+
+             xPow= Math.cos(Math.toRadians(diffTheta))  *DRIVE_SPEED;
+             yPow= Math.sin(Math.toRadians(diffTheta))*DRIVE_SPEED;
              rotPow = rotPow*DRIVE_SPEED;
-            drive.setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
-
-            if(g1.wasJustPressed(GamepadKeys.Button.A)){
-                drive.resetImu();
-            }
-
+            if(Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) >0.05 || Math.abs(gamepad1.right_stick_x) > 0.05)drive.setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
+            else drive.setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),0));
+            telemetry.addLine(" X" + xPow + " Y" + yPow + " ROT" + rotPow);
+            telemetry.update();
 
         }
     }

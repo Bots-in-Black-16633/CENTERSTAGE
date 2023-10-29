@@ -9,14 +9,8 @@ public final class Constants{
     @Config
 
     public static final class DriveConstants{
-        //Drive Wheel Positions
-        // Locations of the wheels relative to the robot center.
-        public static Translation2d frontLeftLocation = new Translation2d(0.381, 0.381);
-        public static Translation2d frontRightLocation = new Translation2d(0.381, -0.381);
-        public static Translation2d backLeftLocation = new Translation2d(-0.381, 0.381);
-        public Translation2d backRightLocation = new Translation2d(-0.381, -0.381);
 
-        public IMU.Parameters imuParam = new IMU.Parameters( new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        public static IMU.Parameters imuParam = new IMU.Parameters( new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
     }
     @Config
     public static final class SliderConstants{

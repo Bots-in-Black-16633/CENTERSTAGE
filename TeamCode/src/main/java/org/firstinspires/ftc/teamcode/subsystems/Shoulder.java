@@ -5,13 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 
-public class Shoulder extends SubsystemBase{
+public class Shoulder implements SubsystemBase{
 
 
-
+    public HardwareMap hwMap;
     public Shoulder(HardwareMap hwMap){
-        super("Shoulder", hwMap);
-
     }
 
     @Override

@@ -40,6 +40,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.lang.Math;
 import java.util.Arrays;
@@ -47,10 +48,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Config
-public final class MecanumDrive {
+public class MecanumDrive {
     public static class Params {
         // drive model parameters
-        public double inPerTick = 1784;//tuned 10/27
+        public double inPerTick = .000561;//tuned 10/27
         public double lateralInPerTick = 1;
         public double trackWidthTicks = 0;
 
@@ -191,9 +192,7 @@ public final class MecanumDrive {
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         imu = hardwareMap.get(IMU.class, "imu");
-        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        IMU.Parameters parameters = Constants.DriveConstants.imuParam;
         imu.initialize(parameters);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
@@ -216,6 +215,7 @@ public final class MecanumDrive {
         leftBack.setPower(wheelVels.leftBack.get(0) / maxPowerMag);
         rightBack.setPower(wheelVels.rightBack.get(0) / maxPowerMag);
         rightFront.setPower(wheelVels.rightFront.get(0) / maxPowerMag);
+
     }
 
     public final class FollowTrajectoryAction implements Action {
@@ -436,13 +436,6 @@ public final class MecanumDrive {
                 0.25, 0.1
         );
     }
-    public double getOrientation(){
-        YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
-        return orientation.getYaw(AngleUnit.DEGREES)-imuOffset;
-    }
-    public double resetImu(){
-        imuOffset= imu.getRobotYawPitchRollAngles().getYaw((AngleUnit.DEGREES));
-        return imuOffset;
-    }
+
 
 }

@@ -10,14 +10,13 @@ import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
-public class Slider extends SubsystemBase{
+public class Slider implements SubsystemBase{
 
     DcMotor leader;
     DcMotor follower;
     MotorGroup slider;
 
     public Slider(HardwareMap hwMap){
-        super("Slider", hwMap);
         leader = hwMap.dcMotor.get("slider1");
         follower = hwMap.dcMotor.get("slider2");
         follower.setDirection(DcMotorSimple.Direction.REVERSE);

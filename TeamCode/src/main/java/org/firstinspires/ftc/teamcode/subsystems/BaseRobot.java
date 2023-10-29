@@ -9,16 +9,13 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseRobot extends SubsystemBase{
+public class BaseRobot implements SubsystemBase{
     List<SubsystemBase> subsystems = new ArrayList<SubsystemBase>();
     public Slider slider;
    public Hopper hopper;
     public MecanumDrive drive;
     public BaseRobot(HardwareMap hwMap){
-        super("BaseRobot", hwMap);
-        //slider = new Slider(hwMap);
         hopper = new Hopper(hwMap);
-        //drive = new MecanumDrive(hwMap, new Pose2d(0,0,0));
 
 
 

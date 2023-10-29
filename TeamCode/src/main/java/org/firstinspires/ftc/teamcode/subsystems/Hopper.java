@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
-public class Hopper extends SubsystemBase{
+public class Hopper implements SubsystemBase{
 
     CRServo leftHopper;
     CRServo rightHopper;
@@ -17,7 +17,6 @@ public class Hopper extends SubsystemBase{
     public static final int ALL = 0;
 
     public Hopper(HardwareMap hwMap){
-        super("Hopper", hwMap);
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
         leftHopper.setInverted(true);

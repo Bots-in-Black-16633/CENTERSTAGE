@@ -5,12 +5,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 
-public class Shooter extends SubsystemBase{
+public class Shooter implements SubsystemBase{
 
 
-
+    public HardwareMap hwMap;
     public Shooter(HardwareMap hwMap){
-        super("Shooter", hwMap);
 
     }
 
