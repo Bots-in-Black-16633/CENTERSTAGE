@@ -54,6 +54,8 @@ public class Slider implements SubsystemBase{
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
+        t.addLine();
+        t.addLine("____SLIDER_____");
         t.addLine("LEFT SLIDER (LEADER): " + leader.getCurrentPosition());
         t.addLine("RIGHT SLIDER (FOLLOWER)" + follower.getCurrentPosition());
 

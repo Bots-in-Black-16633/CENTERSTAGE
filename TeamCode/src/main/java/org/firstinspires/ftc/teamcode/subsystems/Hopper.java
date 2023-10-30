@@ -23,22 +23,27 @@ public class Hopper implements SubsystemBase{
     }
 
     public void intake(int type){
-        if(type ==1 || type ==0)leftHopper.set(Constants.HopperConstants.hopperPower);
-        if(type == 2 || type ==0)rightHopper.set(Constants.HopperConstants.hopperPower);
+        setPower(type, -Constants.HopperConstants.hopperPower);
     }
 
     public void outtake(int type){
-       if(type == 0 || type == 1)leftHopper.set(-Constants.HopperConstants.hopperPower);
-       if(type == 0 || type == 2)rightHopper.set(-Constants.HopperConstants.hopperPower);
+        setPower(type, -Constants.HopperConstants.hopperPower);
     }
     public void setPower(int type, double power){
         if(type == 0 || type == 1)leftHopper.set(power);
         if(type == 0 || type == 2)rightHopper.set(power);
     }
 
+    public void rest(int type){
+        setPower(type, 0);
+    }
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
+        t.addLine();
+        t.addLine("____HOPPER_____");
+        t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
+        t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
         t.addLine("LEFT HOPPER: " + leftHopper.toString());
         t.addLine("RIGHT HOPPER: " + rightHopper.toString());
     }

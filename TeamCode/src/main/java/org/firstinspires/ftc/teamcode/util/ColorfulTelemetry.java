@@ -49,7 +49,6 @@ public class ColorfulTelemetry  {
     }
     public ColorfulTelemetry addLine(String message){
         telemetry.addLine(format(message));
-        t.addLine(format(message));
         return this;
     }
     public ColorfulTelemetry addData(String title, Object data){
@@ -120,7 +119,6 @@ public class ColorfulTelemetry  {
 
     public ColorfulTelemetry update(){
         telemetry.update();
-        t.update();
         return this;
     }
 

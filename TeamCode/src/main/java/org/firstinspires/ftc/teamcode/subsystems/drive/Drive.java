@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 
 public class Drive extends MecanumDrive implements SubsystemBase {
 
+    ColorfulTelemetry t = null;
+
     public Drive(HardwareMap hardwareMap, Pose2d startPose) {
         super(hardwareMap, startPose);
     }
@@ -23,13 +25,18 @@ public class Drive extends MecanumDrive implements SubsystemBase {
      * @param speed - speed at  which tp run
      */
     public void driveFieldcentric(double xPow, double yPow, double rotPow, double speed){
+        if(Math.abs(xPow)<.05 && Math.abs(yPow)<.05 && Math.abs(rotPow)<.05) {setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),0)); return;}
+
         double targetTheta = Math.atan2(Math.toRadians(yPow), Math.toRadians(xPow));
         double robotTheta = Math.toRadians(pose.heading.log());
         double diffTheta = Math.toDegrees(targetTheta)- Math.toDegrees(robotTheta);
-
+        if(t!=null)t.addLine("Target " + Math.toDegrees(targetTheta) + " Robot " + Math.toDegrees(robotTheta) + " Difference " + diffTheta);
         xPow = Math.cos(diffTheta)*speed;
         yPow = Math.sin(diffTheta)*speed;
         rotPow = rotPow*speed;
+        if(t !=null){
+            t.addLine("XPOW: " + xPow + "YPOW: " + yPow + "rotPow" + rotPow);
+        }
 
         setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
 
@@ -38,6 +45,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
+        this.t = t;
         t.addLine("DRIVE TELEMETRY");
         t.addLine("POSITION: " + pose.toString());
     }

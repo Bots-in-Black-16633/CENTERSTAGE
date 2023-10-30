@@ -19,6 +19,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
+import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -33,13 +34,10 @@ import java.util.List;
 @TeleOp(name = "Drive Tester", group = "helper")
 public class DriveTester extends LinearOpMode {
     ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
-    MecanumDrive drive;
+    Drive drive;
     public static Pose2d startPos = new Pose2d(0,0,0);
     public static double DRIVE_SPEED = 1;
-    double robotDegree;
-    double gamepadDegree;
-    public IMU imu;
-    public double offset = 0;
+
 
     public GamepadEx g1;
 
@@ -47,37 +45,15 @@ public class DriveTester extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        drive = new MecanumDrive(hardwareMap, startPos);
+        drive = new Drive(hardwareMap, startPos);
         g1 = new GamepadEx(gamepad1);
 
         waitForStart();
 
         while(!isStopRequested() && opModeIsActive()){
-            double xPow;
-            double yPow;
-            double rotPow;
-
-            // Strafer Mode
-            xPow = gamepad1.left_stick_x;
-            yPow = -gamepad1.left_stick_y;//inversed to match x y plane coords
-            rotPow = gamepad1.right_stick_x;
-
-
-
-
-            double gamepadTheta = Math.atan2(Math.toRadians(yPow), Math.toRadians(xPow));
-            double diffTheta = Math.toDegrees(gamepadTheta) - Math.toDegrees(drive.updatePoseEstimate().angVel);
-            telemetry.addLine("heading: "+drive.pose.heading.component1());
-            telemetry.addLine("Gamepad Target: " + round(yPow) + "/" + round(xPow) + " " + Math.toDegrees(gamepadTheta));
-
-             xPow= Math.cos(Math.toRadians(diffTheta))  *DRIVE_SPEED;
-             yPow= Math.sin(Math.toRadians(diffTheta))*DRIVE_SPEED;
-             rotPow = rotPow*DRIVE_SPEED;
-            if(Math.abs(gamepad1.left_stick_y) > .05 || Math.abs(gamepad1.left_stick_x) >0.05 || Math.abs(gamepad1.right_stick_x) > 0.05)drive.setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
-            else drive.setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),0));
-            telemetry.addLine(" X" + xPow + " Y" + yPow + " ROT" + rotPow);
-            telemetry.update();
-
+            pen.addLine("lY: " + g1.getLeftY() + " lX " + g1.getLeftX() + " rX " + g1.getRightX());
+           drive.driveFieldcentric(g1.getLeftX(), g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
+            drive.printTelemetry(pen);
         }
     }
     private double round(double t){
