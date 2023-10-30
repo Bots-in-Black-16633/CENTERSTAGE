@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
-import com.acmerobotics.roadrunner.Pose2d;
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.canvas.Canvas;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
@@ -13,13 +17,15 @@ public class BaseRobot implements SubsystemBase{
     List<SubsystemBase> subsystems = new ArrayList<SubsystemBase>();
     public Slider slider;
    public Hopper hopper;
+   public Wrist wrist;
+   public Shoulder shoulder;
     public MecanumDrive drive;
     public BaseRobot(HardwareMap hwMap){
         hopper = new Hopper(hwMap);
 
 
 
-        addSubsystems( hopper);
+        addSubsystems(hopper, wrist, shoulder);
     }
 
 
@@ -40,5 +46,26 @@ public class BaseRobot implements SubsystemBase{
         for(SubsystemBase b: subsystems){
             b.periodic();
         }
+    }
+    class ResetToIntake implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            //set the wrist and shoulder so rest position and wait
+
+            //reset the slider
+
+            return false;
+        }
+
+        @Override
+        public void preview(@NonNull Canvas fieldOverlay) {
+            Action.super.preview(fieldOverlay);
+
+        }
+
+    }
+    public Action outtake(){
+        return new ResetToIntake();
     }
 }

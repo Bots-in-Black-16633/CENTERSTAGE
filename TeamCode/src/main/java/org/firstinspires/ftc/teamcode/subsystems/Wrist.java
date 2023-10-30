@@ -15,6 +15,8 @@ public class Wrist implements SubsystemBase{
     public void setPosition(double position){
         wrist.setPosition(position);
     }
+
+    public double getPosition(){return wrist.getPosition();}
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();

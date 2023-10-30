@@ -5,6 +5,8 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.checkerframework.checker.units.qual.C;
+
 public final class Constants{
     @Config
 
@@ -24,8 +26,16 @@ public final class Constants{
     }
     @Config
     public static final class ShoulderConstants{
+        public static double shoulderMin = -1;
+        public static double shoulderMax = 1;
 
-    }@Config
+    }
+    @Config
+    public static final class WristConstants{
+        public static double wristMax =1;
+        public static double wristMin = -1;
+    }
+    @Config
     public static final class IntakeConstants{
 
     }@Config

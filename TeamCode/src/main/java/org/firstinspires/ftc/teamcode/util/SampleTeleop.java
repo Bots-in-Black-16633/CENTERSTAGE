@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 
 public abstract class SampleTeleop extends LinearOpMode {
     public ColorfulTelemetry pen;
-    BaseRobot robot;
+    public BaseRobot robot;
     @Override
     public void runOpMode() throws InterruptedException {
         pen = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());

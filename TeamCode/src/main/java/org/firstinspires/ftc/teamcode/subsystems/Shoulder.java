@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 public class Shoulder implements SubsystemBase{
 
     public Servo shoulder;
+
     public HardwareMap hwMap;
     public Shoulder(HardwareMap hwMap){
         shoulder = hwMap.servo.get("shoulder");
@@ -19,6 +20,7 @@ public class Shoulder implements SubsystemBase{
     public void setPosition(double position){
         shoulder.setPosition(position);
     }
+    public double getPosition(){return shoulder.getPosition();}
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine("");
