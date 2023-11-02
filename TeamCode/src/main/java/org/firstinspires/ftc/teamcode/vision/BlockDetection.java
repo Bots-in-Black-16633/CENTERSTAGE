@@ -5,6 +5,7 @@ import android.graphics.Color;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
+import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -48,12 +49,12 @@ public class BlockDetection implements VisionProcessor {
 
     public double timesAveraged = 0;
     public static double averageCycle = 30;
-    Telemetry telemetry;
+    ColorfulTelemetry telemetry;
 
 
 
 
-    public BlockDetection(Telemetry telemetry){
+    public BlockDetection(ColorfulTelemetry telemetry){
         this.telemetry = telemetry;
     }
 
@@ -207,4 +208,5 @@ public class BlockDetection implements VisionProcessor {
         telemetry.update();
 
     }
+
 }

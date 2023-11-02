@@ -14,7 +14,7 @@ public abstract class SampleTeleop extends LinearOpMode {
         onInit();
         waitForStart();
         while(opModeIsActive() && !isStopRequested()){
-            loop();
+            onLoop();
             telemetry();
         }
         onStop();

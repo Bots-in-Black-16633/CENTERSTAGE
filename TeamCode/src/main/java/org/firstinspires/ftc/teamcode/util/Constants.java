@@ -37,6 +37,7 @@ public final class Constants{
     }
     @Config
     public static final class IntakeConstants{
+        public static double intakePower = 1;
 
     }@Config
     public static final class HopperConstants{

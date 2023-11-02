@@ -19,13 +19,15 @@ public class BaseRobot implements SubsystemBase{
    public Hopper hopper;
    public Wrist wrist;
    public Shoulder shoulder;
+   public Intake intake;
     public MecanumDrive drive;
     public BaseRobot(HardwareMap hwMap){
-        hopper = new Hopper(hwMap);
+        //hopper = new Hopper(hwMap);
+        intake = new Intake(hwMap);
 
 
-
-        addSubsystems(hopper, wrist, shoulder);
+        addSubsystems(intake);
+        //addSubsystems(hopper, wrist, shoulder);
     }
 
 
