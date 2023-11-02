@@ -52,8 +52,9 @@ public class DriveTester extends LinearOpMode {
 
         while(!isStopRequested() && opModeIsActive()){
             pen.addLine("lY: " + g1.getLeftY() + " lX " + g1.getLeftX() + " rX " + g1.getRightX());
-           drive.driveFieldcentric(g1.getLeftX(), g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
+           drive.driveFieldcentric(g1.getLeftX(), -g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
             drive.printTelemetry(pen);
+            pen.update();
         }
     }
     private double round(double t){

@@ -25,14 +25,14 @@ public class Drive extends MecanumDrive implements SubsystemBase {
      * @param speed - speed at  which tp run
      */
     public void driveFieldcentric(double xPow, double yPow, double rotPow, double speed){
-        if(Math.abs(xPow)<.05 && Math.abs(yPow)<.05 && Math.abs(rotPow)<.05) {setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),0)); return;}
+        if(Math.abs(xPow)<.05 && Math.abs(yPow)<.05) {setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),rotPow*speed)); return;}
 
         double targetTheta = Math.atan2(Math.toRadians(yPow), Math.toRadians(xPow));
         double robotTheta = Math.toRadians(pose.heading.log());
         double diffTheta = Math.toDegrees(targetTheta)- Math.toDegrees(robotTheta);
         if(t!=null)t.addLine("Target " + Math.toDegrees(targetTheta) + " Robot " + Math.toDegrees(robotTheta) + " Difference " + diffTheta);
-        xPow = Math.cos(diffTheta)*speed;
-        yPow = Math.sin(diffTheta)*speed;
+        xPow = Math.cos(Math.toRadians(diffTheta))*speed;
+        yPow = Math.sin(Math.toRadians(diffTheta))*speed;
         rotPow = rotPow*speed;
         if(t !=null){
             t.addLine("XPOW: " + xPow + "YPOW: " + yPow + "rotPow" + rotPow);
