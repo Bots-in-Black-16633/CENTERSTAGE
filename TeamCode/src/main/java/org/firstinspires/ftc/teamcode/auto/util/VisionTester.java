@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.auto.util;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -28,6 +30,7 @@ public class VisionTester extends SampleAuto {
         b = new TeamPropDetector(pen);
         camera = hardwareMap.get(WebcamName.class, "camera");
         v = VisionPortal.easyCreateWithDefaults(camera, b);
+
     }
 
     @Override
@@ -41,7 +44,8 @@ public class VisionTester extends SampleAuto {
         else if(blue.x < zone2Border)blueZone=2;
         else blueZone = 3;
 
-        while(opModeIsActive() && !isStopRequested()){
+        FtcDashboard.getInstance().startCameraStream((CameraStreamSource) b, 0);
+        while(!isStopRequested()){
             red = b.getRedBoundingRect();
             blue = b.getBlueBoundingRect();
             pen.addLine("RED: "+red.toString());

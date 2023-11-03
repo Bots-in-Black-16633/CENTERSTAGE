@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.checkerframework.checker.units.qual.A;
+import org.firstinspires.ftc.teamcode.subsystems.LFSlider;
 import org.firstinspires.ftc.teamcode.subsystems.Slider;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
@@ -22,7 +23,7 @@ import java.util.Set;
 @TeleOp(name = "MotorGroup Diagnostic", group = "helper")
 public class MotorGroupDiagnostic extends LinearOpMode {
     ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
-    Slider s;
+    LFSlider s;
     double sliderPos = 0;
     boolean encoderControl = false;
 
@@ -32,7 +33,7 @@ public class MotorGroupDiagnostic extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        s = new Slider(hardwareMap);
+        s = new LFSlider(hardwareMap);
         s.reset();
 
         g1 = new GamepadEx(gamepad1);

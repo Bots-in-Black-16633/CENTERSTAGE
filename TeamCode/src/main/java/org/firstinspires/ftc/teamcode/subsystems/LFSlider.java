@@ -3,50 +3,41 @@ package org.firstinspires.ftc.teamcode.subsystems;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
-public class Slider implements SubsystemBase{
+public class LFSlider implements SubsystemBase{
 
-    DcMotor leader;
-    DcMotor follower;
+    Motor leader;
+    Motor follower;
     MotorGroup slider;
 
-    public Slider(HardwareMap hwMap){
-        leader = hwMap.dcMotor.get("leftSlider");
-        follower = hwMap.dcMotor.get("rightSlider");
-        follower.setDirection(DcMotorSimple.Direction.REVERSE);
-
+    public LFSlider(HardwareMap hwMap){
+        leader = new Motor(hwMap, "leftSlider");
+        follower = new Motor(hwMap, "rightSlider");
+        leader.setInverted(true);
+        slider = new MotorGroup(leader, follower);
+        slider.setPositionCoefficient(Constants.SliderConstants.kP);
 
     }
 
     public void runToPosition(double pos){
         if(pos > Constants.SliderConstants.sliderMaxPosition)pos = Constants.SliderConstants.sliderMaxPosition;
         if(pos < Constants.SliderConstants.sliderMinPosition)pos = Constants.SliderConstants.sliderMinPosition;
-        leader.setTargetPosition((int)pos);
-        follower.setTargetPosition((int)pos);
-        leader.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        follower.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leader.setPower(1);
-        follower.setPower(1);
-
+        slider.setRunMode(Motor.RunMode.PositionControl);
+        slider.setTargetPosition((int)pos);
+        slider.set(Constants.SliderConstants.sliderPower);
     }
 
     public void reset(){
-        leader.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        follower.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leader.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        follower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slider.resetEncoder();
     }
     public void set(double power){
-        follower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leader.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leader.setPower(power);
-        follower.setPower(power);
+        slider.setRunMode(Motor.RunMode.RawPower);
+        slider.set(power);
     }
     public int getPosition(){
         return leader.getCurrentPosition();
@@ -54,10 +45,9 @@ public class Slider implements SubsystemBase{
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
-        t.addLine();
-        t.addLine("____SLIDER_____");
         t.addLine("LEFT SLIDER (LEADER): " + leader.getCurrentPosition());
         t.addLine("RIGHT SLIDER (FOLLOWER)" + follower.getCurrentPosition());
+        t.addLine("kP" + slider.getPositionCoefficient());
 
     }
 

@@ -34,7 +34,7 @@ public class ColorfulTelemetry  {
     public ColorfulTelemetry(Telemetry telemetry, FtcDashboard dash){
         this.dash = dash;
         packet = new TelemetryPacket();
-        telemetry = telemetry;
+        this.telemetry = telemetry;
         telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
         telemetry.setItemSeparator("");
 
