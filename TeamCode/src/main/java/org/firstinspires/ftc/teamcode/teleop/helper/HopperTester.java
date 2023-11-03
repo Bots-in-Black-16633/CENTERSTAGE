@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teleop.helper;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
@@ -11,7 +12,7 @@ public class HopperTester extends SampleTeleop {
 
     @Override
     public void onInit() {
-        robot = new BaseRobot(hardwareMap);
+        robot = new BaseRobot(hardwareMap, new Pose2d(0,0,0));
 
     }
 

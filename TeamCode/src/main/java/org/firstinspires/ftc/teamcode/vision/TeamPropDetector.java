@@ -1,29 +1,27 @@
 package org.firstinspires.ftc.teamcode.vision;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.MatOfPoint2f;
-import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class BlockDetection implements VisionProcessor {
+public class TeamPropDetector implements VisionProcessor {
     Mat hsvThresholdOutputRed = new Mat();
     Mat hsvThresholdOutputBlue = new Mat();
 
@@ -51,10 +49,17 @@ public class BlockDetection implements VisionProcessor {
     public static double averageCycle = 30;
     ColorfulTelemetry telemetry;
 
+    public static double ZONE1EDGE = 200;
+    public static double ZONE2EDGE = 400;
+
+    public static VisionPortal portal;
+    public static WebcamName camera;
+    public static TeamPropDetector propDetector;
 
 
 
-    public BlockDetection(ColorfulTelemetry telemetry){
+
+    public TeamPropDetector(ColorfulTelemetry telemetry){
         this.telemetry = telemetry;
     }
 
@@ -153,8 +158,6 @@ public class BlockDetection implements VisionProcessor {
     public Rect getBlueBoundingRect(){
         return redUnionRect;
     }
-    //FInd average of x Posiions of pixels
-
     public void addToAverage(Rect red, Rect blue){
 
         if(timesAveraged >averageCycle || timesAveraged == 0){
@@ -206,7 +209,35 @@ public class BlockDetection implements VisionProcessor {
         telemetry.addLine("AVG BLUE: " + blueUnionRect.toString());
         telemetry.addLine("AVG Red: " + redUnionRect.toString());
         telemetry.update();
+    }
+
+    /**
+     * Static Methods
+     */
+
+    public static void startPropDetection(HardwareMap hwMap, ColorfulTelemetry pen){
+         propDetector = new TeamPropDetector(pen);
+        camera = hwMap.get(WebcamName.class, "camera");
+         portal = VisionPortal.easyCreateWithDefaults(camera, propDetector);
 
     }
+    public static int getRedPropZone(){
+        double pos = propDetector.getRedBoundingRect().x;
+
+        if(pos < ZONE1EDGE)return 1;
+        else if(pos < ZONE2EDGE)return 2;
+        else return 3;
+    }
+    public static int getBluePropZone(){
+        double pos = propDetector.getBlueBoundingRect().x;
+        if(pos < ZONE1EDGE)return 1;
+        else if(pos < ZONE2EDGE)return 2;
+        else return 3;
+    }
+
+    public static void endPropDetection(){
+        portal.close();
+    }
+
 
 }

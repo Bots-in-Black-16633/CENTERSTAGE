@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 import androidx.core.math.MathUtils;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,7 +23,7 @@ public class TesterTeleop extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot = new BaseRobot(hardwareMap);
+        robot = new BaseRobot(hardwareMap, new Pose2d(0,0,0));
 
 
 

@@ -5,8 +5,11 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
+import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 
@@ -20,13 +23,19 @@ public class BaseRobot implements SubsystemBase{
    public Wrist wrist;
    public Shoulder shoulder;
    public Intake intake;
-    public MecanumDrive drive;
-    public BaseRobot(HardwareMap hwMap){
+   public Climber climber;
+    public Drive drive;
+
+    public AutoUtil autoGenerator;
+    public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         //hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
+        climber = new Climber(hwMap);
+        drive = new Drive(hwMap, startPose);
+        autoGenerator = new AutoUtil(drive);
 
 
-        addSubsystems(intake);
+        addSubsystems(intake, climber, drive);
         //addSubsystems(hopper, wrist, shoulder);
     }
 

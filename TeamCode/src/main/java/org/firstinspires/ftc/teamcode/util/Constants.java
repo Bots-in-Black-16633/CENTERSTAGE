@@ -45,6 +45,7 @@ public final class Constants{
 
     }@Config
     public static final class ClimberConstants{
+        public static double climberPower = 1;
 
     }@Config
     public static final class ShooterConstants{

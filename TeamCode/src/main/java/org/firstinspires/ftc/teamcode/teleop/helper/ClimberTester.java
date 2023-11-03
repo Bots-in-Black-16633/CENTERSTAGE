@@ -4,11 +4,12 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleTeleop;
-@TeleOp(name="IntakeTester", group="tester")
-public class IntakeTester extends SampleTeleop {
+@TeleOp(name="ClimberTester", group="tester")
+public class ClimberTester extends SampleTeleop {
 
 
     @Override
@@ -24,9 +25,9 @@ public class IntakeTester extends SampleTeleop {
 
     @Override
     public void onLoop() {
-        if(gamepad1.a)robot.intake.setMode(Intake.INTAKE);
-        else if(gamepad1.b)robot.intake.setMode(Intake.OUTTAKE);
-        else robot.intake.setMode(Intake.REST);
+        if(gamepad1.a)robot.climber.setMode(Climber.RAISE);
+        else if(gamepad1.b)robot.climber.setMode(Climber.LOWER);
+        else robot.climber.setMode(Climber.REST);
     }
 
     @Override

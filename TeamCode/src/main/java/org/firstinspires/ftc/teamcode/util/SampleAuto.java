@@ -14,17 +14,7 @@ public abstract class SampleAuto extends LinearOpMode {
         pen = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
         onInit();
         waitForStart();
-        //once the auto has started start the timer
-        time = new ElapsedTime();
-        while(opModeIsActive() && !isStopRequested()){
-
-            //run onStop 2 seconds before the Autonomous stops
-            if(time.seconds()>28)onStop();
-            pen.addLine("TIME LEFT: " + (30-time.seconds()));
-
-
-            loop();
-        }
+        onStart();
         onStop();
     }
 
@@ -38,10 +28,7 @@ public abstract class SampleAuto extends LinearOpMode {
      */
     public abstract void onStart();
 
-    /**
-     * This method is repeated as long as the Autonomous is active
-     */
-    public abstract void onLoop();
+
 
     /**
      * This method is run if the Autonomous is manually stopped, or 2 seconds before the autonomous timer expires and stops the auto

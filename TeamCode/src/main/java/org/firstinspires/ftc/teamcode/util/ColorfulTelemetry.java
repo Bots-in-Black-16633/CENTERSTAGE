@@ -2,14 +2,15 @@ package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 
 public class ColorfulTelemetry  {
-   private MultipleTelemetry telemetry;
-   private Telemetry t;
+   private Telemetry telemetry;
+    private TelemetryPacket packet;
 
    //Constants
    public static final String Red  = "Red";
@@ -31,10 +32,12 @@ public class ColorfulTelemetry  {
 
 
     public ColorfulTelemetry(Telemetry telemetry, FtcDashboard dash){
-        this.telemetry=new MultipleTelemetry(telemetry, dash.getTelemetry());
-        t = telemetry;
+        this.dash = dash;
+        packet = new TelemetryPacket();
+        telemetry = telemetry;
         telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
         telemetry.setItemSeparator("");
+
 
     }
 
@@ -45,22 +48,32 @@ public class ColorfulTelemetry  {
      */
     public  ColorfulTelemetry addLine(String message, String color){
         telemetry.addData("<font color = \""+color+"\">" + message, "");
+        packet.addLine(message);
         return this;
     }
     public ColorfulTelemetry addLine(String message){
         telemetry.addLine(format(message));
+        packet.addLine(message);
         return this;
     }
     public ColorfulTelemetry addData(String title, Object data){
         telemetry.addData(format(title),data);
+        packet.put(title, data);
         return this;
     }
     public ColorfulTelemetry addData(String title, int data){
         telemetry.addData(format(title),data);
+        packet.put(title, data);
+        return this;
+    }
+    public ColorfulTelemetry addData(String title, double data){
+        telemetry.addData(format(title),data);
+        packet.put(title, data);
         return this;
     }
     public ColorfulTelemetry addLine(){
         telemetry.addLine();
+        packet.addLine("");
         return this;
     }
 
@@ -119,8 +132,14 @@ public class ColorfulTelemetry  {
 
     public ColorfulTelemetry update(){
         telemetry.update();
+        dash.sendTelemetryPacket(packet);
         return this;
     }
+     public TelemetryPacket getPacket(){
+        return this.packet;
+     }
+
+
 
     public void setCamera(CameraStreamSource camera){
         dash.startCameraStream(camera, 0);

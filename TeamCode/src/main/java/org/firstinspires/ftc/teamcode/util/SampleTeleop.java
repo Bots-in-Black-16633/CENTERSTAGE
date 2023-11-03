@@ -13,6 +13,7 @@ public abstract class SampleTeleop extends LinearOpMode {
         pen = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
         onInit();
         waitForStart();
+        onStart();
         while(opModeIsActive() && !isStopRequested()){
             onLoop();
             telemetry();

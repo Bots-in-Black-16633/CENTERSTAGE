@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.util;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -28,10 +28,6 @@ public class SquareAutoTest extends SampleAuto {
 
     }
 
-    @Override
-    public void onLoop() {
-
-    }
 
     @Override
     public void onStop() {
