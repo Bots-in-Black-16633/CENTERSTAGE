@@ -31,6 +31,7 @@ public class VisionTester extends SampleAuto {
         camera = hardwareMap.get(WebcamName.class, "camera");
         v = VisionPortal.easyCreateWithDefaults(camera, b);
 
+
     }
 
     @Override
@@ -44,12 +45,14 @@ public class VisionTester extends SampleAuto {
         else if(blue.x < zone2Border)blueZone=2;
         else blueZone = 3;
 
-        FtcDashboard.getInstance().startCameraStream((CameraStreamSource) b, 0);
+        //FtcDashboard.getInstance().startCameraStream((CameraStreamSource) b, 0);
         while(!isStopRequested()){
             red = b.getRedBoundingRect();
             blue = b.getBlueBoundingRect();
             pen.addLine("RED: "+red.toString());
             pen.addLine("BLUE: "+blue.toString());
+            pen.addLine("RED ZONE" + TeamPropDetector.getZone(red.x));
+            pen.addLine("BLUE ZONE" + TeamPropDetector.getZone(blue.x));
             pen.update();
         }
 

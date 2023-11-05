@@ -153,10 +153,10 @@ public class TeamPropDetector implements VisionProcessor {
 
 
     public Rect getRedBoundingRect(){
-        return blueUnionRect;
+        return redUnionRect;
     }
     public Rect getBlueBoundingRect(){
-        return redUnionRect;
+        return blueUnionRect;
     }
     public void addToAverage(Rect red, Rect blue){
 
@@ -234,6 +234,12 @@ public class TeamPropDetector implements VisionProcessor {
         else if(pos < ZONE2EDGE)return 2;
         else return 3;
     }
+    public static int getZone(double xPOs){
+        if(xPOs < ZONE1EDGE)return 1;
+        else if(xPOs < ZONE2EDGE)return 2;
+        else return 3;
+    }
+
 
     public static void endPropDetection(){
         portal.close();
