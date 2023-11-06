@@ -5,6 +5,8 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.subsystems.SubsystemBase;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
@@ -48,10 +50,17 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         this.t = t;
         t.addLine("DRIVE TELEMETRY");
         t.addLine("POSITION: " + pose.toString());
+        t.addLine("Yaw" + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+        t.addLine("Pitch" + imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES));
+        t.addLine("Roll" + imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES));
+
+
     }
 
     @Override
     public void periodic() {
+        updatePoseEstimate();
+
 
     }
 }

@@ -23,23 +23,35 @@ public class AutoUtil {
      *
      *                     270 degrees
      */
-    public static  Pose2d REDRIGHTSTART = new Pose2d(0,0,0);
-    public static  Pose2d REDLEFTSTART = new Pose2d(0,0,0);
-    public static  Pose2d BLUERIGHTSTART = new Pose2d(0,0,0);
-    public static  Pose2d BLURLEFTSTART = new Pose2d(12.00, 71.5, Math.toRadians(270));
+    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -71.5, Math.toRadians(90));
+    public static  Pose2d REDLEFTSTART = new Pose2d(-12.00, -71.5, Math.toRadians(90));
+    public static  Pose2d BLUERIGHTSTART = new Pose2d(-12.00, 71.5, Math.toRadians(270));
+    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 71.5, Math.toRadians(270));
 
 
     public static final int BLUESIDE =0;
     public static final int REDSIDE = 1;
 
+    public static final int RIGHTSIDE = 0;
+    public static final int LEFTSIDE = 0;
+
     Drive drive;
     Pose2d startPose;
     int sideColor = 0;
+    int side = 0;
     public AutoUtil(Drive drive){
         this.drive = drive;
         startPose = drive.pose;
         if(startPose.position.y > 0)sideColor = BLUESIDE;
         else sideColor = REDSIDE;
+        if(startPose.position.x < 0){
+            if(sideColor == REDSIDE)side = LEFTSIDE;
+            else side = RIGHTSIDE;
+        }
+        else{
+            if(sideColor == REDSIDE)side = RIGHTSIDE;
+            else side = LEFTSIDE;
+        }
 
     }
 

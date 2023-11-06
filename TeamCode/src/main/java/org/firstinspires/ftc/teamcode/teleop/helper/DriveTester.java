@@ -26,15 +26,16 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.teamcode.util.SampleTeleop;
+
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
 
 import java.util.List;
 
 @TeleOp(name = "Drive Tester", group = "helper")
-public class DriveTester extends LinearOpMode {
+public class DriveTester extends SampleTeleop {
     ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
-    Drive drive;
     public static Pose2d startPos = new Pose2d(0,0,0);
     public static double DRIVE_SPEED = 1;
 
@@ -42,21 +43,30 @@ public class DriveTester extends LinearOpMode {
     public GamepadEx g1;
 
 
+    @Override
+    public void onInit() {
+        g1 = new GamepadEx(gamepad1);
+        robot = new BaseRobot(hardwareMap,startPos);
+
+    }
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        drive = new Drive(hardwareMap, startPos);
-        g1 = new GamepadEx(gamepad1);
+    public void onStart() {
 
-        waitForStart();
-
-        while(!isStopRequested() && opModeIsActive()){
-            pen.addLine("lY: " + g1.getLeftY() + " lX " + g1.getLeftX() + " rX " + g1.getRightX());
-           drive.driveFieldcentric(g1.getLeftX(), -g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
-            drive.printTelemetry(pen);
-            pen.update();
-        }
     }
+
+    @Override
+    public void onLoop()  {
+        pen.addLine("lY: " + g1.getLeftY() + " lX " + g1.getLeftX() + " rX " + g1.getRightX());
+        robot.drive.driveFieldcentric(g1.getLeftX(), g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
+
+    }
+
+    @Override
+    public void onStop() {
+
+    }
+
     private double round(double t){
         return ((int)t*100)/100.0;
 

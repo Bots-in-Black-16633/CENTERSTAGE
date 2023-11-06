@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto.comp;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 
+@Autonomous
 public class AutoRedRight extends SampleAuto {
     BaseRobot robot;
     int zone;

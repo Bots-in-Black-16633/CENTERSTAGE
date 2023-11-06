@@ -28,15 +28,14 @@ public class BaseRobot implements SubsystemBase{
 
     public AutoUtil autoGenerator;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
-        //hopper = new Hopper(hwMap);
+        hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
         climber = new Climber(hwMap);
         drive = new Drive(hwMap, startPose);
         autoGenerator = new AutoUtil(drive);
 
 
-        addSubsystems(intake, climber, drive);
-        //addSubsystems(hopper, wrist, shoulder);
+        addSubsystems(intake, climber, drive, hopper);
     }
 
 

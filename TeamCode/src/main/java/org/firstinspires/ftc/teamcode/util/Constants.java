@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -11,8 +12,7 @@ public final class Constants{
     @Config
 
     public static final class DriveConstants{
-
-        public static IMU.Parameters imuParam = new IMU.Parameters( new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+        public static IMU.Parameters imuParam = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.UP));
     }
     @Config
     public static final class SliderConstants{
@@ -22,18 +22,40 @@ public final class Constants{
         public static  double sliderPower = .5;
         public static int sliderMaxPosition = 3000;
         public static int sliderMinPosition = 0;
-        public static int sliderGround = 0;
+
+        public static double sliderRest = 0;
+        public static double sliderTraveling = 0;
+        public static double sliderOuttake = 0;
+
+        public static double sliderSafeBackToIntake = 0;
+
+        public static double sliderSafeBackToOuttake = 0;
     }
     @Config
     public static final class ShoulderConstants{
         public static double shoulderMin = -1;
         public static double shoulderMax = 1;
 
+        public static double shoulderRest = 0;
+        public static double shoulderTraveling = 0;
+        public static double shoulderOuttake = 0;
+
+        public static double shoulderSafeBackToIntake = 0;
+
+        public static double shoulderSafeBackToOuttake = 0;
     }
     @Config
     public static final class WristConstants{
         public static double wristMax =1;
         public static double wristMin = -1;
+
+        public static double wristRest = 0;
+        public static double wristTraveling = 0;
+        public static double wristOuttake = 0;
+
+        public static double wristSafeBackToIntake = 0;
+
+        public static double wristSafeBackToOuttake = 0;
     }
     @Config
     public static final class IntakeConstants{
@@ -49,6 +71,15 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
+
+    }
+    public static final class AprilTagConstants {
+        public final static Vector2d APRIL_TAG_ONE = new Vector2d(60, 41.4);
+        public final static Vector2d APRIL_TAG_TWO = new Vector2d(60, 35.25);
+        public final static Vector2d APRIL_TAG_THREE = new Vector2d(60, 29);
+        public final static Vector2d APRIL_TAG_FOUR = new Vector2d(60, -29);
+        public final static Vector2d APRIL_TAG_FIVE = new Vector2d(60, -35.25);
+        public final static Vector2d APRIL_TAG_SIX = new Vector2d(60, -41.4);
 
     }
 }
