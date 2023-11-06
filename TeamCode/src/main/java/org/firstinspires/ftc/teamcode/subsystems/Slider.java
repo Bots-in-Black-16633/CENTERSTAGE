@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import androidx.core.math.MathUtils;
+
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorGroup;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -14,19 +16,17 @@ public class Slider implements SubsystemBase{
 
     DcMotor leader;
     DcMotor follower;
-    MotorGroup slider;
 
     public Slider(HardwareMap hwMap){
         leader = hwMap.dcMotor.get("leftSlider");
         follower = hwMap.dcMotor.get("rightSlider");
-        follower.setDirection(DcMotorSimple.Direction.REVERSE);
+        leader.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
     }
 
     public void runToPosition(double pos){
-        if(pos > Constants.SliderConstants.sliderMaxPosition)pos = Constants.SliderConstants.sliderMaxPosition;
-        if(pos < Constants.SliderConstants.sliderMinPosition)pos = Constants.SliderConstants.sliderMinPosition;
+        pos = MathUtils.clamp(pos, Constants.SliderConstants.sliderMinPosition, Constants.SliderConstants.sliderMaxPosition);
         leader.setTargetPosition((int)pos);
         follower.setTargetPosition((int)pos);
         leader.setMode(DcMotor.RunMode.RUN_TO_POSITION);

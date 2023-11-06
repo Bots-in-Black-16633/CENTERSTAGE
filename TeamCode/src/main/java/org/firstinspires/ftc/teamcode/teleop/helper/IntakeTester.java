@@ -24,9 +24,9 @@ public class IntakeTester extends SampleTeleop {
 
     @Override
     public void onLoop() {
-        if(gamepad1.a)robot.intake.setMode(Intake.INTAKE);
-        else if(gamepad1.b)robot.intake.setMode(Intake.OUTTAKE);
-        else robot.intake.setMode(Intake.REST);
+        if(gamepad1.a){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
+        else if(gamepad1.b){robot.intake.setMode(Intake.OUTTAKE);robot.hopper.outtake(Hopper.ALL);}
+        else {robot.intake.setMode(Intake.REST);robot.hopper.rest(Hopper.ALL);}
     }
 
     @Override

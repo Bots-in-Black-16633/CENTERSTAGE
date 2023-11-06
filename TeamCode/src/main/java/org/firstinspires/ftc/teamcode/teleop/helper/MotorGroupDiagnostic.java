@@ -23,7 +23,7 @@ import java.util.Set;
 @TeleOp(name = "MotorGroup Diagnostic", group = "helper")
 public class MotorGroupDiagnostic extends LinearOpMode {
     ColorfulTelemetry pen  = new ColorfulTelemetry(telemetry, FtcDashboard.getInstance());
-    LFSlider s;
+    Slider s;
     double sliderPos = 0;
     boolean encoderControl = false;
 
@@ -33,7 +33,7 @@ public class MotorGroupDiagnostic extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        s = new LFSlider(hardwareMap);
+        s = new Slider(hardwareMap);
         s.reset();
 
         g1 = new GamepadEx(gamepad1);

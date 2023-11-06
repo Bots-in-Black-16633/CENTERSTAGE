@@ -8,10 +8,12 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +32,12 @@ public class BaseRobot implements SubsystemBase{
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
-        climber = new Climber(hwMap);
+        //climber = new Climber(hwMap);
         drive = new Drive(hwMap, startPose);
         autoGenerator = new AutoUtil(drive);
 
 
-        addSubsystems(intake, climber, drive, hopper);
+        addSubsystems(intake,  drive, hopper);
     }
 
 
@@ -61,21 +63,49 @@ public class BaseRobot implements SubsystemBase{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //set the wrist and shoulder so rest position and wait
+            //set the wrist and shoulder to a safe Position
+            wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
+            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToIntake);
 
-            //reset the slider
+            AutoUtil.delay(1);
 
+            wrist.setPosition(Constants.WristConstants.wristRest);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
+            slider.runToPosition(Constants.SliderConstants.sliderRest);
+            return false;
+        }
+    }
+    class Outtake implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.setPosition(Constants.WristConstants.wristSafeBackToOuttake);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+
+            AutoUtil.delay(1);
+
+            wrist.setPosition(Constants.WristConstants.wristOuttake);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
+            slider.runToPosition(Constants.SliderConstants.sliderOuttake);
+            return false;
+        }
+    }
+    class toTravelingPosition implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.setPosition(Constants.WristConstants.wristTraveling);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
+            slider.runToPosition(Constants.SliderConstants.sliderTraveling);
             return false;
         }
 
-        @Override
-        public void preview(@NonNull Canvas fieldOverlay) {
-            Action.super.preview(fieldOverlay);
-
-        }
-
     }
-    public Action outtake(){
+
+    public Action resetToIntake(){
         return new ResetToIntake();
     }
+    public Action outtake(){return new Outtake();}
+    public Action toTravelingPosition(){return new toTravelingPosition();}
+
 }

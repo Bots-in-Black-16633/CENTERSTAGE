@@ -70,7 +70,7 @@ public class AutoUtil {
         else return getZone3();
     }
 
-    public void delay(double t) {
+    public static void delay(double t) {
         ElapsedTime runtime = new ElapsedTime();
         runtime.reset();
         while (runtime.seconds() < t) {
