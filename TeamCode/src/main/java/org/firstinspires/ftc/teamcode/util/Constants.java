@@ -33,7 +33,7 @@ public final class Constants{
     }
     @Config
     public static final class ShoulderConstants{
-        public static double shoulderMin = -1;
+        public static double shoulderMin = 0;
         public static double shoulderMax = 1;
 
         public static double shoulderRest = 0;
@@ -47,7 +47,7 @@ public final class Constants{
     @Config
     public static final class WristConstants{
         public static double wristMax =1;
-        public static double wristMin = -1;
+        public static double wristMin = 0;
 
         public static double wristRest = 0;
         public static double wristTraveling = 0;
@@ -71,6 +71,8 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
+        public static double shooterHold = 0;
+        public static double shooterRelease = 0;
 
     }
     public static final class AprilTagConstants {

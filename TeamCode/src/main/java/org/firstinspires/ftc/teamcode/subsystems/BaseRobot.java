@@ -27,6 +27,7 @@ public class BaseRobot implements SubsystemBase{
    public Intake intake;
    public Climber climber;
     public Drive drive;
+    public Shooter shooter;
 
     public AutoUtil autoGenerator;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
@@ -34,10 +35,13 @@ public class BaseRobot implements SubsystemBase{
         intake = new Intake(hwMap);
         //climber = new Climber(hwMap);
         drive = new Drive(hwMap, startPose);
+        shoulder = new Shoulder(hwMap);
+        wrist = new Wrist(hwMap);
+        shooter = new Shooter(hwMap);
         autoGenerator = new AutoUtil(drive);
 
 
-        addSubsystems(intake,  drive, hopper);
+        addSubsystems(intake,  drive, hopper, shoulder, wrist);
     }
 
 

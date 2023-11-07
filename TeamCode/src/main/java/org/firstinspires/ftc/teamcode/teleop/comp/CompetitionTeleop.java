@@ -58,6 +58,12 @@ public class CompetitionTeleop extends SampleTeleop {
             resetPixelSubsystemTrackingVariables();
         }
 
+        if(g2.wasJustPressed(GamepadKeys.Button.B)){
+            robot.shooter.shoot();
+        }
+
+
+
         g1.readButtons();
         g2.readButtons();
     }
