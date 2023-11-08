@@ -4,20 +4,18 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
-import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.SampleTeleop;
-@TeleOp(name="WristShoulderTester", group="tester")
-public class WristShoulderTester extends SampleTeleop {
+@TeleOp(name="PixelSubsystemTester", group="tester")
+public class PixelSubsystemTester extends SampleTeleop {
 
 
 
     public double wristPos;
     public double shoulderPos;
+    public double sliderPos;
     public GamepadEx g1;
     @Override
     public void onInit() {
@@ -55,8 +53,14 @@ public class WristShoulderTester extends SampleTeleop {
             shoulderPos = Constants.ShoulderConstants.shoulderRest;
         }
 
+        sliderPos += gamepad1.left_stick_y*10;
+        if(sliderPos > Constants.SliderConstants.sliderMaxPosition)sliderPos = Constants.SliderConstants.sliderMaxPosition;
+        if(sliderPos < Constants.SliderConstants.sliderMinPosition)sliderPos = Constants.SliderConstants.sliderMinPosition;
+        robot.slider.runToPosition(sliderPos);
+
         robot.wrist.setPosition(wristPos);
         robot.shoulder.setPosition(shoulderPos);
+        pen.addLine("slider: " + sliderPos);
         pen.addLine("wristTarget: " + wristPos);
         pen.addLine("shoulderTarger: " + shoulderPos);
     }
