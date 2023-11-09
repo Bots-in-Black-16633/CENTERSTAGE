@@ -23,7 +23,7 @@ public class Hopper implements SubsystemBase{
     }
 
     public void intake(int type){
-        setPower(type, -Constants.HopperConstants.hopperPower);
+        setPower(type, Constants.HopperConstants.hopperPower);
     }
 
     public void outtake(int type){

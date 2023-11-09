@@ -36,26 +36,26 @@ public final class Constants{
         public static double shoulderMin = 0;
         public static double shoulderMax = 1;
 
-        public static double shoulderRest = 0;
+        public static double shoulderRest = .147;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = 0;
+        public static double shoulderOuttake = .446;
 
         public static double shoulderSafeBackToIntake = 0;
 
-        public static double shoulderSafeBackToOuttake = 0;
+        public static double shoulderSafeBackToOuttake = .147;
     }
     @Config
     public static final class WristConstants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = 0;
+        public static double wristRest = .694;
         public static double wristTraveling = 0;
-        public static double wristOuttake = 0;
+        public static double wristOuttake = .306;
 
         public static double wristSafeBackToIntake = 0;
 
-        public static double wristSafeBackToOuttake = 0;
+        public static double wristSafeBackToOuttake = .957;
     }
     @Config
     public static final class IntakeConstants{

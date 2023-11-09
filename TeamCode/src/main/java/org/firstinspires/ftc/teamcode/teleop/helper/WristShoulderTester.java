@@ -22,7 +22,7 @@ public class WristShoulderTester extends SampleTeleop {
     @Override
     public void onInit() {
         robot = new BaseRobot(hardwareMap, new Pose2d(0,0,0));
-        wristPos = robot.wrist.getPosition();
+        wristPos = Constants.WristConstants.wristRest;
         shoulderPos = Constants.ShoulderConstants.shoulderRest;
         g1 = new GamepadEx(gamepad1);
 
