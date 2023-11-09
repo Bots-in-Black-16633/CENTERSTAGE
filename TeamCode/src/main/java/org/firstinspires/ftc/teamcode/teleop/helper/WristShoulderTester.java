@@ -40,7 +40,7 @@ public class WristShoulderTester extends SampleTeleop {
     public void onLoop() {
 
         wristPos -= gamepad1.left_stick_y*.01;
-        shoulderPos += gamepad1.right_stick_x*.01;
+        shoulderPos += gamepad1.right_stick_y*.01;
         if(wristPos > Constants.WristConstants.wristMax)wristPos = Constants.WristConstants.wristMax;
         if(wristPos < Constants.WristConstants.wristMin)wristPos = Constants.WristConstants.wristMin;
         if(shoulderPos > Constants.ShoulderConstants.shoulderMax)shoulderPos=Constants.ShoulderConstants.shoulderMax;

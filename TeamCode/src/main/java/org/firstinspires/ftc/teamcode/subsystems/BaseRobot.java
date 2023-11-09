@@ -33,15 +33,16 @@ public class BaseRobot implements SubsystemBase{
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
-        //climber = new Climber(hwMap);
+        climber = new Climber(hwMap);
         drive = new Drive(hwMap, startPose);
         shoulder = new Shoulder(hwMap);
         wrist = new Wrist(hwMap);
         shooter = new Shooter(hwMap);
+        slider = new Slider(hwMap);
         autoGenerator = new AutoUtil(drive);
 
 
-        addSubsystems(intake,  drive, hopper, shoulder, wrist);
+        addSubsystems(intake,  drive, hopper, shoulder, wrist, slider);
     }
 
 
@@ -70,28 +71,35 @@ public class BaseRobot implements SubsystemBase{
             //set the wrist and shoulder to a safe Position
             wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
+            AutoUtil.delay(.5);
             slider.runToPosition(Constants.SliderConstants.sliderSafeBackToIntake);
 
-            AutoUtil.delay(1);
+            AutoUtil.delay(.5);
 
+
+            slider.runToPosition(Constants.SliderConstants.sliderRest);
+            AutoUtil.delay(.5);
             wrist.setPosition(Constants.WristConstants.wristRest);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
-            slider.runToPosition(Constants.SliderConstants.sliderRest);
+            AutoUtil.delay(.1);
             return false;
         }
     }
     class Outtake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+            AutoUtil.delay(.5);
             wrist.setPosition(Constants.WristConstants.wristSafeBackToOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
-            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
 
+            AutoUtil.delay(.5);
+            slider.runToPosition(Constants.SliderConstants.sliderOuttake);
             AutoUtil.delay(1);
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
-            slider.runToPosition(Constants.SliderConstants.sliderOuttake);
+
             return false;
         }
     }

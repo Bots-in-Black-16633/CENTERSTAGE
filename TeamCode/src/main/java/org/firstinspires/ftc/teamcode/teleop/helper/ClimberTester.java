@@ -25,8 +25,10 @@ public class ClimberTester extends SampleTeleop {
 
     @Override
     public void onLoop() {
-        if(gamepad1.a)robot.climber.setMode(Climber.RAISE);
-        else if(gamepad1.b)robot.climber.setMode(Climber.LOWER);
+        if(gamepad1.y)robot.climber.setMode(Climber.CLIMB);
+        else if(gamepad1.a)robot.climber.setMode(Climber.UNCLIMB);
+        else if(gamepad1.b)robot.climber.setMode(Climber.RAISE);
+        else if(gamepad1.x)robot.climber.setMode(Climber.LOWER);
         else robot.climber.setMode(Climber.REST);
     }
 

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.drive;
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 public class Drive extends MecanumDrive implements SubsystemBase {
 
     ColorfulTelemetry t = null;
+
 
     public Drive(HardwareMap hardwareMap, Pose2d startPose) {
         super(hardwareMap, startPose);
@@ -30,18 +32,42 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         if(Math.abs(xPow)<.05 && Math.abs(yPow)<.05) {setDrivePowers(new PoseVelocity2d(new Vector2d(0,0),rotPow*speed)); return;}
 
         double targetTheta = Math.atan2(Math.toRadians(yPow), Math.toRadians(xPow));
-        double robotTheta = Math.toRadians(pose.heading.log());
+        double robotTheta = getHeading();
         double diffTheta = Math.toDegrees(targetTheta)- Math.toDegrees(robotTheta);
         if(t!=null)t.addLine("Target " + Math.toDegrees(targetTheta) + " Robot " + Math.toDegrees(robotTheta) + " Difference " + diffTheta);
         xPow = Math.cos(Math.toRadians(diffTheta))*speed;
         yPow = Math.sin(Math.toRadians(diffTheta))*speed;
         rotPow = rotPow*speed;
         if(t !=null){
-            t.addLine("XPOW: " + xPow + "YPOW: " + yPow + "rotPow" + rotPow);
+            t.addLine("XPOW: " + xPow);
+            t.addLine("YPOW" + yPow);
+            t.addLine("ROT POW" + rotPow);
+            t.addLine("DIFF " + Math.toDegrees(diffTheta));
         }
 
         setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
 
+
+//       Vector2d input = pose.heading.inverse().times(new Vector2d(xPow,yPow));
+//       if(t!=null){
+//           t.addLine("rESUL X POW:" + input.x);
+//           t.addLine("rESUL X POW:" + input.y);
+//           t.addLine("ANGLE: " + Math.toDegrees(input.angleCast().log()));
+//       }
+//
+//
+//        setDrivePowers(new PoseVelocity2d(input ,rotPow));
+
+
+    }
+
+    public void drive(double xPow, double yPow, double rotPow){
+
+
+        leftFront.setPower(yPow + xPow + rotPow);
+        leftBack.setPower(yPow - xPow + rotPow);
+        rightFront.setPower(yPow - xPow - rotPow);
+        rightBack.setPower(yPow + xPow - rotPow);
     }
 
 
@@ -49,18 +75,29 @@ public class Drive extends MecanumDrive implements SubsystemBase {
     public void printTelemetry(ColorfulTelemetry t) {
         this.t = t;
         t.addLine("DRIVE TELEMETRY");
-        t.addLine("POSITION: " + pose.toString());
-        t.addLine("Yaw" + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
-        t.addLine("Pitch" + imu.getRobotYawPitchRollAngles().getPitch(AngleUnit.DEGREES));
-        t.addLine("Roll" + imu.getRobotYawPitchRollAngles().getRoll(AngleUnit.DEGREES));
-
-
+        t.addLine("POSITION: " + pose.position + "HEADING " + pose.heading.log()  + " " + pose.heading.real);
+        t.addLine("XPOS: " + pose.position.x);
+        t.addLine("YPOS: " + pose.position.y);
+        t.addLine("Heading: " +pose.heading.log());
+        t.addLine("perp"+ ((ThreeDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
+        t.addLine("par0"+ ((ThreeDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
+        t.addLine("par1"+ ((ThreeDeadWheelLocalizer)localizer).par1.getPositionAndVelocity().position);
+        t.addLine("YAW: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }
 
     @Override
     public void periodic() {
         updatePoseEstimate();
-
-
     }
+
+    public void resetHeading(){
+        pose = new Pose2d(pose.position.x, pose.position.y, Math.toRadians(90));
+        imu.resetYaw();
+    }
+
+    public double getHeading(){
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+    }
+
+
 }

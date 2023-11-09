@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 
@@ -25,6 +26,9 @@ public class AutoRedRight extends SampleAuto {
         pen.update();
         robot.autoGenerator.delay(.5);
         robot.autoGenerator.getZone(zone).run(pen.getPacket());
+        robot.intake.setMode(Intake.OUTTAKE);
+        AutoUtil.delay(.1);
+        robot.intake.setMode(Intake.REST);
 
     }
 

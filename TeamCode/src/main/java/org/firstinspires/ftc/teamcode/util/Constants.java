@@ -25,11 +25,13 @@ public final class Constants{
 
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
-        public static double sliderOuttake = 0;
+        public static double sliderOuttake = 1688;
 
-        public static double sliderSafeBackToIntake = 0;
+        public static double sliderSafeBackToIntake = 300;
 
-        public static double sliderSafeBackToOuttake = 0;
+        public static double sliderSafeBackToOuttake = 300;
+
+        public static double backdropRowConstant = 100;
     }
     @Config
     public static final class ShoulderConstants{
@@ -38,11 +40,11 @@ public final class Constants{
 
         public static double shoulderRest = .147;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = .446;
+        public static double shoulderOuttake = .444;
 
-        public static double shoulderSafeBackToIntake = 0;
+        public static double shoulderSafeBackToIntake = .11;
 
-        public static double shoulderSafeBackToOuttake = .147;
+        public static double shoulderSafeBackToOuttake = .11;
     }
     @Config
     public static final class WristConstants{
@@ -51,11 +53,11 @@ public final class Constants{
 
         public static double wristRest = .694;
         public static double wristTraveling = 0;
-        public static double wristOuttake = .306;
+        public static double wristOuttake = .49;
 
-        public static double wristSafeBackToIntake = 0;
+        public static double wristSafeBackToIntake = .727;
 
-        public static double wristSafeBackToOuttake = .957;
+        public static double wristSafeBackToOuttake = .727;
     }
     @Config
     public static final class IntakeConstants{
@@ -63,7 +65,7 @@ public final class Constants{
 
     }@Config
     public static final class HopperConstants{
-        public static double hopperPower = .5;
+        public static double hopperPower = 1;
 
     }@Config
     public static final class ClimberConstants{
@@ -71,8 +73,8 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold = 0;
-        public static double shooterRelease = 0;
+        public static double shooterHold = .8;
+        public static double shooterRelease = 1;
 
     }
     public static final class AprilTagConstants {

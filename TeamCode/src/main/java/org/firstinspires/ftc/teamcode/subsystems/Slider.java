@@ -14,50 +14,51 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 
 public class Slider implements SubsystemBase{
 
-    DcMotor leader;
-    DcMotor follower;
+    DcMotor leftSlider;
+    DcMotor rightSlider;
 
     public Slider(HardwareMap hwMap){
-        leader = hwMap.dcMotor.get("leftSlider");
-        follower = hwMap.dcMotor.get("rightSlider");
-        leader.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSlider = hwMap.dcMotor.get("leftSlider");
+        rightSlider = hwMap.dcMotor.get("rightSlider");
+        leftSlider.setDirection(DcMotorSimple.Direction.REVERSE);
+        reset();
 
 
     }
 
     public void runToPosition(double pos){
         pos = MathUtils.clamp(pos, Constants.SliderConstants.sliderMinPosition, Constants.SliderConstants.sliderMaxPosition);
-        leader.setTargetPosition((int)pos);
-        follower.setTargetPosition((int)pos);
-        leader.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        follower.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leader.setPower(1);
-        follower.setPower(1);
+        leftSlider.setTargetPosition((int)pos);
+        rightSlider.setTargetPosition((int)pos);
+        leftSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftSlider.setPower(1);
+        rightSlider.setPower(1);
 
     }
 
     public void reset(){
-        leader.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        follower.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leader.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        follower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void set(double power){
-        follower.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leader.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leader.setPower(power);
-        follower.setPower(power);
+        rightSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftSlider.setPower(power);
+        rightSlider.setPower(power);
     }
     public int getPosition(){
-        return leader.getCurrentPosition();
+        return leftSlider.getCurrentPosition();
     }
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____SLIDER_____");
-        t.addLine("LEFT SLIDER (LEADER): " + leader.getCurrentPosition());
-        t.addLine("RIGHT SLIDER (FOLLOWER)" + follower.getCurrentPosition());
+        t.addLine("LEFT SLIDER : " + leftSlider.getCurrentPosition());
+        t.addLine("RIGHT SLIDER (FOLLOWER)" + rightSlider.getCurrentPosition());
 
     }
 

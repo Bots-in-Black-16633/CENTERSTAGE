@@ -57,8 +57,14 @@ public class DriveTester extends SampleTeleop {
 
     @Override
     public void onLoop()  {
-        pen.addLine("lY: " + g1.getLeftY() + " lX " + g1.getLeftX() + " rX " + g1.getRightX());
-        robot.drive.driveFieldcentric(g1.getLeftX(), g1.getLeftY(), g1.getRightX(), DRIVE_SPEED);
+        pen.addLine("lY: " + -g1.getLeftY() + " lX " + -g1.getLeftX() + " rX " + g1.getRightX());
+        robot.drive.driveFieldcentric(g1.getLeftX(), g1.getLeftY(), -g1.getRightX(), DRIVE_SPEED);
+        robot.drive.periodic();
+
+        if(g1.wasJustPressed(GamepadKeys.Button.A)){
+            robot.drive.resetHeading();
+        }
+        g1.readButtons();
 
     }
 
