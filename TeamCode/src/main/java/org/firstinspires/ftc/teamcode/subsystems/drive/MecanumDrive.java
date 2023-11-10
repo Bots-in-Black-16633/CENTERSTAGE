@@ -53,7 +53,7 @@ public class MecanumDrive {
         // drive model parameters
         public double inPerTick = .0005264427;
         public double lateralInPerTick = 0.0003265623707504739;
-        public double trackWidthTicks = 26442.711405613747;
+        public double trackWidthTicks = 27119.7;
 
         // feedforward parameters (in tick units)
         public double kS = 1.56944844373966;
@@ -199,7 +199,7 @@ public class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS.inPerTick);
+        localizer = new ThreeDeadWheelLocalizer(hardwareMap, PARAMS.inPerTick);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }

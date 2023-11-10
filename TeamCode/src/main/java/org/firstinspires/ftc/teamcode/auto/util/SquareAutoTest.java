@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
@@ -24,8 +25,7 @@ public class SquareAutoTest extends SampleAuto {
 
     @Override
     public void onStart() {
-        squareTest.run( new TelemetryPacket());
-
+        Actions.runBlocking(squareTest);
     }
 
 

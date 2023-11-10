@@ -80,7 +80,13 @@ public class TeamPropDetector implements VisionProcessor {
         Imgproc.dilate(hsvThresholdOutputBlue, dilationOutputBlue,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_CROSS, new Size(3,3)));
 
         Core.bitwise_or(dilationOutputBlue, dilationOutputRed, frame);
-        // Find Contours
+
+//            double redXPos = getAvergageWhitPixXPos(dilationOutputBlue);
+//            double blueXPos = getAvergageWhitPixXPos(dilationOutputRed);
+//            telemetry.addLine("REDXPOS: " + redXPos);
+//            telemetry.addLine("BLUEXPOS: " + blueXPos);
+//            telemetry.addLine();
+     //    Find Contours
         findContours(dilationOutputRed, contoursRed);
         findContours(dilationOutputBlue, contoursBlue);
 
@@ -96,7 +102,7 @@ public class TeamPropDetector implements VisionProcessor {
 
 
 
-        //Find Rectangle which covers all the Contours
+       // Find Rectangle which covers all the Contours
         if(contoursOutputBlue.size() >0 && contoursOutputRed.size() > 0){
             addToAverage(Imgproc.boundingRect(contoursOutputRed.get(0)),Imgproc.boundingRect(contoursOutputBlue.get(0)));
             Imgproc.rectangle(frame, Imgproc.boundingRect(contoursOutputRed.get(0)), new Scalar(90,90,90));
@@ -108,7 +114,6 @@ public class TeamPropDetector implements VisionProcessor {
             telemetry.addLine("NEW RED: " + Imgproc.boundingRect(contoursOutputRed.get(0)).toString());
 
         }
-
 
 
         return null;
@@ -210,6 +215,25 @@ public class TeamPropDetector implements VisionProcessor {
         telemetry.addLine("AVG Red: " + redUnionRect.toString());
         telemetry.update();
     }
+
+//    public double getAvergageWhitPixXPos(Mat binaryMat){
+//        double average = 0;
+//        double timesAveraged = 0;
+//        for(int i = 0; i < binaryMat.cols(); i++){
+//            double numWhitePixelsInColumn = numLongestContinousWhitePixels(binaryMat.col(i));
+//
+//            double curAverage = average*(timesAveraged/(timesAveraged+numWhitePixelsInColumn));
+//            double addAverage = i* (numWhitePixelsInColumn/(numWhitePixelsInColumn+timesAveraged));
+//            average = curAverage + addAverage;
+//            timesAveraged = timesAveraged + numWhitePixelsInColumn;
+//        }
+//        telemetry.addLine("AVERAGE XPOS: " + average);
+//
+//        return average;
+//    }
+//    public double numLongestContinousWhitePixels(){
+//
+//    }
 
     /**
      * Static Methods

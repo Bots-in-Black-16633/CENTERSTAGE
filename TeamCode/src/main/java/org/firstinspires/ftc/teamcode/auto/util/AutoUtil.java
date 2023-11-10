@@ -56,13 +56,13 @@ public class AutoUtil {
     }
 
     public Action getZone1(){
-        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?-1:1)*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00)).build();
+        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?1:-1)*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00)).build();
     }
     public Action getZone2(){
-        return drive.actionBuilder(startPose).lineToY((sideColor==BLUESIDE?-1:1)*36.29).build();
+        return drive.actionBuilder(startPose).lineToY((sideColor==BLUESIDE?1:-1)*36.29).build();
     }
     public Action getZone3(){
-        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?-1:1)*36.29, Math.toRadians(210)), Math.toRadians(-90.00)).build();
+        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?1:-1)*36.29, Math.toRadians(210)), Math.toRadians(-90.00)).build();
     }
     public Action getZone(int zone){
         if(zone==1)return getZone1();

@@ -82,9 +82,9 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         t.addLine("XPOS: " + pose.position.x);
         t.addLine("YPOS: " + pose.position.y);
         t.addLine("Heading: " +pose.heading.log());
-        t.addLine("perp"+ ((TwoDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
-        //t.addLine("par0"+ ((TwoDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
-        t.addLine("par1"+ ((TwoDeadWheelLocalizer)localizer).par.getPositionAndVelocity().position);
+        t.addLine("perp"+ ((ThreeDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
+        t.addLine("par0"+ ((ThreeDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
+        t.addLine("par1"+ ((ThreeDeadWheelLocalizer)localizer).par1.getPositionAndVelocity().position);
         t.addLine("YAW: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }
 
