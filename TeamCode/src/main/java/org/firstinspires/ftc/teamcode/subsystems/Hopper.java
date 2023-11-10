@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 
 public class Hopper implements SubsystemBase{
 
-    CRServo leftHopper;
-    CRServo rightHopper;
+    public CRServo leftHopper;
+    public CRServo rightHopper;
 
     public static final int RIGHT_HOPPER = 1;
     public static final int LEFT_HOPPER =2;

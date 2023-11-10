@@ -51,14 +51,14 @@ import java.util.List;
 public class MecanumDrive {
     public static class Params {
         // drive model parameters
-        public double inPerTick = 0;
-        public double lateralInPerTick = 1;
-        public double trackWidthTicks = 0;
+        public double inPerTick = .0005264427;
+        public double lateralInPerTick = 0.0003265623707504739;
+        public double trackWidthTicks = 26442.711405613747;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
-        public double kA = 0;
+        public double kS = 1.56944844373966;
+        public double kV = 0.00008873773735512145;
+        public double kA = 0.000017;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -199,7 +199,7 @@ public class MecanumDrive {
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
-        localizer = new ThreeDeadWheelLocalizer(hardwareMap, PARAMS.inPerTick);
+        localizer = new TwoDeadWheelLocalizer(hardwareMap, imu, PARAMS.inPerTick);
 
         FlightRecorder.write("MECANUM_PARAMS", PARAMS);
     }
