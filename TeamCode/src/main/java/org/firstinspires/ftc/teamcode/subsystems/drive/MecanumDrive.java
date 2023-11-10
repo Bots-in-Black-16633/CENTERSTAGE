@@ -438,6 +438,9 @@ public class MecanumDrive {
                 0.25, 0.1
         );
     }
+    public void resetHeading(){
+        imu.resetYaw();
+    }
 
 
 }

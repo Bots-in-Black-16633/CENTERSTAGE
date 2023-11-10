@@ -94,10 +94,13 @@ public class CompetitionTeleop extends SampleTeleop {
         //Manual Fine adjustent controls
         sliderPos += -1*g2.getLeftY()*.01;
         shoulderPos += -1*g2.getRightY()*.01;
-        wristPos += g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)*.01;
+        wristPos += (g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))*.01;
+        robot.slider.runToPosition(sliderPos);
+        robot.wrist.setPosition(wristPos);
+       robot.shoulder.setPosition(shoulderPos);
 
         robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), g1.getRightX(), 1);
-
+        if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 
         g1.readButtons();
         g2.readButtons();

@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -15,6 +16,7 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 public class Drive extends MecanumDrive implements SubsystemBase {
 
     ColorfulTelemetry t = null;
+    ElapsedTime timer = null;
 
 
     public Drive(HardwareMap hardwareMap, Pose2d startPose) {
@@ -37,6 +39,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         if(t!=null)t.addLine("Target " + Math.toDegrees(targetTheta) + " Robot " + Math.toDegrees(robotTheta) + " Difference " + diffTheta);
         xPow = Math.cos(Math.toRadians(diffTheta))*speed;
         yPow = Math.sin(Math.toRadians(diffTheta))*speed;
+        rotPow = rotPow*speed;
         rotPow = rotPow*speed;
         if(t !=null){
             t.addLine("XPOW: " + xPow);
@@ -79,9 +82,9 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         t.addLine("XPOS: " + pose.position.x);
         t.addLine("YPOS: " + pose.position.y);
         t.addLine("Heading: " +pose.heading.log());
-        t.addLine("perp"+ ((ThreeDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
-        t.addLine("par0"+ ((ThreeDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
-        t.addLine("par1"+ ((ThreeDeadWheelLocalizer)localizer).par1.getPositionAndVelocity().position);
+        t.addLine("perp"+ ((TwoDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
+        //t.addLine("par0"+ ((TwoDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
+        t.addLine("par1"+ ((TwoDeadWheelLocalizer)localizer).par.getPositionAndVelocity().position);
         t.addLine("YAW: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
     }
 
@@ -90,14 +93,51 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         updatePoseEstimate();
     }
 
-    public void resetHeading(){
-        pose = new Pose2d(pose.position.x, pose.position.y, Math.toRadians(90));
-        imu.resetYaw();
-    }
+
 
     public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
     }
+
+    /**
+     * @param motorPowers array containg powers for each of he motors [leftFront, leftBack, rightFront, rightBack]
+     * @param time
+     */
+    public void setPowers(double [] motorPowers, double time){
+        timer = new ElapsedTime();
+        timer.reset();
+        while(timer.seconds()< time){
+            leftFront.setPower(motorPowers[0]);
+            leftBack.setPower(motorPowers[1]);
+            rightFront.setPower(motorPowers[2]);
+            rightBack.setPower(motorPowers[3]);
+        }
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
+    }
+
+    public void forward(double time, double power){
+        setPowers(new double[]{power,power,power,power}, time);
+    }
+    public void backward(double time, double power){
+        setPowers(new double[]{-power,-power,-power,-power}, time);
+    }
+    public void right(double time, double power){
+        setPowers(new double[]{power, -power, -power, power}, time);
+    }
+    public void left(double time, double power){
+        setPowers(new double[]{-power, power, power, -power}, time);
+    }
+
+    public void turnRight(double time, double power){
+        setPowers(new double[]{power, power, -power, -power}, time);
+    }
+    public void turnLeft(double time, double power){
+        setPowers(new double[]{-power, -power, power, power}, time);
+    }
+
 
 
 }
