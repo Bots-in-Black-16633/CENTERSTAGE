@@ -16,6 +16,9 @@ public class Hopper implements SubsystemBase{
     public static final int LEFT_HOPPER =2;
     public static final int ALL = 0;
 
+    boolean leftLocked = false;
+    boolean rightLocked = false;
+
     public Hopper(HardwareMap hwMap){
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
@@ -30,8 +33,23 @@ public class Hopper implements SubsystemBase{
         setPower(type, -Constants.HopperConstants.hopperPower);
     }
     public void setPower(int type, double power){
-        if(type == 0 || type == 1)leftHopper.set(power);
-        if(type == 0 || type == 2)rightHopper.set(power);
+        if(!leftLocked && (type == 0 || type == 1))leftHopper.set(power);
+        if(!rightLocked && (type == 0 || type == 2))rightHopper.set(power);
+    }
+    public void lock(int type){
+        if(type == 0 || type == 1)leftLocked = true;
+        if(type == 0 || type == 2)rightLocked = true;
+    }
+    public void unLock(int type){
+        if(type == 0 || type == 1)leftLocked = false;
+        if(type == 0 || type == 2)rightLocked = false;
+    }
+
+    public boolean isLocked(int type){
+        if(type == 1)return leftLocked;
+        if(type == 2)return rightLocked;
+        else return leftLocked && rightLocked;
+
     }
 
     public void rest(int type){

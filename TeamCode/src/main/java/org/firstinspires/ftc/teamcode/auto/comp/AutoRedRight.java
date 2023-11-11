@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.auto.comp;
 
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
@@ -25,10 +28,8 @@ public class AutoRedRight extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
         robot.autoGenerator.delay(.5);
-        robot.autoGenerator.getZone(zone).run(pen.getPacket());
-        robot.intake.setMode(Intake.OUTTAKE);
-        AutoUtil.delay(.1);
-        robot.intake.setMode(Intake.REST);
+        Actions.runBlocking(getZone(zone));
+        Actions.runBlocking(robot.slowOuttake());
 
     }
 
@@ -36,5 +37,19 @@ public class AutoRedRight extends SampleAuto {
     @Override
     public void onStop() {
 
+    }
+    public Action getZone1(){
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).splineToLinearHeading(new Pose2d(6.00, 35, Math.toRadians(0)), Math.toRadians(-90.00)).build();
+    }
+    public Action getZone2(){
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).lineToY(47).build();
+    }
+    public Action getZone3(){
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).splineToLinearHeading(new Pose2d(14.00, 35, Math.toRadians(180)), Math.toRadians(-90.00)).build();
+    }
+    public Action getZone(int zone){
+        if(zone==1)return getZone1();
+        else if(zone==2)return getZone2();
+        else return getZone3();
     }
 }

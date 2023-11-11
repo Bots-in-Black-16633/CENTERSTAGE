@@ -89,8 +89,7 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
-            AutoUtil.delay(.5);
-            wrist.setPosition(Constants.WristConstants.wristSafeBackToOuttake);
+            AutoUtil.delay(.25);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
 
             AutoUtil.delay(.5);
@@ -114,10 +113,26 @@ public class BaseRobot implements SubsystemBase{
 
     }
 
+    class SlowOuttake implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            hopper.intake(Hopper.ALL);
+            intake.setPower(-2);
+            AutoUtil.delay(2);
+            intake.setMode(Intake.REST);
+            hopper.rest(Hopper.ALL);
+
+            return false;
+        }
+    }
+
     public Action resetToIntake(){
         return new ResetToIntake();
     }
     public Action outtake(){return new Outtake();}
     public Action toTravelingPosition(){return new toTravelingPosition();}
+    public Action slowOuttake(){
+        return new SlowOuttake();
+    }
 
 }

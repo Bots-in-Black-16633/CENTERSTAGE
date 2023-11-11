@@ -27,32 +27,23 @@ public class VisionTester extends SampleAuto {
 
     @Override
     public void onInit() {
-        b = new TeamPropDetector(pen);
-        camera = hardwareMap.get(WebcamName.class, "camera");
-        v = VisionPortal.easyCreateWithDefaults(camera, b);
+        TeamPropDetector.startPropDetection(hardwareMap, pen);
 
 
     }
 
     @Override
     public void onStart() {
-        red = b.getRedBoundingRect();
-        blue = b.getBlueBoundingRect();
-        if(red.x < zone1Border)redZone=1;
-        else if(red.x < zone2Border)redZone=2;
-        else redZone = 3;
-        if(blue.x < zone1Border)blueZone=1;
-        else if(blue.x < zone2Border)blueZone=2;
-        else blueZone = 3;
+        redZone = TeamPropDetector.getRedPropZone();
+        blueZone = TeamPropDetector.getBluePropZone();
 
         //FtcDashboard.getInstance().startCameraStream((CameraStreamSource) b, 0);
         while(!isStopRequested()){
-            red = b.getRedBoundingRect();
-            blue = b.getBlueBoundingRect();
-            pen.addLine("RED: "+red.toString());
-            pen.addLine("BLUE: "+blue.toString());
-            pen.addLine("RED ZONE" + TeamPropDetector.getZone(red.x));
-            pen.addLine("BLUE ZONE" + TeamPropDetector.getZone(blue.x));
+            redZone = TeamPropDetector.getRedPropZone();
+            blueZone = TeamPropDetector.getBluePropZone();
+            pen.addLine("RED ZONE" + redZone);
+            pen.addLine("BLUE ZONE" + blueZone);
+
             pen.update();
         }
 

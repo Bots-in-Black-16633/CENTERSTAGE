@@ -20,7 +20,7 @@ public class CompetitionTeleop extends SampleTeleop {
     double shoulderPos;
     double sliderPos;
     double wristPos;
-    GamepadEx g1;
+    volatile GamepadEx g1;
     GamepadEx g2;
 
 
@@ -31,13 +31,15 @@ public class CompetitionTeleop extends SampleTeleop {
         g1 = new GamepadEx(gamepad1);
         g2 = new GamepadEx(gamepad2);
 
-        shoulderPos = robot.shoulder.getPosition();
-        wristPos = robot.wrist.getPosition();
-        sliderPos = robot.slider.getPosition();
+        shoulderPos = Constants.ShoulderConstants.shoulderRest;
+        wristPos = Constants.WristConstants.wristRest;
+        sliderPos = Constants.SliderConstants.sliderRest;
     }
 
     @Override
     public void onStart() {
+        Thread driveLoop = new Thread(this::runDriveLoop);
+        driveLoop.start();
 
     }
 
@@ -56,53 +58,88 @@ public class CompetitionTeleop extends SampleTeleop {
         }
         if(g2.wasJustPressed(GamepadKeys.Button.X)){
             robot.outtake().run(pen.getPacket());
+            robot.hopper.unLock(Hopper.ALL);
             resetPixelSubsystemTrackingVariables();
         }
         if(g2.wasJustPressed(GamepadKeys.Button.B)){
             robot.shooter.shoot();
         }
 
-        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
+        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)){
             sliderPos += Constants.SliderConstants.backdropRowConstant;
         }
-        else if(g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
+        else if(g2.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)){
             sliderPos -= Constants.SliderConstants.backdropRowConstant;
         }
 
         //HOPPER OUTTAKE
-        if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+        //IF YOU ARE INTAKING AND THE RIGHT BUMPER IS PRESSED
+        if((sliderPos < 100) && g2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
+            if(robot.hopper.isLocked(Hopper.LEFT_HOPPER))robot.hopper.unLock(Hopper.LEFT_HOPPER);
+            else{
+                robot.hopper.rest(Hopper.LEFT_HOPPER);
+                robot.hopper.lock(Hopper.LEFT_HOPPER);
+            }
+
+        }
+        else if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
             robot.hopper.outtake(Hopper.LEFT_HOPPER);
         }
-        else robot.hopper.rest(Hopper.RIGHT_HOPPER);
-        if (g2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+        else if(!(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)||g2.isDown(GamepadKeys.Button.DPAD_LEFT))){robot.hopper.rest(Hopper.LEFT_HOPPER);}
+
+        if((sliderPos < 100) && g2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
+            if(robot.hopper.isLocked(Hopper.RIGHT_HOPPER))robot.hopper.unLock(Hopper.RIGHT_HOPPER);
+            else{
+                robot.hopper.rest(Hopper.RIGHT_HOPPER);
+                robot.hopper.lock(Hopper.RIGHT_HOPPER);
+            }
+        }
+        else if(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
             robot.hopper.outtake(Hopper.RIGHT_HOPPER);
         }
-        else robot.hopper.rest(Hopper.RIGHT_HOPPER);
+        else if(!(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)||g2.isDown(GamepadKeys.Button.DPAD_LEFT))){robot.hopper.rest(Hopper.RIGHT_HOPPER);}
 
         //INTTAKE
-        if(g2.isDown(GamepadKeys.Button.DPAD_UP)){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
-        else if(g2.isDown(GamepadKeys.Button.DPAD_DOWN)){robot.intake.setMode(Intake.OUTTAKE);robot.hopper.outtake(Hopper.ALL);}
+        if(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
+        else if(g2.isDown(GamepadKeys.Button.DPAD_LEFT)){robot.intake.setMode(Intake.OUTTAKE);robot.hopper.outtake(Hopper.ALL);}
         else {
             robot.intake.setMode(Intake.REST);
             if(!g2.isDown(GamepadKeys.Button.RIGHT_BUMPER))robot.hopper.rest(Hopper.RIGHT_HOPPER);
             if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER))robot.hopper.rest(Hopper.LEFT_HOPPER);
         }
 
+        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
+            sliderPos += Constants.SliderConstants.backdropRowConstant;
+            robot.slider.runToPosition(sliderPos);
+        }
+        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
+            sliderPos -= Constants.SliderConstants.backdropRowConstant;
+            robot.slider.runToPosition(sliderPos);
+        }
 
 
 
-        //Manual Fine adjustent controls
-        sliderPos += -1*g2.getLeftY()*.01;
-        shoulderPos += -1*g2.getRightY()*.01;
-        wristPos += (g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))*.01;
-        robot.slider.runToPosition(sliderPos);
-        robot.wrist.setPosition(wristPos);
-       robot.shoulder.setPosition(shoulderPos);
 
-        robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), g1.getRightX(), 1);
-        if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 
-        g1.readButtons();
+
+//        //Manual Fine adjustent controls
+        if(Math.abs(g2.getLeftY())>.01){
+            sliderPos += g2.getLeftY()*10;
+            robot.slider.runToPosition(sliderPos);
+        }
+        if(Math.abs(g2.getRightY())>.01){
+            shoulderPos += -1*g2.getRightY()*.01;
+            robot.shoulder.setPosition(shoulderPos);
+
+        }
+        if(Math.abs((g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)))>.01){
+            wristPos += (g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))*.01;
+            robot.wrist.setPosition(wristPos);
+        }
+        telemetry.addLine("TRIGGERS: " + Math.abs((g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
+
+
+
         g2.readButtons();
     }
 
@@ -115,5 +152,15 @@ public class CompetitionTeleop extends SampleTeleop {
         wristPos = robot.wrist.getPosition();
         shoulderPos = robot.shoulder.getPosition();
         sliderPos = robot.slider.getPosition();
+    }
+    public void runDriveLoop(){
+        while(true){
+            robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), 1-(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)*.5));
+            if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
+
+            g1.readButtons();
+        }
+
+
     }
 }

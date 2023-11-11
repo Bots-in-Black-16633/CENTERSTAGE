@@ -55,19 +55,19 @@ public class AutoUtil {
 
     }
 
-    public Action getZone1(){
-        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?1:-1)*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00)).build();
-    }
-    public Action getZone2(){
-        return drive.actionBuilder(startPose).lineToY((sideColor==BLUESIDE?1:-1)*36.29).build();
-    }
-    public Action getZone3(){
-        return drive.actionBuilder(startPose).splineToLinearHeading(new Pose2d(12.00, (sideColor==BLUESIDE?1:-1)*36.29, Math.toRadians(210)), Math.toRadians(-90.00)).build();
-    }
-    public Action getZone(int zone){
-        if(zone==1)return getZone1();
-        else if(zone==2)return getZone2();
-        else return getZone3();
+
+//    public Action getBlueToBackdrop(int zone){
+//       return drive.actionBuilder(getZone(zone))
+//
+//                .splineToLinearHeading(new Pose2d(12.00, 1*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00))
+//                .lineToY(67.42)
+//                .splineToLinearHeading(new Pose2d(51.95, 36.67, Math.toRadians(1.97)), Math.toRadians(-37.34)).build();
+//    }
+    public Action getRedToBackdrop(){
+        return drive.actionBuilder(new Pose2d(12.00, -71.5, Math.toRadians(90)))
+                .splineToLinearHeading(new Pose2d(12.00, -1*36.29, Math.toRadians(45)), Math.toRadians(90))
+                .lineToY( -67.42)
+                .splineToLinearHeading(new Pose2d(51.95, -36.67, Math.toRadians(1.97)), Math.toRadians(0)).build();
     }
 
     public static void delay(double t) {

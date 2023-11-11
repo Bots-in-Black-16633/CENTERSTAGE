@@ -13,6 +13,7 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -56,6 +57,12 @@ public class TeamPropDetector implements VisionProcessor {
     public static WebcamName camera;
     public static TeamPropDetector propDetector;
 
+    public static double redXPos = 0;
+    public static double blueXPos = 0;
+
+    public static double redXTimesAveraged = 0;
+    public static double blueXTimesAveraged = 0;
+
 
 
 
@@ -77,43 +84,58 @@ public class TeamPropDetector implements VisionProcessor {
 
         // TO -DO Dilate the image to fill in the spots in the found white area. Little hard to explain. Watch this video https://www.youtube.com/watch?v=7-FZBgrW4RE
         Imgproc.dilate(hsvThresholdOutputRed, dilationOutputRed,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3)));
-        Imgproc.dilate(hsvThresholdOutputBlue, dilationOutputBlue,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_CROSS, new Size(3,3)));
+        Imgproc.dilate(hsvThresholdOutputBlue, dilationOutputBlue,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3)));
 
         Core.bitwise_or(dilationOutputBlue, dilationOutputRed, frame);
 
-//            double redXPos = getAvergageWhitPixXPos(dilationOutputBlue);
-//            double blueXPos = getAvergageWhitPixXPos(dilationOutputRed);
-//            telemetry.addLine("REDXPOS: " + redXPos);
-//            telemetry.addLine("BLUEXPOS: " + blueXPos);
-//            telemetry.addLine();
-     //    Find Contours
-        findContours(dilationOutputRed, contoursRed);
-        findContours(dilationOutputBlue, contoursBlue);
+        double curRedX = getAvergageWhitePixelXPos(dilationOutputRed);
+        double curBlueX = getAvergageWhitePixelXPos(dilationOutputBlue);
 
-        //draw the contours
-        Imgproc.drawContours(frame, contoursRed,-1,new Scalar(50,50,50));
-        Imgproc.drawContours(frame, contoursBlue,-1,new Scalar(50,50,50));
+        if(!Double.isNaN(curRedX)){
+            redXPos = (redXPos * (redXTimesAveraged/(redXTimesAveraged+1))) + (curRedX* (1/(redXTimesAveraged+1)));
+            redXTimesAveraged++;
+        }
+        if(!Double.isNaN(curBlueX)){
+            blueXPos = (blueXPos * (blueXTimesAveraged/(blueXTimesAveraged+1))) + (curBlueX* (1/(blueXTimesAveraged+1)));
+            blueXTimesAveraged++;
+        }
 
+        telemetry.addLine("REDXPOS: " + redXPos);
+        telemetry.addLine("CURREDX" + curRedX);
+        telemetry.addLine("BLUEXPOS: " + blueXPos);
+        telemetry.addLine();
+        telemetry.update();
+        Imgproc.line(frame, new Point(redXPos, 0), new Point(redXPos, frame.rows()-1), new Scalar(255,255,255));
+        Imgproc.line(frame, new Point(blueXPos, 0), new Point(blueXPos, frame.rows()-1), new Scalar(255,255,255));
 
-        //Filter Contours
-        filterContours(contoursRed, frame, contoursOutputRed);
-        filterContours(contoursBlue, frame, contoursOutputBlue);
+        //    Find Contours
+//        findContours(dilationOutputRed, contoursRed);
+//        findContours(dilationOutputBlue, contoursBlue);
+//
+//        //draw the contours
+//        Imgproc.drawContours(frame, contoursRed,-1,new Scalar(50,50,50));
+//        Imgproc.drawContours(frame, contoursBlue,-1,new Scalar(50,50,50));
+//
+//
+//        //Filter Contours
+//        filterContours(contoursRed, frame, contoursOutputRed);
+//        filterContours(contoursBlue, frame, contoursOutputBlue);
 
 
 
 
        // Find Rectangle which covers all the Contours
-        if(contoursOutputBlue.size() >0 && contoursOutputRed.size() > 0){
-            addToAverage(Imgproc.boundingRect(contoursOutputRed.get(0)),Imgproc.boundingRect(contoursOutputBlue.get(0)));
-            Imgproc.rectangle(frame, Imgproc.boundingRect(contoursOutputRed.get(0)), new Scalar(90,90,90));
-            Imgproc.rectangle(frame, Imgproc.boundingRect(contoursOutputBlue.get(0)), new Scalar(90,90,90));
-
-            Imgproc.rectangle(frame, blueUnionRect, new Scalar(255,0,0));
-            Imgproc.rectangle(frame, redUnionRect, new Scalar(255,0,0));
-            telemetry.addLine("NEW BLUE: " + Imgproc.boundingRect(contoursOutputBlue.get(0)).toString());
-            telemetry.addLine("NEW RED: " + Imgproc.boundingRect(contoursOutputRed.get(0)).toString());
-
-        }
+//        if(contoursOutputBlue.size() >0 && contoursOutputRed.size() > 0){
+//            addToAverage(Imgproc.boundingRect(contoursOutputRed.get(0)),Imgproc.boundingRect(contoursOutputBlue.get(0)));
+//            Imgproc.rectangle(frame, Imgproc.boundingRect(contoursOutputRed.get(0)), new Scalar(90,90,90));
+//            Imgproc.rectangle(frame, Imgproc.boundingRect(contoursOutputBlue.get(0)), new Scalar(90,90,90));
+//
+//            Imgproc.rectangle(frame, blueUnionRect, new Scalar(255,0,0));
+//            Imgproc.rectangle(frame, redUnionRect, new Scalar(255,0,0));
+//            telemetry.addLine("NEW BLUE: " + Imgproc.boundingRect(contoursOutputBlue.get(0)).toString());
+//            telemetry.addLine("NEW RED: " + Imgproc.boundingRect(contoursOutputRed.get(0)).toString());
+//
+//        }
 
 
         return null;
@@ -213,7 +235,6 @@ public class TeamPropDetector implements VisionProcessor {
         telemetry.addLine("TIME AVG:" + timesAveraged);
         telemetry.addLine("AVG BLUE: " + blueUnionRect.toString());
         telemetry.addLine("AVG Red: " + redUnionRect.toString());
-        telemetry.update();
     }
 
 //    public double getAvergageWhitPixXPos(Mat binaryMat){
@@ -246,16 +267,15 @@ public class TeamPropDetector implements VisionProcessor {
 
     }
     public static int getRedPropZone(){
-        double pos = propDetector.getRedBoundingRect().x;
 
-        if(pos < ZONE1EDGE)return 1;
-        else if(pos < ZONE2EDGE)return 2;
+        if(redXPos < ZONE1EDGE)return 1;
+        else if(redXPos < ZONE2EDGE)return 2;
         else return 3;
     }
     public static int getBluePropZone(){
-        double pos = propDetector.getBlueBoundingRect().x;
-        if(pos < ZONE1EDGE)return 1;
-        else if(pos < ZONE2EDGE)return 2;
+
+        if(blueXPos < ZONE1EDGE)return 1;
+        else if(blueXPos < ZONE2EDGE)return 2;
         else return 3;
     }
     public static int getZone(double xPOs){
@@ -267,6 +287,39 @@ public class TeamPropDetector implements VisionProcessor {
 
     public static void endPropDetection(){
         portal.close();
+    }
+
+    public double getAvergageWhitePixelXPos(Mat binaryMat){
+        double average = 0;
+        double timesAveraged = 1;
+        for(int i = 0; i < binaryMat.cols(); i++){
+            double numWhitePixelsInColumn = getGreatestNumContinousWhitePixels(binaryMat, i);
+            if(numWhitePixelsInColumn < 20)continue;
+            double curAverage = average*(timesAveraged/(timesAveraged+numWhitePixelsInColumn));
+            double addAverage = i* (numWhitePixelsInColumn/(numWhitePixelsInColumn+timesAveraged));
+            average = curAverage + addAverage;
+            timesAveraged = timesAveraged + numWhitePixelsInColumn;
+        }
+
+        return average;
+    }
+
+    public double getGreatestNumContinousWhitePixels(Mat binaryMatColumn, int col){
+        double greatestNumContinous = 0;
+        double curNumContinous = 0;
+        for(int i = 0; i < binaryMatColumn.rows(); i++){
+            double val = binaryMatColumn.get(i,col)[0];
+
+            if(val == 255)greatestNumContinous++;
+            if(val !=255)curNumContinous=0;
+
+            if(curNumContinous > greatestNumContinous){
+                greatestNumContinous = curNumContinous;
+            }
+
+        }
+        return greatestNumContinous;
+
     }
 
 

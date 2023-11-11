@@ -8,16 +8,16 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(800);
+        MeepMeep meepMeep = new MeepMeep(400);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(12.00, 71.5, Math.toRadians(270)))
-                                .splineToLinearHeading(new Pose2d(12.00, 1*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00)).build()
-
-
+                        drive.trajectorySequenceBuilder(new Pose2d(12.00, 71.5, Math.toRadians(90)))
+                                .splineToLinearHeading(new Pose2d(12.00, 36.29, Math.toRadians(45)), Math.toRadians(90))
+                                .lineTo(new Vector2d(12, 67.42))
+                                .splineToLinearHeading(new Pose2d(51.95, 36.67, Math.toRadians(1.97)), Math.toRadians(0)).build()
 
                 );
 

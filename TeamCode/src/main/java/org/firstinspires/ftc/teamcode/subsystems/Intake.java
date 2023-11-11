@@ -25,6 +25,9 @@ public class Intake implements SubsystemBase{
         else if(mode == OUTTAKE)intake.setPower(-Constants.IntakeConstants.intakePower);
         else if(mode == REST)intake.setPower(0);
     }
+    public void setPower(double power){
+        intake.setPower(power);
+    }
 
 
     @Override

@@ -31,7 +31,7 @@ public final class Constants{
 
         public static double sliderSafeBackToOuttake = 300;
 
-        public static double backdropRowConstant = 100;
+        public static double backdropRowConstant = 200;
     }
     @Config
     public static final class ShoulderConstants{
@@ -51,7 +51,7 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .694;
+        public static double wristRest = .622;
         public static double wristTraveling = 0;
         public static double wristOuttake = .49;
 
@@ -73,7 +73,7 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold = .8;
+        public static double shooterHold = .6;
         public static double shooterRelease = 1;
 
     }
