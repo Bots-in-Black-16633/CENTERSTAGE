@@ -23,10 +23,10 @@ public class AutoUtil {
      *
      *                     270 degrees
      */
-    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -71.5, Math.toRadians(90));
-    public static  Pose2d REDLEFTSTART = new Pose2d(-12.00, -71.5, Math.toRadians(90));
-    public static  Pose2d BLUERIGHTSTART = new Pose2d(-12.00, 71.5, Math.toRadians(270));
-    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 71.5, Math.toRadians(270));
+    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(90));
+    public static  Pose2d REDLEFTSTART = new Pose2d(-36, -63, Math.toRadians(90));
+    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 62.5, Math.toRadians(270));
+    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 62.5, Math.toRadians(270));
 
 
     public static final int BLUESIDE =0;
