@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
@@ -83,11 +84,17 @@ public class TeamPropDetector implements VisionProcessor {
         hsvThreshold(frame, redLower, redUpper, hsvThresholdOutputRed);
 
         // TO -DO Dilate the image to fill in the spots in the found white area. Little hard to explain. Watch this video https://www.youtube.com/watch?v=7-FZBgrW4RE
-        Imgproc.dilate(hsvThresholdOutputRed, dilationOutputRed,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3)));
-        Imgproc.dilate(hsvThresholdOutputBlue, dilationOutputBlue,Imgproc.getStructuringElement(Imgproc.CV_SHAPE_RECT, new Size(3,3)));
+        Imgproc.erode(hsvThresholdOutputRed, dilationOutputRed, Mat.ones(15,15, CvType.CV_8U));
+
+        Imgproc.erode(hsvThresholdOutputBlue, dilationOutputBlue, Mat.ones(15,15, CvType.CV_8U));
+        Imgproc.dilate(dilationOutputBlue, dilationOutputBlue,Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
+        Imgproc.dilate(dilationOutputRed, dilationOutputRed,Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(10, 10)));
+
+
+
+
 
         Core.bitwise_or(dilationOutputBlue, dilationOutputRed, frame);
-
         double curRedX = getAvergageWhitePixelXPos(dilationOutputRed);
         double curBlueX = getAvergageWhitePixelXPos(dilationOutputBlue);
 
@@ -102,11 +109,14 @@ public class TeamPropDetector implements VisionProcessor {
 
         telemetry.addLine("REDXPOS: " + redXPos);
         telemetry.addLine("CURREDX" + curRedX);
+        telemetry.addLine("CUrBlueX" + curBlueX);
         telemetry.addLine("BLUEXPOS: " + blueXPos);
-        telemetry.addLine();
-        telemetry.update();
+        telemetry.addLine("BZONE: " + TeamPropDetector.getBluePropZone());
+        telemetry.addLine("RZONE: " + TeamPropDetector.getRedPropZone());
+
         Imgproc.line(frame, new Point(redXPos, 0), new Point(redXPos, frame.rows()-1), new Scalar(255,255,255));
         Imgproc.line(frame, new Point(blueXPos, 0), new Point(blueXPos, frame.rows()-1), new Scalar(255,255,255));
+        telemetry.update();
 
         //    Find Contours
 //        findContours(dilationOutputRed, contoursRed);
@@ -294,6 +304,7 @@ public class TeamPropDetector implements VisionProcessor {
         double timesAveraged = 1;
         for(int i = 0; i < binaryMat.cols(); i++){
             double numWhitePixelsInColumn = getGreatestNumContinousWhitePixels(binaryMat, i);
+
             if(numWhitePixelsInColumn < 20)continue;
             double curAverage = average*(timesAveraged/(timesAveraged+numWhitePixelsInColumn));
             double addAverage = i* (numWhitePixelsInColumn/(numWhitePixelsInColumn+timesAveraged));

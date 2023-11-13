@@ -46,6 +46,7 @@ public class VisionTester extends SampleAuto {
 
             pen.update();
         }
+        TeamPropDetector.endPropDetection();
 
     }
 

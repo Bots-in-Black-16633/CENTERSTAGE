@@ -37,6 +37,7 @@ public class Slider implements SubsystemBase{
 
     }
 
+
     public void reset(){
         leftSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

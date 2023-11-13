@@ -25,7 +25,7 @@ public final class Constants{
 
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
-        public static double sliderOuttake = 1688;
+        public static double sliderOuttake = 1200;//1688
 
         public static double sliderSafeBackToIntake = 300;
 
@@ -40,7 +40,7 @@ public final class Constants{
 
         public static double shoulderRest = .147;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = .444;
+        public static double shoulderOuttake = .35;//.444
 
         public static double shoulderSafeBackToIntake = .11;
 

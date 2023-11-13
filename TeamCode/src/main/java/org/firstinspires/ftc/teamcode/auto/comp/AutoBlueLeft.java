@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 public class AutoBlueLeft extends SampleAuto {
     BaseRobot robot;
     int zone;
-    double backdropDropOffY = 0;
+    double backDropY = 0;
     double firstEndAngle = 270;
     @Override
     public void onInit() {
@@ -30,25 +30,30 @@ public class AutoBlueLeft extends SampleAuto {
     @Override
     public void onStart() {
         zone = 2;
-        if(zone ==1){backdropDropOffY=36;firstEndAngle=180;}
-        else if(zone ==2){backdropDropOffY=32;firstEndAngle=270;}
-        else{backdropDropOffY=25;firstEndAngle=0;}
+        if(zone ==1){backDropY=36;}
+        else if(zone ==2){backDropY=32;}
+        else{backDropY=25;}
         TeamPropDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
         AutoUtil.delay(1);
         Actions.runBlocking(getZone(zone));
-        robot.slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
-        AutoUtil.delay(1);
+       // robot.slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+        //AutoUtil.delay(1);
         Actions.runBlocking(robot.slowOuttake());
         AutoUtil.delay(1);
-        Actions.runBlocking(robot.drive.actionBuilder(new Pose2d(12,50, Math.toRadians(firstEndAngle))).splineToConstantHeading(new Vector2d(12, 60), Math.toRadians(firstEndAngle)).splineToConstantHeading(new Vector2d(35,60), Math.toRadians(270)).splineToLinearHeading(new Pose2d(50, backdropDropOffY, Math.toRadians(180)), Math.toRadians(-90)).splineToConstantHeading(new Vector2d(58, backdropDropOffY), Math.toRadians(180)).build());
-        Actions.runBlocking(robot.outtake());
-        robot.hopper.outtake(Hopper.ALL);
-        AutoUtil.delay(1);
-        robot.hopper.rest(Hopper.ALL);
-
-        Actions.runBlocking(robot.resetToIntake());
+//        Actions.runBlocking(robot.drive.actionBuilder(robot.drive.pose)
+//                        .splineToConstantHeading(new Vector2d(12, 55), robot.drive.pose.heading)
+//                .splineToConstantHeading(new Vector2d(12, 60), robot.drive.pose.heading)
+//                .splineToLinearHeading(new Pose2d(35,50, robot.drive.pose.heading.log()), Math.toRadians(0))
+//                .splineToLinearHeading(new Pose2d(50, backDropY, Math.toRadians(180)), Math.toRadians(0))
+//                .splineToLinearHeading(new Pose2d(58, backDropY, Math.toRadians(180)), Math.toRadians(0)).build());
+//        Actions.runBlocking(robot.outtake());
+//        robot.hopper.outtake(Hopper.ALL);
+//        AutoUtil.delay(1);
+//        robot.hopper.rest(Hopper.ALL);
+//
+//        Actions.runBlocking(robot.resetToIntake());
     }
 
 
@@ -57,13 +62,13 @@ public class AutoBlueLeft extends SampleAuto {
 
     }
     public Action getZone1(){
-        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).splineToLinearHeading(new Pose2d(6.00, 35, Math.toRadians(0)), Math.toRadians(-90.00)).build();
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).lineToX(14).lineToY(55).build();
     }
     public Action getZone2(){
-        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).lineToY(50).build();
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).lineToY(42).build();
     }
     public Action getZone3(){
-        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).splineToLinearHeading(new Pose2d(14.00, 35, Math.toRadians(180)), Math.toRadians(-90.00)).build();
+        return robot.drive.actionBuilder(AutoUtil.BLUELEFTSTART).lineToY(55).lineToX(10).build();
     }
     public Action getZone(int zone){
         if(zone==1)return getZone1();
