@@ -19,7 +19,7 @@ public class AutoRedRightBackdrop extends SampleAuto {
     @Override
     public void onInit() {
         robot  = new BaseRobot(hardwareMap, AutoUtil.REDRIGHTSTART);
-        TeamPropDetector.startPropDetection(hardwareMap, pen);
+        TeamPropDetector.startPropDetection(robot.camera, pen);
     }
     double backDropY = 0;
     double firstEndAngle = 270;

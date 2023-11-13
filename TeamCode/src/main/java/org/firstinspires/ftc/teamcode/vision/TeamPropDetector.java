@@ -270,9 +270,9 @@ public class TeamPropDetector implements VisionProcessor {
      * Static Methods
      */
 
-    public static void startPropDetection(HardwareMap hwMap, ColorfulTelemetry pen){
+    public static void startPropDetection(WebcamName camera, ColorfulTelemetry pen){
          propDetector = new TeamPropDetector(pen);
-        camera = hwMap.get(WebcamName.class, "camera");
+        TeamPropDetector.camera = camera;
          portal = VisionPortal.easyCreateWithDefaults(camera, propDetector);
 
     }

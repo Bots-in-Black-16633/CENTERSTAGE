@@ -21,7 +21,7 @@ public class AutoBlueLeftBackdrop extends SampleAuto {
     @Override
     public void onInit() {
         robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART);
-        TeamPropDetector.startPropDetection(hardwareMap, pen);
+        TeamPropDetector.startPropDetection(robot.camera, pen);
     }
 
     @Override

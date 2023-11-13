@@ -7,13 +7,17 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Const;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +32,7 @@ public class BaseRobot implements SubsystemBase{
    public Climber climber;
     public Drive drive;
     public Shooter shooter;
+    public WebcamName camera;
 
     public AutoUtil autoGenerator;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
@@ -40,6 +45,7 @@ public class BaseRobot implements SubsystemBase{
         shooter = new Shooter(hwMap);
         slider = new Slider(hwMap);
         autoGenerator = new AutoUtil(drive);
+        camera = hwMap.get(WebcamName.class, "camera");
 
 
         addSubsystems(intake,  drive, hopper, shoulder, wrist, slider);
@@ -122,6 +128,41 @@ public class BaseRobot implements SubsystemBase{
             intake.setMode(Intake.REST);
             hopper.rest(Hopper.ALL);
 
+            return false;
+        }
+    }
+
+    class DriveToAprilTag implements Action{
+        int id = 0;
+        final int DESIRED_DISTANCE = 12;
+        AprilTagDetection tag;
+        final double SPEED_GAIN  =  0.02  ;   //  Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
+        final double STRAFE_GAIN =  0.015 ;   //  Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
+        final double TURN_GAIN   =  0.01  ;
+
+        public void setId(int i){this.id = i;}
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            AprilTagProcessorWrapper.startAprilTagDetection(camera);
+            while(true){
+                tag = AprilTagProcessorWrapper.getAprilTagInfo(id);
+                if(tag != null){
+                    double  rangeError      = (tag.ftcPose.range - DESIRED_DISTANCE);
+                    double  headingError    = tag.ftcPose.bearing;
+                    double  yawError        = tag.ftcPose.yaw;
+                    double forward, turn, strafe;
+
+
+                    if(Math.abs(rangeError) < .5)break;
+                    // Use the speed and turn "gains" to calculate how we want the robot to move.
+                    forward  = Range.clip(rangeError * SPEED_GAIN, -1, 1);
+                    turn   = Range.clip(headingError * TURN_GAIN, -1, 1) ;
+                    strafe = Range.clip(-yawError * STRAFE_GAIN, -1, 1);
+                    drive.drive(forward, strafe, turn);
+                }
+
+            }
             return false;
         }
     }
