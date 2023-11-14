@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 @Config
 public class AutoUtil {
-
+//Hi Cole! -Russ
     //Field is 12ft by 12 ft; Grid looks like this
 
     /**              72 in 90 degrees
