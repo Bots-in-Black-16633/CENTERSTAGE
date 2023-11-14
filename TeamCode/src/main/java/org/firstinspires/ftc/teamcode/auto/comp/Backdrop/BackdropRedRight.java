@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto.comp;
+package org.firstinspires.ftc.teamcode.auto.comp.Backdrop;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -12,8 +12,8 @@ import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 
-@Autonomous
-public class AutoRedRightBackdrop extends SampleAuto {
+@Autonomous(group="backdrop")
+public class BackdropRedRight extends SampleAuto {
     BaseRobot robot;
     int zone;
     @Override

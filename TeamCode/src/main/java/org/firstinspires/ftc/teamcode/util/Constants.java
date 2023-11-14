@@ -73,8 +73,8 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold = .6;
-        public static double shooterRelease = 1;
+        public static double shooterHold =0;
+        public static double shooterRelease = .75;
 
     }
     public static final class AprilTagConstants {

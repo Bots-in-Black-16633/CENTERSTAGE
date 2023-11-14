@@ -24,9 +24,9 @@ public class AutoUtil {
      *                     270 degrees
      */
     public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(90));
-    public static  Pose2d REDLEFTSTART = new Pose2d(-36, -63, Math.toRadians(90));
-    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 62.5, Math.toRadians(270));
-    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 62.5, Math.toRadians(270));
+    public static  Pose2d REDLEFTSTART = new Pose2d(-36.00, -63, Math.toRadians(90));
+    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 63, Math.toRadians(270));
+    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 63, Math.toRadians(270));
 
 
     public static final int BLUESIDE =0;
@@ -56,19 +56,8 @@ public class AutoUtil {
     }
 
 
-//    public Action getBlueToBackdrop(int zone){
-//       return drive.actionBuilder(getZone(zone))
-//
-//                .splineToLinearHeading(new Pose2d(12.00, 1*36.29, Math.toRadians(-30.00)), Math.toRadians(-90.00))
-//                .lineToY(67.42)
-//                .splineToLinearHeading(new Pose2d(51.95, 36.67, Math.toRadians(1.97)), Math.toRadians(-37.34)).build();
-//    }
-    public Action getRedToBackdrop(){
-        return drive.actionBuilder(new Pose2d(12.00, -71.5, Math.toRadians(90)))
-                .splineToLinearHeading(new Pose2d(12.00, -1*36.29, Math.toRadians(45)), Math.toRadians(90))
-                .lineToY( -67.42)
-                .splineToLinearHeading(new Pose2d(51.95, -36.67, Math.toRadians(1.97)), Math.toRadians(0)).build();
-    }
+
+
 
     public static void delay(double t) {
         ElapsedTime runtime = new ElapsedTime();
