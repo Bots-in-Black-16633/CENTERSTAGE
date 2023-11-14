@@ -85,12 +85,11 @@ import java.util.concurrent.TimeUnit;
  *
  */
 
-@TeleOp(name="Omni Drive To AprilTag", group = "Concept")
-@Disabled
+@TeleOp(name="AprilTagDriveTo", group = "Concept")
 public class AprilTagDriveTest extends LinearOpMode
 {
     // Adjust these numbers to suit your robot.
-    final double DESIRED_DISTANCE = 12.0; //  this is how close the camera should get to the target (inches)
+    final double DESIRED_DISTANCE = 1.0; //  this is how close the camera should get to the target (inches)
 
     //  Set the GAIN constants to control the relationship between the measured position error, and how much power is
     //  applied to the drive motors to correct the error.
@@ -207,7 +206,7 @@ public class AprilTagDriveTest extends LinearOpMode
             telemetry.update();
 
             // Apply desired axes motions to the drivetrain.
-            moveRobot(drive, strafe, turn);
+            moveRobot(-drive, -strafe, turn);
             sleep(10);
         }
     }

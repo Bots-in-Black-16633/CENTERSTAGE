@@ -27,7 +27,6 @@ public class TeamPropPartitionDetector implements VisionProcessor {
     Mat hsvThresholdOutputRed = new Mat();
     Mat hsvThresholdOutputBlue = new Mat();
 
-
     Mat dilationOutputRed = new Mat();
     Mat dilationOutputBlue = new Mat();
 
@@ -53,7 +52,7 @@ public class TeamPropPartitionDetector implements VisionProcessor {
 
     public static VisionPortal portal;
     public static WebcamName camera;
-    public static TeamPropDetector propDetector;
+    public static TeamPropPartitionDetector propDetector;
 
 
 
@@ -69,7 +68,6 @@ public class TeamPropPartitionDetector implements VisionProcessor {
 
     }
 
-    @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
 
         //Convert Color Scheme to HSV and threshold it using an uppre and lower HSV value, turning everything not in the range to black and everything in the range to white
@@ -89,10 +87,27 @@ public class TeamPropPartitionDetector implements VisionProcessor {
 
         Core.bitwise_or(dilationOutputBlue, dilationOutputRed, frame);
 
-        blueLeftFrame = Core.sumElems(dilationOutputBlue.submat(0,dilationOutputBlue.rows(),0,ZONE1EDGE)).val[0];
-        blueMidFrame = Core.sumElems(dilationOutputBlue.submat(0, dilationOutputBlue.rows(), ZONE1EDGE,ZONE2EDGE)).val[0];
-        blueRightFrame = Core.sumElems(dilationOutputBlue.submat(0, dilationOutputBlue.rows(), ZONE2EDGE, dilationOutputBlue.cols())).val[0];
 
+        blueLeftFrame = Core.sumElems(dilationOutputBlue.submat(0,dilationOutputBlue.rows()-1,0,ZONE1EDGE)).val[0];
+        blueMidFrame = Core.sumElems(dilationOutputBlue.submat(0, dilationOutputBlue.rows()-1, ZONE1EDGE,ZONE2EDGE)).val[0];
+        blueRightFrame = Core.sumElems(dilationOutputBlue.submat(0, dilationOutputBlue.rows()-1, ZONE2EDGE, dilationOutputBlue.cols()-1)).val[0];
+
+        redLeftFrame = Core.sumElems(dilationOutputRed.submat(0,dilationOutputRed.rows()-1,0,ZONE1EDGE)).val[0];
+        redMidFrame = Core.sumElems(dilationOutputRed.submat(0, dilationOutputRed.rows()-1, ZONE1EDGE,ZONE2EDGE)).val[0];
+        redRightFrame = Core.sumElems(dilationOutputRed.submat(0, dilationOutputRed.rows()-1, ZONE2EDGE, dilationOutputRed.cols()-1)).val[0];
+
+
+
+        Imgproc.rectangle(frame, new Rect(0, 0, ZONE1EDGE, frame.rows()), new Scalar(255,255,255));
+        Imgproc.rectangle(frame, new Rect(ZONE1EDGE, 0, ZONE2EDGE-ZONE1EDGE, frame.rows()), new Scalar(255,255,255));
+
+        telemetry.addLine("leftFrame: " + blueLeftFrame);
+        telemetry.addLine("MidFrame:" + blueMidFrame);
+        telemetry.addLine("RightFrame:" + blueRightFrame);
+        telemetry.addLine("leftFrame: " + redLeftFrame);
+        telemetry.addLine("MidFrame:" + redMidFrame);
+        telemetry.addLine("RightFrame:" + redRightFrame);
+        telemetry.update();
 
         return null;
     }
@@ -115,8 +130,8 @@ public class TeamPropPartitionDetector implements VisionProcessor {
      */
 
     public static void startPropDetection(WebcamName camera, ColorfulTelemetry pen){
-        propDetector = new TeamPropDetector(pen);
-        TeamPropDetector.camera = camera;
+        propDetector = new TeamPropPartitionDetector(pen);
+        TeamPropPartitionDetector.camera = camera;
         portal = VisionPortal.easyCreateWithDefaults(camera, propDetector);
 
     }

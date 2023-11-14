@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
 
-@Autonomous
+@Autonomous(name="CameraStream", group="tester")
 public class CameraStream extends SampleAuto {
     WebcamName camera;
     VisionPortal portal;

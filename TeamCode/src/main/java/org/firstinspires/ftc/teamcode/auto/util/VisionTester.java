@@ -16,8 +16,7 @@ public class VisionTester extends SampleAuto {
 
     TeamPropDetector b;
     VisionPortal v;
-    Rect red;
-    Rect blue;
+
     WebcamName camera;
 
     public static final double zone1Border = 200;
@@ -27,7 +26,7 @@ public class VisionTester extends SampleAuto {
 
     @Override
     public void onInit() {
-        TeamPropDetector.startPropDetection(hardwareMap, pen);
+        TeamPropDetector.startPropDetection(hardwareMap.get(WebcamName.class, "camera"), pen);
 
 
     }
