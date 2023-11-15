@@ -25,11 +25,11 @@ public final class Constants{
 
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
-        public static double sliderOuttake = 1200;//1688
+        public static double sliderOuttake = 1036;//outtke row1
 
         public static double sliderSafeBackToIntake = 300;
 
-        public static double sliderSafeBackToOuttake = 300;
+        public static double sliderSafeBackToOuttake = 728;
 
         public static double backdropRowConstant = 200;
     }
@@ -40,11 +40,11 @@ public final class Constants{
 
         public static double shoulderRest = .147;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = .35;//.444
+        public static double shoulderOuttake = .335;//.444
 
-        public static double shoulderSafeBackToIntake = .11;
+        public static double shoulderSafeBackToIntake = .104;
 
-        public static double shoulderSafeBackToOuttake = .11;
+        public static double shoulderSafeBackToOuttake = .104;
     }
     @Config
     public static final class WristConstants{

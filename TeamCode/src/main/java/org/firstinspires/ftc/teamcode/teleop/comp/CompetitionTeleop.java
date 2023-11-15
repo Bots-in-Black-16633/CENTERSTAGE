@@ -24,6 +24,9 @@ public class CompetitionTeleop extends SampleTeleop {
     double wristPos;
     volatile GamepadEx g1;
     GamepadEx g2;
+    Thread driveLoop;
+
+    volatile boolean volStopRequested = false;
 
 
 
@@ -40,7 +43,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
     @Override
     public void onStart() {
-        Thread driveLoop = new Thread(this::runDriveLoop);
+        driveLoop = new Thread(this::runDriveLoop);
         driveLoop.start();
 
     }
@@ -147,7 +150,14 @@ public class CompetitionTeleop extends SampleTeleop {
 
     @Override
     public void onStop() {
+        volStopRequested = true;
+        try{
+            driveLoop.join();
 
+        }
+        catch(InterruptedException e){
+
+        }
     }
 
     private void resetPixelSubsystemTrackingVariables(){
@@ -158,8 +168,8 @@ public class CompetitionTeleop extends SampleTeleop {
     public void runDriveLoop(){
         AprilTagProcessorWrapper.startAprilTagDetection(robot.camera);
         double[] suggestedPowers;
-        while(true){
-            if(g1.isDown(GamepadKeys.Button.DPAD_LEFT)){
+        while(!volStopRequested){
+           /** if(g1.isDown(GamepadKeys.Button.DPAD_LEFT)){
                 if(AprilTagProcessorWrapper.getSuggestedPower(1) !=null){
                     suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1);
                     robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
@@ -189,7 +199,8 @@ public class CompetitionTeleop extends SampleTeleop {
                     robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
                 }
             }
-            else robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), 1-(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)*.5));
+            else**/ robot.drive.drive(g1.getLeftX(),g1.getLeftY(), -g1.getRightX());
+           // else robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), 1-(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)*.5));
             if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 
             g1.readButtons();
