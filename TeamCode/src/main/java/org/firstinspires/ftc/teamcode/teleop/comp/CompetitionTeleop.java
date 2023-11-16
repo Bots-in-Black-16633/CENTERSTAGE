@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Const;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Climber;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.subsystems.Wrist;
@@ -52,10 +53,10 @@ public class CompetitionTeleop extends SampleTeleop {
     public void onLoop() {
 
         //Switch betw
-//        if(g2.wasJustPressed(GamepadKeys.Button.A)){
-//            robot.toTravelingPosition().run(pen.getPacket());
-//            resetPixelSubsystemTrackingVariables();
-//        }
+        if(g2.wasJustPressed(GamepadKeys.Button.A)){
+            robot.highOuttake().run(pen.getPacket());
+            resetPixelSubsystemTrackingVariables();
+        }
         //If the Y button is pressed the robot should go back to intake position
         if(g2.wasJustPressed(GamepadKeys.Button.Y)){
             robot.resetToIntake().run(pen.getPacket());
@@ -144,6 +145,21 @@ public class CompetitionTeleop extends SampleTeleop {
         telemetry.addLine("TRIGGERS: " + Math.abs((g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
 
 
+        if(g1.isDown(GamepadKeys.Button.B)){
+            robot.climber.setMode(Climber.RAISE);
+        }
+        else if(g1.isDown(GamepadKeys.Button.X)){
+            robot.climber.setMode(Climber.UNCLIMB);
+        }
+        else if(g1.isDown(GamepadKeys.Button.Y)){
+            robot.climber.setMode(Climber.CLIMB);
+        }
+        else if(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+            robot.climber.setMode(Climber.LOWER);
+        }
+        else robot.climber.setMode(Climber.REST);
+
+
 
         g2.readButtons();
     }
@@ -166,7 +182,7 @@ public class CompetitionTeleop extends SampleTeleop {
         sliderPos = robot.slider.getPosition();
     }
     public void runDriveLoop(){
-        AprilTagProcessorWrapper.startAprilTagDetection(robot.camera);
+        //AprilTagProcessorWrapper.startAprilTagDetection(robot.camera);
         double[] suggestedPowers;
         while(!volStopRequested){
            /** if(g1.isDown(GamepadKeys.Button.DPAD_LEFT)){
@@ -198,9 +214,9 @@ public class CompetitionTeleop extends SampleTeleop {
                     suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5);
                     robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
                 }
-            }
-            else**/ robot.drive.drive(g1.getLeftX(),g1.getLeftY(), -g1.getRightX());
-           // else robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), 1-(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)*.5));
+            }**/
+           // else robot.drive.drive(g1.getLeftX(),g1.getLeftY(), -g1.getRightX());
+            robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), 1-(g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)*.5));
             if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 
             g1.readButtons();

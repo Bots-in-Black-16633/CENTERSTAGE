@@ -25,7 +25,8 @@ public final class Constants{
 
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
-        public static double sliderOuttake = 1036;//outtke row1
+        public static double sliderOuttake = 964;//outtke row1
+        public static double sliderOuttakeHigh = 1200;//outtke row1
 
         public static double sliderSafeBackToIntake = 300;
 
@@ -38,11 +39,13 @@ public final class Constants{
         public static double shoulderMin = 0;
         public static double shoulderMax = 1;
 
-        public static double shoulderRest = .147;
+        public static double shoulderRest = .13;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = .335;//.444
+        public static double shoulderOuttake = .385;//.444
 
-        public static double shoulderSafeBackToIntake = .104;
+        public static double shoulderOuttakeHigh = .385;
+
+        public static double shoulderSafeBackToIntake = .09;
 
         public static double shoulderSafeBackToOuttake = .104;
     }
@@ -51,13 +54,14 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .622;
+        public static double wristRest = .21;
         public static double wristTraveling = 0;
-        public static double wristOuttake = .49;
+        public static double wristOuttake = .203;//low outtae
+        public static double wristOuttakeHigh = .203;//low outtae
 
-        public static double wristSafeBackToIntake = .727;
+        public static double wristSafeBackToIntake = .476;
 
-        public static double wristSafeBackToOuttake = .727;
+        public static double wristSafeBackToOuttake = .472;
     }
     @Config
     public static final class IntakeConstants{

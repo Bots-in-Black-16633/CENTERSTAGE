@@ -52,7 +52,7 @@ public class BackdropBlueLeft extends SampleAuto {
 
         robot.autoGenerator.
                 //Put action here:
-                getZoneOneBlueLeft()
+                getZoneTwoRedRight()
                 );
 //        Actions.runBlocking(robot.outtake());
 //        AutoUtil.delay(1);

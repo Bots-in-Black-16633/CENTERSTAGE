@@ -51,16 +51,6 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
 
 
-//       Vector2d input = pose.heading.inverse().times(new Vector2d(xPow,yPow));
-//       if(t!=null){
-//           t.addLine("rESUL X POW:" + input.x);
-//           t.addLine("rESUL X POW:" + input.y);
-//           t.addLine("ANGLE: " + Math.toDegrees(input.angleCast().log()));
-//       }
-//
-//
-//        setDrivePowers(new PoseVelocity2d(input ,rotPow));
-
 
 
     }

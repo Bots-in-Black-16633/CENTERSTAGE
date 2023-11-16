@@ -77,14 +77,14 @@ public class BaseRobot implements SubsystemBase{
             //set the wrist and shoulder to a safe Position
             wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
-            AutoUtil.delay(.5);
+            AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderSafeBackToIntake);
 
-            AutoUtil.delay(.5);
+            AutoUtil.delay(.25);
 
 
             slider.runToPosition(Constants.SliderConstants.sliderRest);
-            AutoUtil.delay(.5);
+            AutoUtil.delay(.25);
             wrist.setPosition(Constants.WristConstants.wristRest);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
             AutoUtil.delay(.1);
@@ -98,12 +98,29 @@ public class BaseRobot implements SubsystemBase{
             AutoUtil.delay(.25);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
 
-            AutoUtil.delay(.5);
+            AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
-            AutoUtil.delay(1);
+            AutoUtil.delay(.25);
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
+
+            return false;
+        }
+    }
+    class HighOuttake implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+            AutoUtil.delay(.25);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+
+            AutoUtil.delay(.25);
+            slider.runToPosition(Constants.SliderConstants.sliderOuttakeHigh);
+            AutoUtil.delay(.25);
+
+            wrist.setPosition(Constants.WristConstants.wristOuttakeHigh);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttakeHigh);
 
             return false;
         }
@@ -171,6 +188,8 @@ public class BaseRobot implements SubsystemBase{
         return new ResetToIntake();
     }
     public Action outtake(){return new Outtake();}
+    public Action highOuttake(){return new HighOuttake();}
+
     public Action toTravelingPosition(){return new toTravelingPosition();}
     public Action slowOuttake(){
         return new SlowOuttake();
