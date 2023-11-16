@@ -196,5 +196,6 @@ public class BaseRobot implements SubsystemBase{
     public Action slowOuttake(){
         return new SlowOuttake();
     }
+    public DriveToAprilTag aprilTag(){return new DriveToAprilTag();}
 
 }

@@ -27,7 +27,7 @@ public class SpikeRedLeft extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
 
-        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.REDSIDE, AutoUtil.RIGHTSIDE, zone));
+        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.LEFTSIDE,AutoUtil.REDSIDE, zone));
 
     }
 

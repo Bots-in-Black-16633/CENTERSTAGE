@@ -26,40 +26,9 @@ public class BackdropBlueLeft extends SampleAuto {
 
     @Override
     public void onStart() {
-        zone = 1;
-        TeamPropDetector.endPropDetection();
-        telemetry.addLine("ZONE: " + zone);
-        telemetry.update();
-        if (zone == 1) {
-            backDropY = 58;
-        } else if (zone == 2) {
-            backDropY = 55;
-        } else {
-            backDropY = 50;
-        }
-        TeamPropDetector.endPropDetection();
-        pen.addLine("ZONE: " + zone);
-        pen.update();
-        AutoUtil.delay(1);
-        Actions.runBlocking(/**robot.drive.actionBuilder(new Pose2d(12, 71.5, Math.toRadians(270)))
-                        .splineToConstantHeading(new Vector2d(12, 55), robot.drive.pose.heading)
-                .splineToConstantHeading(new Vector2d(12, 60), robot.drive.pose.heading)
-                .splineToLinearHeading(new Pose2d(35,50, robot.drive.pose.heading.log()), Math.toRadians(180))
-                .splineToLinearHeading(new Pose2d(50, backDropY, Math.toRadians(180)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(58, backDropY, Math.toRadians(180)), Math.toRadians(0))
-                        .lineToX(60)
-                .build()**/
 
-        robot.autoGenerator.
-                //Put action here:
-                getZoneTwoRedRight()
-                );
-//        Actions.runBlocking(robot.outtake());
-//        AutoUtil.delay(1);
-//        robot.hopper.outtake(Hopper.ALL);
-//        AutoUtil.delay(1);
-//        robot.hopper.rest(Hopper.ALL);
-//        Actions.runBlocking(robot.resetToIntake());
+
+
 
     }
 

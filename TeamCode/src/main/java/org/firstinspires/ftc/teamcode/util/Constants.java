@@ -41,9 +41,9 @@ public final class Constants{
 
         public static double shoulderRest = .13;
         public static double shoulderTraveling = 0;
-        public static double shoulderOuttake = .385;//.444
+        public static double shoulderOuttake = .355;//.444
 
-        public static double shoulderOuttakeHigh = .35;
+        public static double shoulderOuttakeHigh = .355;
 
         public static double shoulderSafeBackToIntake = .09;
 

@@ -63,160 +63,103 @@ public class AutoUtil {
             if(side == AutoUtil.LEFTSIDE){
                  if(zone==1){
                      return drive.actionBuilder(REDLEFTSTART)
-                     .strafeTo(new Vector2d(-47.66, -38.74))
-                     .strafeToLinearHeading(new Vector2d(-55, -38.74), Math.toRadians(0))
-                     .build();
+                             .strafeTo(new Vector2d(-47.66, -38.74))
+                             .strafeToLinearHeading(new Vector2d(-48.27, -49.08), Math.toRadians(180.00))
+                             .build();
                  }
                  else if(zone==2){
                      return drive.actionBuilder(REDLEFTSTART)
-                     .strafeTo(new Vector2d(-36.30, -33.87))
-                     .strafeToLinearHeading(new Vector2d(-36.30, -44.21),Math.toRadians(0.00))
-                     .build();
+                             .strafeTo(new Vector2d(-36.30, -33.87))
+                             .strafeToLinearHeading(new Vector2d(-36.30, -44.21), Math.toRadians(180))
+                             .build();
                  }
                  else if(zone == 3){
-                     return drive.actionBuilder(REDLEFTSTART)
-                        .strafeTo(new Vector2d(-34.68, -31.64))
-                             .strafeToLinearHeading(new Vector2d(-44.62, -19.27),Math.toRadians(0))
+                     return drive.actionBuilder(REDLEFTSTART).lineToY(-36)
+                             .lineToX(-25.15)
+                             .lineToY(-38.54)
+                             .lineToX(-36)
                              .build();
                  }
             }
             else if(side == AutoUtil.RIGHTSIDE){
-
+                if(zone == 1){
+                    return drive.actionBuilder(REDRIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(12.00, -34.00))
+                            .strafeToConstantHeading(new Vector2d(0.00, -34.00))
+                            .strafeToLinearHeading(new Vector2d(39.27, -50.11), Math.toRadians(180.00))
+                            .strafeToConstantHeading(new Vector2d(50.93, -30.27))
+                            .build();
+                }
+                else if(zone ==2){
+                    return drive.actionBuilder(REDRIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(11.97, -33.67))
+                            .strafeToSplineHeading(new Vector2d(20.48, -41.58), Math.toRadians(180))
+                            .splineToSplineHeading(new Pose2d(50.91, -36.71, Math.toRadians(180)), Math.toRadians(0))
+                            .build();
+                }
+                else {
+                    return drive.actionBuilder(REDRIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(23.32, -37.93))
+                            .strafeToConstantHeading(new Vector2d(27.99, -49.49))
+                            .splineToSplineHeading(new Pose2d(50.70, -43.00, Math.toRadians(180)), Math.toRadians(0.00))
+                            .build();
+                }
             }
         }
         else if(color ==AutoUtil.BLUESIDE){
             if(side == AutoUtil.LEFTSIDE){
-
+                if(zone ==1){
+                    return drive.actionBuilder(BLUELEFTSTART)
+                            .strafeToConstantHeading(new Vector2d(20, 41))
+                            .strafeToConstantHeading(new Vector2d(20, 45))
+                            .strafeToConstantHeading(new Vector2d(32.65, 48.68))
+                            .strafeToLinearHeading(new Vector2d(32.65, 42), Math.toRadians(145))
+                            .strafeToConstantHeading(new Vector2d(53, 42))
+                            .build();
+                }
+                else if(zone ==2){
+                    return drive.actionBuilder(BLUELEFTSTART)
+                            .strafeToConstantHeading(new Vector2d(12, 37))
+                            .strafeToConstantHeading(new Vector2d(12, 39))
+                            .strafeToConstantHeading(new Vector2d(22.31, 41.58))
+                            .strafeToLinearHeading(new Vector2d(50.30, 37.59), Math.toRadians(150))
+                            .build();
+                }else{
+                    return drive.actionBuilder(BLUELEFTSTART)
+                            .strafeToConstantHeading(new Vector2d(24.00, 48.00))
+                            .strafeToLinearHeading(new Vector2d(11.5, 27), Math.toRadians(0))
+                            .strafeToLinearHeading(new Vector2d(52.14, 28.5), Math.toRadians(155.00))
+                            .strafeToConstantHeading(new Vector2d(56.5, 28.5))
+                            .build();
+                }
             }
             else if(color == AutoUtil.RIGHTSIDE){
-
+                if(zone == 1){
+                    return drive.actionBuilder(REDLEFTSTART).lineToY(36)
+                            .lineToX(-25.15)
+                            .lineToY(38.54)
+                            .lineToX(-36)
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .splineTo(new Vector2d(-36.00, 35.00), Math.toRadians(270.00))
+                            .strafeToLinearHeading(new Vector2d(-47.55, 43.93), Math.toRadians(180.00))
+                            .build();
+                }
+                else{
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .strafeToLinearHeading(new Vector2d(-47.46, 38.13), Math.toRadians(270.00))
+                            .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(180))
+                            .build();
+                }
             }
         }
         return null;
 
     }
 
-    public  Action getZoneOneRedLeft() {
-        return drive.actionBuilder(REDLEFTSTART)
-                .strafeTo(new Vector2d(-47.66, -38.74))
-                .strafeToLinearHeading(new Vector2d(-48.27, -49.08), Math.toRadians(180.00))
-                .build();
 
-    }
-
-    public Action getZoneTwoRedLeft() {
-        return drive.actionBuilder(REDLEFTSTART)
-                .strafeTo(new Vector2d(-36.30, -33.87))
-                .strafeToLinearHeading(new Vector2d(-36.30, -44.21), Math.toRadians(180))
-                .build();
-
-
-    }
-
-    public Action getZoneThreeRedLeft() {
-        return drive.actionBuilder(REDLEFTSTART).lineToY(-36)
-                .lineToX(-25.15)
-                .lineToY(-38.54)
-                .lineToX(-36)
-                .build();
-
-    }
-    // Red Right Methods
-    public Action getZoneOneRedRight() {
-        return drive.actionBuilder(REDRIGHTSTART)
-                .strafeToConstantHeading(new Vector2d(12.00, -34.00))
-                .strafeToConstantHeading(new Vector2d(0.00, -34.00))
-                .strafeToLinearHeading(new Vector2d(39.27, -50.11), Math.toRadians(180.00))
-                .strafeToConstantHeading(new Vector2d(50.93, -30.27))
-                .build();
-
-
-    }
-
-    public Action getZoneTwoRedRight() {
-        return drive.actionBuilder(REDRIGHTSTART)
-                .strafeToConstantHeading(new Vector2d(11.97, -33.67))
-                .strafeToSplineHeading(new Vector2d(20.48, -41.58), Math.toRadians(180))
-                .splineToSplineHeading(new Pose2d(50.91, -36.71, Math.toRadians(180)), Math.toRadians(0))
-                .build();
-    }
-
-    public Action getZoneThreeRedRight() {
-        return drive.actionBuilder(REDRIGHTSTART)
-                .strafeToConstantHeading(new Vector2d(23.32, -37.93))
-                .strafeToConstantHeading(new Vector2d(27.99, -49.49))
-                .splineToSplineHeading(new Pose2d(50.70, -43.00, Math.toRadians(180)), Math.toRadians(0.00))
-                .build();
-
-
-    }
-
-    // Blue Left Methods
-    public Action getZoneOneBlueLeft() {
-        return drive.actionBuilder(BLUELEFTSTART)
-                .strafeToConstantHeading(new Vector2d(23.73, 38.94))
-                .strafeToConstantHeading(new Vector2d(32.65, 48.68))
-                .splineToSplineHeading(new Pose2d(50.30, 29.81, Math.toRadians(180)), Math.toRadians(0.00))
-                .build();
-
-
-    }
-
-    public Action getZoneTwoBlueLeft() {
-        return drive.actionBuilder(BLUELEFTSTART)
-                .strafeToConstantHeading(new Vector2d(11.56, 34.88))
-                .strafeToConstantHeading(new Vector2d(22.31, 41.58))
-                .splineToSplineHeading(new Pose2d(50.30, 35.09, Math.toRadians(180)), Math.toRadians(0.00))
-                .build();
-
-
-
-
-    }
-
-    public Action getZoneThreeBlueLeft() {
-        return drive.actionBuilder(BLUELEFTSTART)
-                .strafeToConstantHeading(new Vector2d(12.00, 34.00))
-                .strafeToConstantHeading(new Vector2d(0.00, 34.00))
-                .lineToY(37)
-                .strafeToLinearHeading(new Vector2d(39.27, 50.11), Math.toRadians(180.00))
-                .strafeToConstantHeading(new Vector2d(50.52, 27.61))
-                .build();
-
-
-        // Replace with the appropriate return statement
-    }
-
-    // Blue Right Methods
-    public Action getZoneOneBlueRight() {
-        return drive.actionBuilder(REDLEFTSTART).lineToY(36)
-                .lineToX(-25.15)
-                .lineToY(38.54)
-                .lineToX(-36)
-                .build();
-
-
-
-    }
-
-    public Action getZoneTwoBlueRight() {
-        return drive.actionBuilder(BLUERIGHTSTART)
-                .splineTo(new Vector2d(-36.00, 35.00), Math.toRadians(270.00))
-                .strafeToLinearHeading(new Vector2d(-47.55, 43.93), Math.toRadians(180.00))
-                .build();
-
-
-    }
-
-    public Action getZoneThreeBlueRight() {
-        return drive.actionBuilder(BLUERIGHTSTART)
-                .strafeToLinearHeading(new Vector2d(-47.46, 38.13), Math.toRadians(270.00))
-                .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(180))
-                .build();
-
-
-        // Replace with the appropriate return statement
-    }
 
 
 
