@@ -5,6 +5,8 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
+import java.util.Vector;
+
 
 public class MeepMeepTesting {
     public static void main(String[] args) {
@@ -14,15 +16,30 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-36, -63, Math.toRadians(270)))
-                                .lineTo(new Vector2d(12,50))
-                                .splineToConstantHeading(new Vector2d(12, 60), Math.toRadians(270))
-                                .splineToLinearHeading(new Pose2d(35,50, Math.toRadians(270)), Math.toRadians(0))
-                                .splineToLinearHeading(new Pose2d(50, 45, Math.toRadians(180)), Math.toRadians(0))
-                                .splineToLinearHeading(new Pose2d(58, 45, Math.toRadians(180)), Math.toRadians(0)).build());
+                        drive.trajectorySequenceBuilder(new Pose2d(12.00, 63.00, Math.toRadians(90.00)))
+                                .lineToConstantHeading(new Vector2d(12.00, 34.00))
+                                .lineToConstantHeading(new Vector2d(0.00, 34.00))
+                                .lineTo(new Vector2d(0, 36))
+                                .lineToLinearHeading(new Pose2d(39.27, 50.11, Math.toRadians(180.00)))
+                                .lineToConstantHeading(new Vector2d(50.52, 27.61))
+                                .build()
 
 
-        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
+
+
+
+
+
+
+
+
+
+
+                );
+
+
+
+                        meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
                 .addEntity(myBot)

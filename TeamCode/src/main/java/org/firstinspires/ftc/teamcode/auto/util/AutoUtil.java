@@ -27,10 +27,10 @@ public class AutoUtil {
      *
      *                     270 degrees
      */
-    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(90));
-    public static  Pose2d REDLEFTSTART = new Pose2d(-36.00, -63, Math.toRadians(90));
-    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 63, Math.toRadians(270));
-    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 63, Math.toRadians(270));
+    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(270));
+    public static  Pose2d REDLEFTSTART = new Pose2d(-36.00, -63, Math.toRadians(270));
+    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 63, Math.toRadians(90));
+    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 63, Math.toRadians(90));
 
 
     public static final int BLUESIDE =0;
@@ -68,43 +68,48 @@ public class AutoUtil {
 
     public Action getZoneTwoRedLeft() {
         return drive.actionBuilder(REDLEFTSTART)
-                .splineTo(new Vector2d(-36.30, -33.87), Math.toRadians(89.43))
-                .strafeToLinearHeading(new Vector2d(-36.30, -44.21), Math.toRadians(0.00))
+                .strafeTo(new Vector2d(-36.30, -33.87))
+                .strafeToLinearHeading(new Vector2d(-36.30, -44.21), Math.toRadians(180))
                 .build();
+
 
     }
 
     public Action getZoneThreeRedLeft() {
-        return drive.actionBuilder(REDLEFTSTART)
-                .splineToSplineHeading(new Pose2d(-34.68, -31.64, Math.toRadians(0.00)), Math.toRadians(0.00))
-                .strafeToConstantHeading(new Vector2d(-44.62, -19.27))
+        return drive.actionBuilder(REDLEFTSTART).lineToY(-36)
+                .lineToX(-25.15)
+                .lineToY(-38.54)
+                .lineToX(-36)
                 .build();
+
     }
     // Red Right Methods
     public Action getZoneOneRedRight() {
         return drive.actionBuilder(REDRIGHTSTART)
-                .splineToSplineHeading(new Pose2d(9.94, -30.83, Math.toRadians(180.00)), Math.toRadians(180.00))
-                .strafeToSplineHeading(new Vector2d(50.70, -31.64), Math.toRadians(0.00))
+                .strafeToConstantHeading(new Vector2d(12.00, -34.00))
+                .strafeToConstantHeading(new Vector2d(0.00, -34.00))
+                .strafeToLinearHeading(new Vector2d(39.27, -50.11), Math.toRadians(180.00))
+                .strafeToConstantHeading(new Vector2d(50.93, -30.27))
                 .build();
+
 
     }
 
     public Action getZoneTwoRedRight() {
         return drive.actionBuilder(REDRIGHTSTART)
-                .splineTo(new Vector2d(11.97, -33.67), Math.toRadians(90.00))
-                .strafeToConstantHeading(new Vector2d(20.48, -41.58))
-                .splineTo(new Vector2d(50.91, -36.71), Math.toRadians(0.00))
+                .strafeToConstantHeading(new Vector2d(11.97, -33.67))
+                .strafeToSplineHeading(new Vector2d(20.48, -41.58), Math.toRadians(180))
+                .splineToSplineHeading(new Pose2d(50.91, -36.71, Math.toRadians(180)), Math.toRadians(0))
                 .build();
-
-
     }
 
     public Action getZoneThreeRedRight() {
         return drive.actionBuilder(REDRIGHTSTART)
                 .strafeToConstantHeading(new Vector2d(23.32, -37.93))
                 .strafeToConstantHeading(new Vector2d(27.99, -49.49))
-                .splineToSplineHeading(new Pose2d(50.70, -43.00, Math.toRadians(0.00)), Math.toRadians(0.00))
+                .splineToSplineHeading(new Pose2d(50.70, -43.00, Math.toRadians(180)), Math.toRadians(0.00))
                 .build();
+
 
     }
 
@@ -113,36 +118,45 @@ public class AutoUtil {
         return drive.actionBuilder(BLUELEFTSTART)
                 .strafeToConstantHeading(new Vector2d(23.73, 38.94))
                 .strafeToConstantHeading(new Vector2d(32.65, 48.68))
-                .splineToSplineHeading(new Pose2d(50.30, 29.81, Math.toRadians(0.00)), Math.toRadians(0.00))
+                .splineToSplineHeading(new Pose2d(50.30, 29.81, Math.toRadians(180)), Math.toRadians(0.00))
                 .build();
+
 
     }
 
     public Action getZoneTwoBlueLeft() {
         return drive.actionBuilder(BLUELEFTSTART)
-                .splineTo(new Vector2d(11.56, 34.88), Math.toRadians(-88.90))
+                .strafeToConstantHeading(new Vector2d(11.56, 34.88))
                 .strafeToConstantHeading(new Vector2d(22.31, 41.58))
-                .splineTo(new Vector2d(50.30, 35.09), Math.toRadians(0.00))
+                .splineToSplineHeading(new Pose2d(50.30, 35.09, Math.toRadians(180)), Math.toRadians(0.00))
                 .build();
+
+
+
 
     }
 
     public Action getZoneThreeBlueLeft() {
         return drive.actionBuilder(BLUELEFTSTART)
-                .splineToSplineHeading(new Pose2d(10.75, 30.83, Math.toRadians(180.00)), Math.toRadians(180.00))
-                .strafeToLinearHeading(new Vector2d(50.50, 40.77), Math.toRadians(0.00))
-                .strafeTo(new Vector2d(50.70, 18.46))
+                .strafeToConstantHeading(new Vector2d(12.00, 34.00))
+                .strafeToConstantHeading(new Vector2d(0.00, 34.00))
+                .lineToY(37)
+                .strafeToLinearHeading(new Vector2d(39.27, 50.11), Math.toRadians(180.00))
+                .strafeToConstantHeading(new Vector2d(50.52, 27.61))
                 .build();
+
 
         // Replace with the appropriate return statement
     }
 
     // Blue Right Methods
     public Action getZoneOneBlueRight() {
-        return drive.actionBuilder(BLUERIGHTSTART)
-                .splineTo(new Vector2d(-34.57, 31.91), Math.toRadians(0.00))
-                .strafeToLinearHeading(new Vector2d(-49.70, 40.09), Math.toRadians(180.00))
+        return drive.actionBuilder(REDLEFTSTART).lineToY(36)
+                .lineToX(-25.15)
+                .lineToY(38.54)
+                .lineToX(-36)
                 .build();
+
 
 
     }
@@ -151,15 +165,17 @@ public class AutoUtil {
         return drive.actionBuilder(BLUERIGHTSTART)
                 .splineTo(new Vector2d(-36.00, 35.00), Math.toRadians(270.00))
                 .strafeToLinearHeading(new Vector2d(-47.55, 43.93), Math.toRadians(180.00))
-        .build();
+                .build();
+
 
     }
 
     public Action getZoneThreeBlueRight() {
         return drive.actionBuilder(BLUERIGHTSTART)
                 .strafeToLinearHeading(new Vector2d(-47.46, 38.13), Math.toRadians(270.00))
-                .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(0.00))
+                .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(180))
                 .build();
+
 
         // Replace with the appropriate return statement
     }
@@ -169,22 +185,31 @@ public class AutoUtil {
     //Experemintal Trajectories: Backdrop from starting on audience side
     public Action getZoneOneRedBackdrop() {
         return drive.actionBuilder(REDLEFTSTART)
-                .splineTo(new Vector2d(-44.21, -41.58), Math.toRadians(113.12))
-                .strafeToLinearHeading(new Vector2d(-33.67, -39.75), Math.toRadians(11.09))
-                .strafeToLinearHeading(new Vector2d(-25.15, -35.29), Math.toRadians(-8.13))
-                .splineToSplineHeading(new Pose2d(51.11, -29.41, Math.toRadians(0.00)), Math.toRadians(0.00))
-                .build()
-                ; // Replace with the appropriate return statement
+                .strafeToConstantHeading(new Vector2d(-44.21, -41.58))
+                .strafeToConstantHeading(new Vector2d(-44.21, -44))
+                .strafeToConstantHeading(new Vector2d(-35, -44))
+                .strafeToConstantHeading(new Vector2d(-35, -37.75))
+                .strafeToConstantHeading(new Vector2d(-25.15, -35.29))
+                .lineToX(5)
+                .strafeToLinearHeading(new Vector2d(51.11, -29.41), Math.toRadians(180))
+                .build();
+
+        // Replace with the appropriate return statement
     }
 
     public Action getZoneTwoRedBackdrop() {
         return drive.actionBuilder(REDLEFTSTART)
-                .splineTo(new Vector2d(-36.91, -34.28), Math.toRadians(90.98))
-                .strafeToConstantHeading(new Vector2d(-55.17, -34.28))
-                .splineToLinearHeading(new Pose2d(-30.42, -1.83, Math.toRadians(0.00)), Math.toRadians(0.00))
-                .splineToSplineHeading(new Pose2d(50.91, -36.10, Math.toRadians(0.00)), Math.toRadians(0.00))
+                .strafeToConstantHeading(new Vector2d(-36.00, -34.57))
+                .strafeToConstantHeading(new Vector2d(-36.00, -38.66))
+                .strafeToSplineHeading(new Vector2d(-43.275, -34.57), Math.toRadians(0))
+                .splineToSplineHeading(new Pose2d(-43.57, -9.20, Math.toRadians(0.00)), Math.toRadians(48.58))
+                .splineTo(new Vector2d(1.02, -7), Math.toRadians(-2.90))
+                .splineToSplineHeading(new Pose2d(45.20, -13.30, Math.toRadians(180.00)), Math.toRadians(-1.03))
+                .strafeToConstantHeading(new Vector2d(45.20, -36.61))
+                .lineToX(53.5)
                 .build();
-         // Replace with the appropriate return statement
+
+        // Replace with the appropriate return statement
     }
 
     public Action getZoneThreeRedBackdrop() {
