@@ -57,7 +57,6 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
     public void drive(double xPow, double yPow, double rotPow){
 
-        //if x pow is positiv
         leftFront.setPower(yPow + xPow + rotPow);
         leftBack.setPower(yPow - xPow + rotPow);
         rightFront.setPower(yPow - xPow - rotPow);

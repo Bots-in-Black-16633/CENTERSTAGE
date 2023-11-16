@@ -27,10 +27,10 @@ public class AutoUtil {
      *
      *                     270 degrees
      */
-    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(90));
-    public static  Pose2d REDLEFTSTART = new Pose2d(-36.00, -63, Math.toRadians(90));
-    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 63, Math.toRadians(270));
-    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 63, Math.toRadians(270));
+    public static  Pose2d REDRIGHTSTART = new Pose2d(12.00, -63, Math.toRadians(270));
+    public static  Pose2d REDLEFTSTART = new Pose2d(-36.00, -63, Math.toRadians(270));
+    public static  Pose2d BLUERIGHTSTART = new Pose2d(-36, 63, Math.toRadians(90));
+    public static  Pose2d BLUELEFTSTART = new Pose2d(12.00, 63, Math.toRadians(90));
 
 
     public static final int BLUESIDE =0;
@@ -55,6 +55,44 @@ public class AutoUtil {
             if(sideColor == REDSIDE)side = RIGHTSIDE;
             else side = LEFTSIDE;
         }
+
+    }
+
+    public Action getSpikeAutoAction(int side, int color, int zone){
+        if(color==AutoUtil.REDSIDE){
+            if(side == AutoUtil.LEFTSIDE){
+                 if(zone==1){
+                     return drive.actionBuilder(REDLEFTSTART)
+                     .strafeTo(new Vector2d(-47.66, -38.74))
+                     .strafeToLinearHeading(new Vector2d(-55, -38.74), Math.toRadians(0))
+                     .build();
+                 }
+                 else if(zone==2){
+                     return drive.actionBuilder(REDLEFTSTART)
+                     .strafeTo(new Vector2d(-36.30, -33.87))
+                     .strafeToLinearHeading(new Vector2d(-36.30, -44.21),Math.toRadians(0.00))
+                     .build();
+                 }
+                 else if(zone == 3){
+                     return drive.actionBuilder(REDLEFTSTART)
+                        .strafeTo(new Vector2d(-34.68, -31.64))
+                             .strafeToLinearHeading(new Vector2d(-44.62, -19.27),Math.toRadians(0))
+                             .build();
+                 }
+            }
+            else if(side == AutoUtil.RIGHTSIDE){
+
+            }
+        }
+        else if(color ==AutoUtil.BLUESIDE){
+            if(side == AutoUtil.LEFTSIDE){
+
+            }
+            else if(color == AutoUtil.RIGHTSIDE){
+
+            }
+        }
+        return null;
 
     }
 

@@ -30,6 +30,23 @@ public class ClimberTester extends SampleTeleop {
         else if(gamepad1.b)robot.climber.setMode(Climber.RAISE);
         else if(gamepad1.x)robot.climber.setMode(Climber.LOWER);
         else robot.climber.setMode(Climber.REST);
+        pen.addLine("Y: CLIMB");
+        pen.addLine("A: UNCLIMB");
+        pen.addLine("B: RAISE");
+        pen.addLine("X: LOWER");
+        pen.addLine("rightX: rightServo");
+        pen.addLine("leftX: leftServo");
+        pen.addLine("right: CLIMB");
+
+
+
+
+
+
+
+        robot.climber.leftClimberServo.setPower(gamepad1.left_stick_x);
+        robot.climber.rightClimberServo.setPower(gamepad1.right_stick_x);
+        robot.climber.climber.setPower(gamepad1.right_stick_y);
     }
 
     @Override

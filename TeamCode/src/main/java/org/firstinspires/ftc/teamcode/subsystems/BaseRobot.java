@@ -84,7 +84,9 @@ public class BaseRobot implements SubsystemBase{
 
 
             slider.runToPosition(Constants.SliderConstants.sliderRest);
-            AutoUtil.delay(.25);
+            while(slider.getPosition() != Constants.SliderConstants.sliderRest){
+
+            }
             wrist.setPosition(Constants.WristConstants.wristRest);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
             AutoUtil.delay(.1);

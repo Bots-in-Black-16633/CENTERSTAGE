@@ -26,7 +26,7 @@ public final class Constants{
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
         public static double sliderOuttake = 964;//outtke row1
-        public static double sliderOuttakeHigh = 1200;//outtke row1
+        public static double sliderOuttakeHigh = 2360;//outtke row1
 
         public static double sliderSafeBackToIntake = 300;
 
@@ -43,7 +43,7 @@ public final class Constants{
         public static double shoulderTraveling = 0;
         public static double shoulderOuttake = .385;//.444
 
-        public static double shoulderOuttakeHigh = .385;
+        public static double shoulderOuttakeHigh = .35;
 
         public static double shoulderSafeBackToIntake = .09;
 
@@ -54,14 +54,14 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .21;
+        public static double wristRest = .6;
         public static double wristTraveling = 0;
-        public static double wristOuttake = .203;//low outtae
-        public static double wristOuttakeHigh = .203;//low outtae
+        public static double wristOuttake = .585;//low outtae
+        public static double wristOuttakeHigh = .585;//low outtae
 
-        public static double wristSafeBackToIntake = .476;
+        public static double wristSafeBackToIntake = .77;
 
-        public static double wristSafeBackToOuttake = .472;
+        public static double wristSafeBackToOuttake = .77;
     }
     @Config
     public static final class IntakeConstants{
@@ -77,8 +77,8 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold =0;
-        public static double shooterRelease = .75;
+        public static double shooterHold =.78;
+        public static double shooterRelease = .55;
 
     }
     public static final class AprilTagConstants {

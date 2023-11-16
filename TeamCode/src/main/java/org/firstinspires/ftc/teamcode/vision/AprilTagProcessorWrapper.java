@@ -38,6 +38,7 @@ public class AprilTagProcessorWrapper {
         return atp.getDetections().stream().filter(tag->tag.id==id).findFirst().orElse(null);
     }
     public static double[] getSuggestedPower(int id){
+
         AprilTagDetection desiredTag = getAprilTagInfo(id);
         if(desiredTag == null)return null;
         else{

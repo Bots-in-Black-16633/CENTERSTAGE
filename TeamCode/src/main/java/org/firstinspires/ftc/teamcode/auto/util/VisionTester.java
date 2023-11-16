@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
+import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Rect;
 
@@ -26,26 +27,26 @@ public class VisionTester extends SampleAuto {
 
     @Override
     public void onInit() {
-        TeamPropDetector.startPropDetection(hardwareMap.get(WebcamName.class, "camera"), pen);
+        TeamPropPartitionDetector.startPropDetection(hardwareMap.get(WebcamName.class, "camera"), pen);
 
 
     }
 
     @Override
     public void onStart() {
-        redZone = TeamPropDetector.getRedPropZone();
-        blueZone = TeamPropDetector.getBluePropZone();
+        redZone = TeamPropPartitionDetector.getRedPropZone();
+        blueZone = TeamPropPartitionDetector.getBluePropZone();
 
         //FtcDashboard.getInstance().startCameraStream((CameraStreamSource) b, 0);
         while(!isStopRequested()){
-            redZone = TeamPropDetector.getRedPropZone();
-            blueZone = TeamPropDetector.getBluePropZone();
+            redZone = TeamPropPartitionDetector.getRedPropZone();
+            blueZone = TeamPropPartitionDetector.getBluePropZone();
             pen.addLine("RED ZONE" + redZone);
             pen.addLine("BLUE ZONE" + blueZone);
 
             pen.update();
         }
-        TeamPropDetector.endPropDetection();
+        TeamPropPartitionDetector.endPropDetection();
 
     }
 
@@ -54,4 +55,6 @@ public class VisionTester extends SampleAuto {
     public void onStop() {
 
     }
+
+
 }

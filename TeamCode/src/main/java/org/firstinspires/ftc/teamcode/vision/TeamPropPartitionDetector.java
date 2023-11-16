@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.vision;
 
+import static java.lang.Thread.sleep;
+
 import android.graphics.Canvas;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -22,6 +26,7 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class TeamPropPartitionDetector implements VisionProcessor {
     Mat hsvThresholdOutputRed = new Mat();
@@ -30,12 +35,12 @@ public class TeamPropPartitionDetector implements VisionProcessor {
     Mat dilationOutputRed = new Mat();
     Mat dilationOutputBlue = new Mat();
 
-    double blueLeftFrame;
-    double redLeftFrame;
-    double blueMidFrame;
-    double redMidFrame;
-    double blueRightFrame;
-    double redRightFrame;
+    private static double blueLeftFrame;
+    private static double redLeftFrame;
+    private static double blueMidFrame;
+    private static double redMidFrame;
+    private static double blueRightFrame;
+    private static double redRightFrame;
 
     Mat hierarchy = new Mat();
 
@@ -107,6 +112,11 @@ public class TeamPropPartitionDetector implements VisionProcessor {
         telemetry.addLine("leftFrame: " + redLeftFrame);
         telemetry.addLine("MidFrame:" + redMidFrame);
         telemetry.addLine("RightFrame:" + redRightFrame);
+
+        telemetry.addLine();
+        telemetry.addLine("Blue Zone: " + TeamPropPartitionDetector.getBluePropZone());
+        telemetry.addLine("Red Zone: " + TeamPropPartitionDetector.getRedPropZone());
+
         telemetry.update();
 
         return null;
@@ -133,25 +143,36 @@ public class TeamPropPartitionDetector implements VisionProcessor {
         propDetector = new TeamPropPartitionDetector(pen);
         TeamPropPartitionDetector.camera = camera;
         portal = VisionPortal.easyCreateWithDefaults(camera, propDetector);
+        if (portal.getCameraState() != VisionPortal.CameraState.STREAMING) {
+            pen.addData("Camera", "Waiting");
+            pen.update();
+            while ((portal.getCameraState() != VisionPortal.CameraState.STREAMING)) {
 
-    }
-//    public static int getRedPropZone(){
-//
-//        if(redXPos < ZONE1EDGE)return 1;
-//        else if(redXPos < ZONE2EDGE)return 2;
-//        else return 3;
-//    }
-//    public static int getBluePropZone(){
-//
-//        if(blueXPos < ZONE1EDGE)return 1;
-//        else if(blueXPos < ZONE2EDGE)return 2;
-//        else return 3;
-//    }
-    public static int getZone(double xPOs){
-        if(xPOs < ZONE1EDGE)return 1;
-        else if(xPOs < ZONE2EDGE)return 2;
+            }
+            pen.addData("Camera", "Ready");
+            pen.update();
+        }
+        ExposureControl exposureControl = portal.getCameraControl(ExposureControl.class);
+        exposureControl.setMode(ExposureControl.Mode.Manual);
+        exposureControl.setExposure((long)20, TimeUnit.MILLISECONDS);
+        //GainControl gainControl = portal.getCameraControl(GainControl.class);
+        //gainControl.setGain(10);
+
+
+        }
+    public static int getRedPropZone(){
+        double max = Math.max(redLeftFrame, Math.max(redMidFrame ,redRightFrame));
+        if(max == redLeftFrame)return 1;
+        else if(max == redMidFrame)return 2;
         else return 3;
     }
+    public static int getBluePropZone(){
+        double max = Math.max(blueLeftFrame, Math.max(blueMidFrame ,blueRightFrame));
+        if(max == blueLeftFrame)return 1;
+        else if(max == blueMidFrame)return 2;
+        else return 3;
+    }
+
 
 
     public static void endPropDetection(){
