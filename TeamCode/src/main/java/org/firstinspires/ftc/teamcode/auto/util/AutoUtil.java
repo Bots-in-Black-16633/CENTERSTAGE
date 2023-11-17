@@ -74,10 +74,10 @@ public class AutoUtil {
                              .build();
                  }
                  else if(zone == 3){
-                     return drive.actionBuilder(REDLEFTSTART).lineToY(-36)
-                             .lineToX(-25.15)
-                             .lineToY(-38.54)
-                             .lineToX(-36)
+                     return drive.actionBuilder(REDLEFTSTART)
+                             .strafeToConstantHeading(new Vector2d(-48.07, -47.86))
+                             .strafeToLinearHeading(new Vector2d(-34.16, -30.07), Math.toRadians(180.00))
+                             .strafeToConstantHeading(new Vector2d(-48.47, -30.02))
                              .build();
                  }
             }
@@ -107,10 +107,10 @@ public class AutoUtil {
             }
             else if(color == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
-                    return drive.actionBuilder(BLUERIGHTSTART).lineToY(36)
-                            .lineToX(-25.15)
-                            .lineToY(38.54)
-                            .lineToX(-36)
+                    drive.actionBuilder(BLUERIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(-48.07, 47.86))
+                            .strafeToLinearHeading(new Vector2d(-34.16, 30.07), Math.toRadians(180.00))
+                            .strafeToConstantHeading(new Vector2d(-41.52, 30.07))
                             .build();
                 }
                 else if(zone==2){
@@ -191,7 +191,7 @@ public class AutoUtil {
                             .build();
                      */
                     //REFLECTED BLUE LEFT
-                    return drive.actionBuilder(BLUELEFTSTART)
+                    return drive.actionBuilder(REDRIGHTSTART)
                             .strafeToConstantHeading(new Vector2d(24.00, -48.00))
                             .strafeToLinearHeading(new Vector2d(11.5, -27), Math.toRadians(0))
                             .strafeToLinearHeading(new Vector2d(52.14, -28.5), Math.toRadians(155.00))
