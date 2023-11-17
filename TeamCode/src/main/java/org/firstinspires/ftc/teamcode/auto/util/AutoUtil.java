@@ -84,7 +84,68 @@ public class AutoUtil {
             else if(side == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
 
-                    /*
+
+                }
+                else if(zone ==2){
+
+                }
+                else {
+
+                }
+            }
+        }
+        else if(color ==AutoUtil.BLUESIDE){
+            if(side == AutoUtil.LEFTSIDE){
+                if(zone ==1){
+
+                }
+                else if(zone ==2){
+
+                }else{
+
+                }
+            }
+            else if(color == AutoUtil.RIGHTSIDE){
+                if(zone == 1){
+                    return drive.actionBuilder(BLUERIGHTSTART).lineToY(36)
+                            .lineToX(-25.15)
+                            .lineToY(38.54)
+                            .lineToX(-36)
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .splineTo(new Vector2d(-36.00, 35.00), Math.toRadians(270.00))
+                            .strafeToLinearHeading(new Vector2d(-47.55, 43.93), Math.toRadians(180.00))
+                            .build();
+                }
+                else{
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .strafeToLinearHeading(new Vector2d(-47.46, 38.13), Math.toRadians(270.00))
+                            .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(180))
+                            .build();
+                }
+            }
+        }
+        return null;
+    }
+
+    public Action getBackdropAutoAction(int side, int color, int zone){
+        if(color==AutoUtil.REDSIDE){
+            if(side == AutoUtil.LEFTSIDE){
+                if(zone==1){
+
+                }
+                else if(zone==2){
+
+                }
+                else if(zone == 3){
+
+                }
+            }
+            else if(side == AutoUtil.RIGHTSIDE){
+                if(zone == 1){
+                     /*
                     ORIGINAL:
                     return drive.actionBuilder(REDRIGHTSTART)
                             .strafeToConstantHeading(new Vector2d(12.00, -34.00))
@@ -168,30 +229,19 @@ public class AutoUtil {
             }
             else if(color == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
-                    return drive.actionBuilder(REDLEFTSTART).lineToY(36)
-                            .lineToX(-25.15)
-                            .lineToY(38.54)
-                            .lineToX(-36)
-                            .build();
+
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(BLUERIGHTSTART)
-                            .splineTo(new Vector2d(-36.00, 35.00), Math.toRadians(270.00))
-                            .strafeToLinearHeading(new Vector2d(-47.55, 43.93), Math.toRadians(180.00))
-                            .build();
+
                 }
                 else{
-                    return drive.actionBuilder(BLUERIGHTSTART)
-                            .strafeToLinearHeading(new Vector2d(-47.46, 38.13), Math.toRadians(270.00))
-                            .strafeToLinearHeading(new Vector2d(-47.46, 49.08), Math.toRadians(180))
-                            .build();
+
                 }
             }
         }
         return null;
 
     }
-
 
 
 
