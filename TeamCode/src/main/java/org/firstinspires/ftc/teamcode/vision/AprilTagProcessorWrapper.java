@@ -29,9 +29,22 @@ public class AprilTagProcessorWrapper {
                 .setCamera(camera)
                 .addProcessor(atp)
                 .build();
+        while(vp.getCameraState() != VisionPortal.CameraState.STREAMING) {
+
+        }
     }
     public static void pauseAprilTagDetection(){
+
         vp.stopStreaming();
+        while(vp.getCameraState() != VisionPortal.CameraState.CAMERA_DEVICE_READY) {
+
+        }
+    }
+    public static void resumeAprilTagDetection(){
+        if(vp!=null)vp.resumeStreaming();
+        while(vp.getCameraState() != VisionPortal.CameraState.STREAMING) {
+
+        }
     }
 
     public static AprilTagDetection getAprilTagInfo(int id){

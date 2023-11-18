@@ -37,7 +37,7 @@ public class AutoUtil {
     public static final int REDSIDE = 1;
 
     public static final int RIGHTSIDE = 0;
-    public static final int LEFTSIDE = 0;
+    public static final int LEFTSIDE = 1;
     Drive drive;
     Pose2d startPose;
     int sideColor = 0;
@@ -63,8 +63,8 @@ public class AutoUtil {
             if(side == AutoUtil.LEFTSIDE){
                  if(zone==1){
                      return drive.actionBuilder(REDLEFTSTART)
-                             .strafeTo(new Vector2d(-47.66, -38.74))
-                             .strafeToLinearHeading(new Vector2d(-48.27, -49.08), Math.toRadians(180.00))
+                             .strafeToConstantHeading(new Vector2d(-47.66, -20))
+                             .strafeToLinearHeading(new Vector2d(-47.66, -50.93), Math.toRadians(180.00))
                              .build();
                  }
                  else if(zone==2){
@@ -105,7 +105,7 @@ public class AutoUtil {
 
                 }
             }
-            else if(color == AutoUtil.RIGHTSIDE){
+            else if(side == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
                     drive.actionBuilder(BLUERIGHTSTART)
                             .strafeToConstantHeading(new Vector2d(-48.07, 47.86))
@@ -134,28 +134,18 @@ public class AutoUtil {
         if(color==AutoUtil.REDSIDE){
             if(side == AutoUtil.LEFTSIDE){
                 if(zone==1){
-
+                    return null;
                 }
                 else if(zone==2){
-
+                    return null;
                 }
-                else if(zone == 3){
+                else return null;
 
-                }
             }
             else if(side == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
-                     /*
-                    ORIGINAL:
-                    return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToConstantHeading(new Vector2d(12.00, -34.00))
-                            .strafeToConstantHeading(new Vector2d(0.00, -34.00))
-                            .strafeToLinearHeading(new Vector2d(39.27, -50.11), Math.toRadians(180.00))
-                            .strafeToConstantHeading(new Vector2d(50.93, -30.27))
-                            .build();
-                     */
                     //REFLECTED BLUE LEFT
-                    return drive.actionBuilder(REDRIGHTSTART)
+                    return drive.actionBuilder(AutoUtil.REDRIGHTSTART)
                             .strafeToConstantHeading(new Vector2d(20, -41))
                             .strafeToConstantHeading(new Vector2d(20, -45))
                             .strafeToConstantHeading(new Vector2d(32.65, -48.68))
@@ -164,34 +154,17 @@ public class AutoUtil {
                             .build();
                 }
                 else if(zone ==2){
-                    /*
-                    ORIGINAL
-                    return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToConstantHeading(new Vector2d(11.97, -33.67))
-                            .strafeToSplineHeading(new Vector2d(20.48, -41.58), Math.toRadians(180))
-                            .splineToSplineHeading(new Pose2d(50.91, -36.71, Math.toRadians(180)), Math.toRadians(0))
-                            .build();
-
-                     */
                     //REFLECTED BLUE LEFT
-                    return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToConstantHeading(new Vector2d(12, -37))
+                    return drive.actionBuilder(AutoUtil.REDRIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(10, -36.5))
                             .strafeToConstantHeading(new Vector2d(12, -39))
                             .strafeToConstantHeading(new Vector2d(22.31, -41.58))
-                            .strafeToLinearHeading(new Vector2d(50.30, -37.59), Math.toRadians(150))
+                            .strafeToLinearHeading(new Vector2d(50.30, -37.59), Math.toRadians(180))
+                            .strafeToConstantHeading(new Vector2d(52, -37.59))
                             .build();
                 }
                 else {
-                    /*
-                    ORIGINAL
-                    return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToConstantHeading(new Vector2d(23.32, -37.93))
-                            .strafeToConstantHeading(new Vector2d(27.99, -49.49))
-                            .splineToSplineHeading(new Pose2d(50.70, -43.00, Math.toRadians(180)), Math.toRadians(0.00))
-                            .build();
-                     */
-                    //REFLECTED BLUE LEFT
-                    return drive.actionBuilder(REDRIGHTSTART)
+                    return drive.actionBuilder(AutoUtil.REDRIGHTSTART)
                             .strafeToConstantHeading(new Vector2d(24.00, -48.00))
                             .strafeToLinearHeading(new Vector2d(11.5, -27), Math.toRadians(0))
                             .strafeToLinearHeading(new Vector2d(52.14, -28.5), Math.toRadians(155.00))
@@ -199,13 +172,14 @@ public class AutoUtil {
                             .build();
                 }
             }
+            else return null;
         }
         else if(color ==AutoUtil.BLUESIDE){
             if(side == AutoUtil.LEFTSIDE){
                 if(zone ==1){
                     return drive.actionBuilder(BLUELEFTSTART)
-                            .strafeToConstantHeading(new Vector2d(20, 41))
-                            .strafeToConstantHeading(new Vector2d(20, 45))
+                            .strafeToConstantHeading(new Vector2d(20.5, 41))
+                            .strafeToConstantHeading(new Vector2d(20.5, 45))
                             .strafeToConstantHeading(new Vector2d(32.65, 48.68))
                             .strafeToLinearHeading(new Vector2d(32.65, 42), Math.toRadians(145))
                             .strafeToConstantHeading(new Vector2d(53, 42))
@@ -221,26 +195,26 @@ public class AutoUtil {
                 }else{
                     return drive.actionBuilder(BLUELEFTSTART)
                             .strafeToConstantHeading(new Vector2d(24.00, 48.00))
-                            .strafeToLinearHeading(new Vector2d(11.5, 27), Math.toRadians(0))
-                            .strafeToLinearHeading(new Vector2d(52.14, 28.5), Math.toRadians(155.00))
-                            .strafeToConstantHeading(new Vector2d(56.5, 28.5))
+                            .strafeToLinearHeading(new Vector2d(12, 27), Math.toRadians(0))
+                            .strafeToLinearHeading(new Vector2d(52.14, 28), Math.toRadians(155.00))
+                            .strafeToConstantHeading(new Vector2d(56.5, 28))
                             .build();
                 }
             }
-            else if(color == AutoUtil.RIGHTSIDE){
+            else if(side == AutoUtil.RIGHTSIDE){
                 if(zone == 1){
-
+                    return null;
                 }
                 else if(zone==2){
-
+                    return null;
                 }
                 else{
-
+                    return null;
                 }
             }
+            else return null;
         }
-        return null;
-
+        else return null;
     }
 
 

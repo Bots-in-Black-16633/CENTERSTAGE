@@ -25,7 +25,7 @@ public final class Constants{
 
         public static double sliderRest = 0;
         public static double sliderTraveling = 0;
-        public static double sliderOuttake = 964;//outtke row1
+        public static double sliderOuttake = 1080;//outtke row1
         public static double sliderOuttakeHigh = 2360;//outtke row1
 
         public static double sliderSafeBackToIntake = 300;
