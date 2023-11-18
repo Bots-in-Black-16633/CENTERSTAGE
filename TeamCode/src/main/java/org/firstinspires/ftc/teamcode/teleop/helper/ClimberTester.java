@@ -46,7 +46,7 @@ public class ClimberTester extends SampleTeleop {
 
         robot.climber.leftClimberServo.setPower(gamepad1.left_stick_x);
         robot.climber.rightClimberServo.setPower(gamepad1.right_stick_x);
-        robot.climber.climber.setPower(gamepad1.right_stick_y);
+        //robot.climber.climber.setPower(gamepad1.right_stick_y);
     }
 
     @Override

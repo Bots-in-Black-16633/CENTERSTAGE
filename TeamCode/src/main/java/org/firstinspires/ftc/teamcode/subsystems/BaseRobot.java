@@ -84,7 +84,7 @@ public class BaseRobot implements SubsystemBase{
 
 
             slider.runToPosition(Constants.SliderConstants.sliderRest);
-            while(slider.getPosition() != Constants.SliderConstants.sliderRest){
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5){
 
             }
             wrist.setPosition(Constants.WristConstants.wristRest);
@@ -123,6 +123,9 @@ public class BaseRobot implements SubsystemBase{
 
             wrist.setPosition(Constants.WristConstants.wristOuttakeHigh);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttakeHigh);
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderOuttakeHigh) > 5){
+
+            }
 
             return false;
         }

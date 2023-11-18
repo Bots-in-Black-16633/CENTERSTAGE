@@ -77,7 +77,7 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold =.78;
+        public static double shooterHold =.75;
         public static double shooterRelease = .55;
 
     }

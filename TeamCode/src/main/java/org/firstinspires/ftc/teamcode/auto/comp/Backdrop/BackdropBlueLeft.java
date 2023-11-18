@@ -27,7 +27,7 @@ public class BackdropBlueLeft extends SampleAuto {
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getBackdropAutoAction(AutoUtil.LEFTSIDE, AutoUtil.BLUESIDE, zone));
+        Actions.runBlocking(robot.autoGenerator.getBackdropAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, zone));
         Actions.runBlocking(robot.outtake());
         robot.hopper.outtake(Hopper.ALL);
         AutoUtil.delay(1);
