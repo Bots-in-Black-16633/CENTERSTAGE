@@ -15,10 +15,10 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 14)
-                .followTrajectorySequence(drive -> MeepMeepAutoUtil.getSpikeAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 1, drive, drive));
+                .followTrajectorySequence(drive -> MeepMeepAutoUtil.getSpikeAutoAction(MeepMeepAutoUtil.BLUE, MeepMeepAutoUtil.LEFT, 1, drive, drive));
 
         RoadRunnerBotEntity myBot2 = new DefaultBotBuilder(meepMeep).setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 14)
-                .followTrajectorySequence(drive -> MeepMeepAutoUtil.getSpikeMarkParkAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 1, drive, myBot.getCurrentTrajectorySequence()));
+                .followTrajectorySequence(drive -> MeepMeepAutoUtil.getSpikeMarkParkAutoAction(MeepMeepAutoUtil.BLUE, MeepMeepAutoUtil.LEFT, 1, drive, myBot.getCurrentTrajectorySequence()));
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
