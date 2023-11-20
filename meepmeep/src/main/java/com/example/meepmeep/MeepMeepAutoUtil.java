@@ -19,8 +19,43 @@ public class MeepMeepAutoUtil {
     public static final int RIGHT = 0;
     public static final int LEFT = 1;
 
-    public static TrajectorySequence getBackStageParkAutoAction(int color, int side, int zone){
-        return null;
+    public static TrajectorySequence getBackStageParkAutoAction(int color, int side, DriveShim drive, TrajectorySequence prevPath){
+        if(color == MeepMeepAutoUtil.BLUE){
+            if(side == MeepMeepAutoUtil.RIGHT){
+                return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                        .lineTo(new Vector2d(60,12))
+
+
+                        .build();
+            }
+            else if(side == MeepMeepAutoUtil.LEFT){
+                return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                        .lineTo(new Vector2d(45,60))
+
+                        .lineTo(new Vector2d(60,60))
+
+                        .build();
+            }
+            else return null;
+        }else if(color == MeepMeepAutoUtil.RED){
+            if(side == MeepMeepAutoUtil.LEFT){
+                return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                        .lineTo(new Vector2d(60,-12))
+
+
+                        .build();
+            }
+            else if(side == MeepMeepAutoUtil.RIGHT){
+                return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                        .lineTo(new Vector2d(45,-60))
+
+                        .lineTo(new Vector2d(60,-60))
+
+                        .build();
+            }
+            else return null;
+        }
+        else return null;
     }
 
     public static TrajectorySequence getBackdropAutoAction(int color, int side, int zone, DriveShim drive, TrajectorySequence prevPath){
@@ -129,7 +164,7 @@ public class MeepMeepAutoUtil {
         else return null;
     }
 
-    public static TrajectorySequence getSpikeAutoAction(int color, int side, int zone, DriveShim drive, DriveShim startPose){
+    public static TrajectorySequence getSpikeAutoAction(int color, int side, int zone, DriveShim drive, TrajectorySequence prevPath){
         if(color==MeepMeepAutoUtil.RED){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
@@ -195,59 +230,131 @@ public class MeepMeepAutoUtil {
         else return null;
     }
 
-    public static TrajectorySequence getSpikeParkAction(int color, int side, int zone, DriveShim robot, DriveShim startPose){
+    public static TrajectorySequence getSpikeParkAction(int color, int side, int zone, DriveShim drive, TrajectorySequence prevPath){
         if(color==MeepMeepAutoUtil.RED){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
-                    return null;
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-34,-44))
+                            .turn(Math.toRadians(-20))
+                            .lineTo(new Vector2d(-36,-12))
+                            .lineTo(new Vector2d(60, -12))
+
+                            .build();
                 }
                 else if(zone==2){
-                    return null;
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-36,-44))
+                            .splineToConstantHeading(new Vector2d(-55, -12), Math.toRadians(90.00))
+                            .lineTo(new Vector2d(60, -12))
+
+
+                            .build();
                 }
-                else return null;
+                else return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-36,-44))
+                            .turn(Math.toRadians(20))
+                            .lineTo(new Vector2d(-36,-12))
+                            .lineTo(new Vector2d(60, -12))
+                            .build();
 
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
-                if(zone == 1){
-                    return null;
+                if(zone==1){
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(14,-44))
+                            .lineToLinearHeading(new Pose2d(14, -60, Math.toRadians(270)))
+                            .lineTo(new Vector2d(60,-60))
+
+                            .build();
                 }
-                else if(zone ==2){
-                    return null;
+                else if(zone==2){
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(12,-44))
+                            .lineTo(new Vector2d(12,-60))
+                            .lineTo(new Vector2d(60,-60))
+                            .build();
                 }
-                else {
-                    return null;
-                }
+                else return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(14,-50))
+                            .lineToLinearHeading(new Pose2d(14, -60, Math.toRadians(270)))
+                            .lineTo(new Vector2d(60,-60))
+
+                            .build();
             }
             else return null;
         }
         else if(color ==MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.LEFT){
-                if(zone ==1){
-                    return null;
-                }
-                else if(zone ==2){
-                    return null;
-                }else{
-                    return null;
-                }
-            }
-            else if(side == MeepMeepAutoUtil.RIGHT){
-                if(zone == 1){
-                    return null;
+                if(zone==1){
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(14,50))
+                            .lineToLinearHeading(new Pose2d(14, 60, Math.toRadians(90)))
+                            .lineTo(new Vector2d(60,60))
+
+                            .build();
                 }
                 else if(zone==2){
-                    return null;
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(12,44))
+                            .lineTo(new Vector2d(12,60))
+                            .lineTo(new Vector2d(60,60))
+                            .build();
                 }
-                else{
-                    return null;
+                else return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(14,44))
+                            .lineToLinearHeading(new Pose2d(14, 60, Math.toRadians(90)))
+                            .lineTo(new Vector2d(60,60))
+
+                            .build();
+            }
+            else if(side == MeepMeepAutoUtil.RIGHT){
+                if(zone==1){
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-34,44))
+                            .turn(Math.toRadians(-20))
+                            .lineTo(new Vector2d(-36,10))
+                            .lineTo(new Vector2d(60, 10))
+                            .build();
                 }
+                else if(zone==2){
+                    return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-36,44))
+                            .splineToConstantHeading(new Vector2d(-55, 10), Math.toRadians(270))
+                            .lineTo(new Vector2d(60, 10))
+                            .build();
+                }
+                else return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                            .lineTo(new Vector2d(-36,44))
+                            .turn(Math.toRadians(20))
+                            .lineTo(new Vector2d(-36,10))
+                            .lineTo(new Vector2d(60, 10))
+
+                            .build();
             }
             else return null;
         }
         else return null;
     }
 
-    public static TrajectorySequence getPixelStackAutoAction(int color, int side, int zone){
-        return null;
+    public static TrajectorySequence getPixelStackAutoAction(int color, DriveShim drive, TrajectorySequence prevPath){
+        if(color == MeepMeepAutoUtil.RED){
+            return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                    .splineToLinearHeading(new Pose2d(31.51, -6.30, Math.toRadians(180)), Math.toRadians(180.00))
+                    .splineToConstantHeading(new Vector2d(-60.35, -9.93), Math.toRadians(180))
+                    .waitSeconds(1)
+                    .lineTo(new Vector2d(50, -12))
+                    .build();
+
+        }
+        else if(color == MeepMeepAutoUtil.BLUE){
+            return drive.trajectorySequenceBuilder(prevPath.end()).waitSeconds(prevPath.duration())
+                    .splineToLinearHeading(new Pose2d(31.51, 6.30, Math.toRadians(180)), Math.toRadians(180.00))
+                    .splineToConstantHeading(new Vector2d(-60.35, 9.93), Math.toRadians(180))
+                    .waitSeconds(1)
+                    .lineTo(new Vector2d(50, 12))
+                    .build();
+        }
+        else return null;
     }
 }
