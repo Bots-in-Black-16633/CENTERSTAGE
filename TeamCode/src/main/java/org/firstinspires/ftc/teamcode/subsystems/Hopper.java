@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
@@ -16,6 +20,9 @@ public class Hopper implements SubsystemBase{
 
     public CRServo leftHopper;
     public CRServo rightHopper;
+
+    public ColorSensorWrapper leftHopperSensor;
+    public ColorSensorWrapper rightHopperSensor;
 
     public static final int RIGHT_HOPPER = 1;
     public static final int LEFT_HOPPER =2;
@@ -27,6 +34,9 @@ public class Hopper implements SubsystemBase{
     public Hopper(HardwareMap hwMap){
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
+
+        leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
+        rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
         leftHopper.setInverted(true);
     }
 
@@ -39,7 +49,11 @@ public class Hopper implements SubsystemBase{
             return false;
         }
     }
+
+
     public Action hopperOutake(){return new HopperOuttake();}
+
+
 
     public void intake(int type){
         setPower(type, Constants.HopperConstants.hopperPower);
@@ -68,6 +82,8 @@ public class Hopper implements SubsystemBase{
 
     }
 
+
+
     public void rest(int type){
         setPower(type, 0);
     }
@@ -80,6 +96,8 @@ public class Hopper implements SubsystemBase{
         t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
         t.addLine("LEFT HOPPER: " + leftHopper.toString());
         t.addLine("RIGHT HOPPER: " + rightHopper.toString());
+        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
+        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
     }
 
     @Override

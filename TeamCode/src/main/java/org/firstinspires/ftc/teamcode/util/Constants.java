@@ -7,6 +7,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.checkerframework.checker.units.qual.C;
+import org.opencv.core.Scalar;
 
 public final class Constants{
     @Config
@@ -90,6 +91,11 @@ public final class Constants{
     public static final class LinkageConstants{
         public static double linkageUp = 0;
         public static double linkageDown = 0;
+    }
+    @Config
+    public static final class ColorSensorWrapperConstants{
+        public static Scalar emptyHopperHSV = new Scalar(0,0,0);
+        public static double maxDistanceFromEmptyHopperColor = 0;
     }
     public static final class AprilTagConstants {
         public final static Vector2d APRIL_TAG_ONE = new Vector2d(60, 41.4);
