@@ -32,6 +32,7 @@ public class BaseRobot implements SubsystemBase{
    public Climber climber;
     public Drive drive;
     public Shooter shooter;
+    public Linkage linkage;
     public WebcamName camera;
 
     public AutoUtil autoGenerator;
@@ -44,6 +45,7 @@ public class BaseRobot implements SubsystemBase{
         wrist = new Wrist(hwMap);
         shooter = new Shooter(hwMap);
         slider = new Slider(hwMap);
+        linkage = new Linkage(hwMap);
         autoGenerator = new AutoUtil(drive);
         camera = hwMap.get(WebcamName.class, "camera");
 

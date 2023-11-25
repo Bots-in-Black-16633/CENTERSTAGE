@@ -112,13 +112,19 @@ public class CompetitionTeleop extends SampleTeleop {
             if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER))robot.hopper.rest(Hopper.LEFT_HOPPER);
         }
 
-        if(sliderPos > 400 && g2.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
-            sliderPos += Constants.SliderConstants.backdropRowConstant;
-            robot.slider.runToPosition(sliderPos);
+//        if(sliderPos > 400 && g2.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
+//            sliderPos += Constants.SliderConstants.backdropRowConstant;
+//            robot.slider.runToPosition(sliderPos);
+//        }
+//        if(sliderPos > 400 && g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
+//            sliderPos -= Constants.SliderConstants.backdropRowConstant;
+//            robot.slider.runToPosition(sliderPos);
+//        }
+        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
+            robot.linkage.raise();
         }
-        if(sliderPos > 400 && g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
-            sliderPos -= Constants.SliderConstants.backdropRowConstant;
-            robot.slider.runToPosition(sliderPos);
+        if(g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
+            robot.linkage.lower();
         }
 
 

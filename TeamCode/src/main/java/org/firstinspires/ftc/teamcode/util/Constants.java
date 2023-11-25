@@ -86,6 +86,11 @@ public final class Constants{
         public static double shooterRelease = .55;
 
     }
+    @Config
+    public static final class LinkageConstants{
+        public static double linkageUp = 0;
+        public static double linkageDown = 0;
+    }
     public static final class AprilTagConstants {
         public final static Vector2d APRIL_TAG_ONE = new Vector2d(60, 41.4);
         public final static Vector2d APRIL_TAG_TWO = new Vector2d(60, 35.25);
