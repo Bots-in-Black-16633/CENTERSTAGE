@@ -23,16 +23,28 @@ public class BackdropBlueRight extends SampleAuto {
     @Override
     public void onStart() {
         zone = TeamPropPartitionDetector.getBluePropZone();
-
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
+        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
+        pen.update();
         Actions.runBlocking(robot.autoGenerator.getBackdropAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
+        pen.update();
+        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
         Actions.runBlocking(robot.outtake());
-        robot.hopper.outtake(Hopper.ALL);
-        AutoUtil.delay(1);
-        robot.hopper.rest(Hopper.ALL);
+        Actions.runBlocking(robot.hopper.hopperOutake());
         Actions.runBlocking(robot.resetToIntake());
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
+        pen.update();
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT));
 
     }
 

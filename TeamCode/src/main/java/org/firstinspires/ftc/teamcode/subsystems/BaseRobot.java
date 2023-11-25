@@ -130,64 +130,9 @@ public class BaseRobot implements SubsystemBase{
             return false;
         }
     }
-    class toTravelingPosition implements Action{
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            wrist.setPosition(Constants.WristConstants.wristTraveling);
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
-            slider.runToPosition(Constants.SliderConstants.sliderTraveling);
-            return false;
-        }
-
-    }
-
-    class SlowOuttake implements Action{
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            hopper.intake(Hopper.ALL);
-            intake.setPower(-2);
-            AutoUtil.delay(2);
-            intake.setMode(Intake.REST);
-            hopper.rest(Hopper.ALL);
-
-            return false;
-        }
-    }
-
-    class DriveToAprilTag implements Action{
-        int id = 0;
-        final int DESIRED_DISTANCE = 12;
-        AprilTagDetection tag;
-        final double SPEED_GAIN  =  0.02  ;   //  Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
-        final double STRAFE_GAIN =  0.015 ;   //  Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
-        final double TURN_GAIN   =  0.01  ;
-
-        public void setId(int i){this.id = i;}
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            AprilTagProcessorWrapper.startAprilTagDetection(camera);
-            while(true){
-                tag = AprilTagProcessorWrapper.getAprilTagInfo(id);
-                if(tag != null){
-                    double  rangeError      = (tag.ftcPose.range - DESIRED_DISTANCE);
-                    double  headingError    = tag.ftcPose.bearing;
-                    double  yawError        = tag.ftcPose.yaw;
-                    double forward, turn, strafe;
 
 
-                    if(Math.abs(rangeError) < .5)break;
-                    // Use the speed and turn "gains" to calculate how we want the robot to move.
-                    forward  = Range.clip(rangeError * SPEED_GAIN, -1, 1);
-                    turn   = Range.clip(headingError * TURN_GAIN, -1, 1) ;
-                    strafe = Range.clip(-yawError * STRAFE_GAIN, -1, 1);
-                    drive.drive(forward, strafe, turn);
-                }
 
-            }
-            return false;
-        }
-    }
 
     public Action resetToIntake(){
         return new ResetToIntake();
@@ -195,10 +140,5 @@ public class BaseRobot implements SubsystemBase{
     public Action outtake(){return new Outtake();}
     public Action highOuttake(){return new HighOuttake();}
 
-    public Action toTravelingPosition(){return new toTravelingPosition();}
-    public Action slowOuttake(){
-        return new SlowOuttake();
-    }
-    public DriveToAprilTag aprilTag(){return new DriveToAprilTag();}
 
 }

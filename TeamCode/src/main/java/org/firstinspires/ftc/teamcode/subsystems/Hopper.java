@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 
@@ -24,6 +29,17 @@ public class Hopper implements SubsystemBase{
         rightHopper = new CRServo(hwMap, "rightHopper");
         leftHopper.setInverted(true);
     }
+
+   public class HopperOuttake implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            outtake(Hopper.ALL);
+            AutoUtil.delay(1);
+            rest(Hopper.ALL);
+            return false;
+        }
+    }
+    public Action hopperOutake(){return new HopperOuttake();}
 
     public void intake(int type){
         setPower(type, Constants.HopperConstants.hopperPower);
@@ -60,8 +76,8 @@ public class Hopper implements SubsystemBase{
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____HOPPER_____");
-        //t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
-        //t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
+        t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
+        t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
         t.addLine("LEFT HOPPER: " + leftHopper.toString());
         t.addLine("RIGHT HOPPER: " + rightHopper.toString());
     }

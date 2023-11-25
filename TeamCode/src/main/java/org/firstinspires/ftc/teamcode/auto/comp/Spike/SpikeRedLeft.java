@@ -18,7 +18,7 @@ public class SpikeRedLeft extends SampleAuto {
     int zone;
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.REDRIGHTSTART);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 
@@ -27,6 +27,11 @@ public class SpikeRedLeft extends SampleAuto {
         zone = TeamPropPartitionDetector.getRedPropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
+        pen.update();
+        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.LEFT, zone));
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
 

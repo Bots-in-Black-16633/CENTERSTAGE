@@ -1,0 +1,13 @@
+Step 1 ctrl R find and replace all public TrajectorySequence with public Action
+
+Step 2 ctrl R all prevPath.pose() with drive.pose
+
+Step 3 ctrlR all .waitSeconds(prevPath.duration()) with nothing
+
+Step 4 ctrR all , DriveShim drive, TrajectorySequence prevPath with nothing
+
+Step 5 ctrlR all lineTo with Strafe TO
+
+Step 6 ctrlR all strafeToLinearHeading(new Pose2d( with strafeToLinearHeading(new Vector2d(
+
+Step 7 ctrl alt shif click cursors onto every line with issues concerning strafeToLinearHeading and fix them all at once

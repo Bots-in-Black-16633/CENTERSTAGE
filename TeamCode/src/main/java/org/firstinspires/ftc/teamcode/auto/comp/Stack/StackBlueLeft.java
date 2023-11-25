@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto.comp.Backdrop;
 
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -11,33 +9,34 @@ import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="BACKDROPRedLeft", group="Backdrop")
-public class BackdropRedLeft extends SampleAuto {
+@Autonomous(name="StackBLueLeft", group="Stack")
+public class StackBlueLeft extends SampleAuto {
     BaseRobot robot;
     int zone;
+
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.REDLEFTSTART);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 
     @Override
     public void onStart() {
-        zone = TeamPropPartitionDetector.getRedPropZone();
+        zone = TeamPropPartitionDetector.getBluePropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.LEFT, zone));
+        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getBackdropAutoAction(AutoUtil.RED, AutoUtil.LEFT, zone));
+        Actions.runBlocking(robot.autoGenerator.getBackdropAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.RED,zone, robot.camera, pen));
+        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
         Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         Actions.runBlocking(robot.resetToIntake());
@@ -45,10 +44,15 @@ public class BackdropRedLeft extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.LEFT));
+
+        Actions.runBlocking(robot.autoGenerator.getPixelStackAutoAction(AutoUtil.BLUE));
+
+
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT));
+
+
+
     }
-
-
 
 
     @Override

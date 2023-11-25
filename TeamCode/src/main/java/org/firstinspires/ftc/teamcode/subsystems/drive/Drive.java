@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Rotation2d;
@@ -7,11 +11,17 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.CameraName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
+import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystems.SubsystemBase;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 public class Drive extends MecanumDrive implements SubsystemBase {
 
@@ -63,6 +73,47 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         rightBack.setPower(yPow + xPow - rotPow);
     }
 
+    class DriveToAprilTag implements Action {
+        int id = 0;
+        AprilTagDetection tag;
+        WebcamName camera;
+        ColorfulTelemetry pen;
+        public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){
+            this.camera = camera;
+            this.pen = pen;
+            if(color == AutoUtil.BLUE){
+                if(zone==1)id=1;
+                else if(zone==2)id=2;
+                else id=3;
+            }
+            else if(color == AutoUtil.RED){
+                if(zone==1)id=4;
+                else if(zone==2)id=5;
+                else id=6;
+            }
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            AprilTagProcessorWrapper.startAprilTagDetection(camera);
+            while(true){
+                double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id);
+                if(powers != null){
+                    drive(powers[0],powers[1],powers[2]);
+                    pen.addLine("FORWARD: " + powers[1]);
+                    pen.addLine("STRAFE: " + powers[0]);
+                    pen.addLine("TURN" + powers[2]);
+                    pen.update();
+                }
+                if(AprilTagProcessorWrapper.isAtTarget())break;
+
+            }
+            return false;
+        }
+    }
+
+    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){return new DriveToAprilTag(color, zone, camera, pen);}
+
+
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
@@ -76,11 +127,13 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         t.addLine("par0"+ ((ThreeDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
         t.addLine("par1"+ ((ThreeDeadWheelLocalizer)localizer).par1.getPositionAndVelocity().position);
         t.addLine("YAW: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+        drawRobot(t.getPacket().fieldOverlay(), pose);
     }
 
     @Override
     public void periodic() {
         updatePoseEstimate();
+
     }
 
 
