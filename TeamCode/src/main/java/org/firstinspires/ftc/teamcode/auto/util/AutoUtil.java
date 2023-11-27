@@ -209,17 +209,20 @@ public class AutoUtil {
             else if(side == AutoUtil.RIGHT){
                 if(zone==1){
                     return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToLinearHeading(new Vector2d(8,-40), Math.toRadians(290)).build();
+                            .strafeToConstantHeading(new Vector2d(24, -48))
+                            .strafeToLinearHeading(new Vector2d(11, -30), Math.toRadians(0.00))
+                            .build();
+
                 }
                 else if(zone==2){
                     return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeTo(new Vector2d(12,-40)).build();
+                            .strafeTo(new Vector2d(12,-35)).build();
 
 
                 }
                 else {
                     return drive.actionBuilder(REDRIGHTSTART)
-                            .strafeToLinearHeading(new Vector2d(16,-40), Math.toRadians(250)).build();
+                            .strafeToLinearHeading(new Vector2d(19,-40), Math.toRadians(250)).build();
                 }
             }
             else return null;
@@ -290,7 +293,7 @@ public class AutoUtil {
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,-44))
                             .strafeToLinearHeading(new Vector2d(14, -60), Math.toRadians(270))
-                            .strafeTo(new Vector2d(60,-60))
+                            .strafeTo(new Vector2d(57,-65))
 
                             .build();
                 }
@@ -298,13 +301,13 @@ public class AutoUtil {
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(12,-44))
                             .strafeTo(new Vector2d(12,-60))
-                            .strafeTo(new Vector2d(60,-60))
+                            .strafeTo(new Vector2d(57,-65))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,-50))
                             .strafeToLinearHeading(new Vector2d(14, -60), Math.toRadians(270))
-                            .strafeTo(new Vector2d(60,-60))
+                            .strafeTo(new Vector2d(57,-65))
 
                             .build();
             }

@@ -154,7 +154,7 @@ public class TeamPropPartitionDetector implements VisionProcessor {
         }
         ExposureControl exposureControl = portal.getCameraControl(ExposureControl.class);
         exposureControl.setMode(ExposureControl.Mode.Manual);
-        exposureControl.setExposure((long)25, TimeUnit.MILLISECONDS);
+        exposureControl.setExposure((long)40, TimeUnit.MILLISECONDS);
         //GainControl gainControl = portal.getCameraControl(GainControl.class);
         //gainControl.setGain(10);
 

@@ -31,6 +31,8 @@ public class SpikeRedRight extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.RED, AutoUtil.RIGHT, zone));
+
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
