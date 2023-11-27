@@ -92,10 +92,11 @@ public class Hopper implements SubsystemBase{
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____HOPPER_____");
-        t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
-        t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
-        t.addLine("LEFT HOPPER: " + leftHopper.toString());
-        t.addLine("RIGHT HOPPER: " + rightHopper.toString());
+//        t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
+//        t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
+        t.addLine("LEFT HOPPER: " + leftHopperSensor.pixelPresent());
+        t.addLine("RIGHT HOPPER: " + rightHopperSensor.pixelPresent());
+
         t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
         t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
     }

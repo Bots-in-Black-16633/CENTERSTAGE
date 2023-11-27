@@ -89,13 +89,13 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkageUp = 0;
-        public static double linkageDown = 0;
+        public static double linkageUp = 1;
+        public static double linkageDown = .82;
     }
     @Config
     public static final class ColorSensorWrapperConstants{
-        public static Scalar emptyHopperHSV = new Scalar(0,0,0);
-        public static double maxDistanceFromEmptyHopperColor = 0;
+        public static Scalar emptyHopperHSV = new Scalar(.08,.1,.13);
+        public static double maxDistanceFromEmptyHopperColor = 1;
     }
     public static final class AprilTagConstants {
         public final static Vector2d APRIL_TAG_ONE = new Vector2d(60, 41.4);

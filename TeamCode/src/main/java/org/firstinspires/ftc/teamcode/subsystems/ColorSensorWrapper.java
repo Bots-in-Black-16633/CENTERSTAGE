@@ -51,9 +51,9 @@ public class ColorSensorWrapper implements  SubsystemBase{
     public float [] getRGB() {
         NormalizedRGBA colors = colorSensor.getNormalizedColors();
         float [] output = new float [3];
-        output[0] = colors.red;
-        output[1] = colors.blue;
-        output[2] = colors.green;
+        output[0] = colors.red*100;
+        output[1] = colors.blue*100;
+        output[2] = colors.green*100;
         return output;
     }
 
