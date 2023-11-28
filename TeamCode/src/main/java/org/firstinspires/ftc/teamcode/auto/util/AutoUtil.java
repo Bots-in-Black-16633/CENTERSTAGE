@@ -125,7 +125,7 @@ public class AutoUtil {
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(12,-44))
-                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(190))
+                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(210))
 
                             .build();
                 }

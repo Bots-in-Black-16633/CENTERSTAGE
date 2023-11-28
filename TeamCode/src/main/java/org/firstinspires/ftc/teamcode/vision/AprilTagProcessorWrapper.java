@@ -25,8 +25,8 @@ public class AprilTagProcessorWrapper {
     static volatile boolean atTarget = false;
 
     final static double MAX_AUTO_SPEED = 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_STRAFE= 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_TURN  = 0.2;   //  Clip the turn speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_STRAFE= 0.2;   //  Clip the approach speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_TURN  = 0.15;   //  Clip the turn speed to this max value (adjust for your robot)
 
 
     public static void startAprilTagDetection(WebcamName camera, ColorfulTelemetry pen){
@@ -81,7 +81,7 @@ public class AprilTagProcessorWrapper {
             double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
             double  headingError    = desiredTag.ftcPose.bearing;
             double  yawError        = desiredTag.ftcPose.yaw;
-            if(Math.abs(rangeError) < 1)atTarget =true;
+            if(Math.abs(rangeError) < 4 && Math.abs(headingError)<4 && Math.abs(yawError)<4)atTarget =true;
             else atTarget = false;
 
 

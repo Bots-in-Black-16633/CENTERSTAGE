@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto.comp.Spike;
+package org.firstinspires.ftc.teamcode.auto.util;
 
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Vector2d;
