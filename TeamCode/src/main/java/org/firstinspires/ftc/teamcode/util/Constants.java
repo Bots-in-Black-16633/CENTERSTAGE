@@ -89,8 +89,8 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkageUp = 1;
-        public static double linkageDown = .82;
+        public static double linkageUp = .9;
+        public static double linkageDown = .65;
     }
     @Config
     public static final class ColorSensorWrapperConstants{
