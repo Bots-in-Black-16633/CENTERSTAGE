@@ -1,26 +1,32 @@
 package org.firstinspires.ftc.teamcode.vision;
 
+import static java.lang.Thread.sleep;
+
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.concurrent.TimeUnit;
+
 public class AprilTagProcessorWrapper {
     static AprilTagProcessor atp;
     static VisionPortal vp;
 
-    static boolean atTarget = false;
+    static volatile boolean atTarget = false;
 
-    final static double MAX_AUTO_SPEED = 0.5;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_STRAFE= 0.5;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_TURN  = 0.3;   //  Clip the turn speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_SPEED = 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_STRAFE= 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_TURN  = 0.2;   //  Clip the turn speed to this max value (adjust for your robot)
 
 
     public static void startAprilTagDetection(WebcamName camera, ColorfulTelemetry pen){
@@ -35,6 +41,14 @@ public class AprilTagProcessorWrapper {
             pen.addLine("STATUS" + getStringCameraState(vp.getCameraState()));
             pen.update();
         }
+        ExposureControl exposureControl = vp.getCameraControl(ExposureControl.class);
+        if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
+            exposureControl.setMode(ExposureControl.Mode.Manual);
+        }
+        exposureControl.setExposure((long)6, TimeUnit.MILLISECONDS);
+        GainControl gainControl = vp.getCameraControl(GainControl.class);
+        gainControl.setGain(250);
+        atTarget=false;
     }
     public static void pauseAprilTagDetection(ColorfulTelemetry pen){
 
@@ -52,6 +66,7 @@ public class AprilTagProcessorWrapper {
             pen.addLine("STATUS" + getStringCameraState(vp.getCameraState()));
             pen.update();
         }
+        atTarget=false;
     }
 
     public static AprilTagDetection getAprilTagInfo(int id){
@@ -62,11 +77,11 @@ public class AprilTagProcessorWrapper {
         AprilTagDetection desiredTag = getAprilTagInfo(id);
         if(desiredTag == null)return null;
         else{
-            double[] out = new double[3];
+            double[] out = new double[6];
             double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
             double  headingError    = desiredTag.ftcPose.bearing;
             double  yawError        = desiredTag.ftcPose.yaw;
-            if(Math.abs(rangeError) < .5)atTarget =true;
+            if(Math.abs(rangeError) < 1)atTarget =true;
             else atTarget = false;
 
 
@@ -79,6 +94,9 @@ public class AprilTagProcessorWrapper {
            //TURN Power
             out[2]= -Range.clip(headingError * Constants.DriveConstants.APRIL_TAG_TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
 
+            out[3]=rangeError;
+            out[4]=headingError;
+            out[5]=yawError;
             return out;
         }
     }

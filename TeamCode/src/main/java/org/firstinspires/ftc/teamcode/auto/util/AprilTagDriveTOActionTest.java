@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
+import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
 import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
@@ -32,15 +33,17 @@ public class AprilTagDriveTOActionTest extends SampleAuto {
         Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.RED, 3, robot.camera, pen));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
-        pen.update();
+        while(opModeIsActive()){
+
+        }
+
 
     }
 
 
     @Override
     public void onStop() {
-
+        AprilTagProcessorWrapper.endAprilTagDetection();
     }
 
 

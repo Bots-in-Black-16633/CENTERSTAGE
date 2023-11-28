@@ -171,14 +171,13 @@ public class CompetitionTeleop extends SampleTeleop {
         sliderPos = robot.slider.getPosition();
     }
     public void runDriveLoop(){
-        AprilTagProcessorWrapper.startAprilTagDetection(robot.camera);
-        AprilTagProcessorWrapper.pauseAprilTagDetection();
+        AprilTagProcessorWrapper.startAprilTagDetection(robot.camera, pen);
+        AprilTagProcessorWrapper.pauseAprilTagDetection(pen);
         double[] suggestedPowers = null;
         while(!volStopRequested){
             if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
-                AprilTagProcessorWrapper.resumeAprilTagDetection();
+                AprilTagProcessorWrapper.resumeAprilTagDetection(pen);
                 if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) && g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-                    AprilTagProcessorWrapper.resumeAprilTagDetection();
                     if(AprilTagProcessorWrapper.getSuggestedPower(2) !=null){
                         suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2);
                     }
@@ -187,7 +186,6 @@ public class CompetitionTeleop extends SampleTeleop {
                     }
                 }
                 else if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-                    AprilTagProcessorWrapper.resumeAprilTagDetection();
                     if(AprilTagProcessorWrapper.getSuggestedPower(1) !=null){
                         suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1);
                     }
@@ -196,7 +194,6 @@ public class CompetitionTeleop extends SampleTeleop {
                     }
                 }
                 else if(g1.isDown(GamepadKeys.Button.DPAD_RIGHT)){
-                    AprilTagProcessorWrapper.resumeAprilTagDetection();
 
                     if(AprilTagProcessorWrapper.getSuggestedPower(3) !=null){
                         suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(3);
@@ -211,7 +208,7 @@ public class CompetitionTeleop extends SampleTeleop {
                 else robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
 
             }
-            else{AprilTagProcessorWrapper.pauseAprilTagDetection();robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));}
+            else{AprilTagProcessorWrapper.pauseAprilTagDetection(pen);robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));}
 
             if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 

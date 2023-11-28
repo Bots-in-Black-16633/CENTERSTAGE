@@ -119,13 +119,13 @@ public class AutoUtil {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,-44))
-                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(-180))
+                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(190))
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(12,-44))
-                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(-180))
+                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(190))
 
                             .build();
                 }
