@@ -94,7 +94,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            AprilTagProcessorWrapper.startAprilTagDetection(camera);
+            AprilTagProcessorWrapper.startAprilTagDetection(camera, pen);
             while(true){
                 double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id);
                 if(powers != null){
@@ -102,11 +102,18 @@ public class Drive extends MecanumDrive implements SubsystemBase {
                     pen.addLine("FORWARD: " + powers[1]);
                     pen.addLine("STRAFE: " + powers[0]);
                     pen.addLine("TURN" + powers[2]);
+                    pen.addLine("Range Error" + powers[3]);
+                    pen.addLine("Heading Error" + powers[4]);
+                    pen.addLine("Yaw Error" + powers[5]);
+
                     pen.update();
+                    updatePoseEstimate();
                 }
                 if(AprilTagProcessorWrapper.isAtTarget())break;
 
             }
+            AprilTagProcessorWrapper.endAprilTagDetection();
+            drive(0,0,0);
             return false;
         }
     }
