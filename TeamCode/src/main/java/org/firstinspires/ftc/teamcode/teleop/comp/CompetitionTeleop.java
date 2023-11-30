@@ -119,13 +119,19 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         //Manual Fine adjustent controls
-        if(Math.abs(g2.getLeftY())>.01){
-            sliderPos += g2.getLeftY()*10;
-            robot.slider.runToPosition(sliderPos);
+        if(Math.abs(g2.getLeftY())>.5){
+            /*sliderPos += g2.getLeftY()*5;
+            robot.slider.runToPosition(sliderPos);*/
+            robot.slider.set(g2.getLeftY()*.1);
+        }
+        else {
+            robot.slider.set(0);
         }
         if(Math.abs(g2.getRightY())>.01){
+
             shoulderPos += -1*g2.getRightY()*.01;
             robot.shoulder.setPosition(shoulderPos);
+
 
         }
         if(Math.abs((g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)))>.01){
