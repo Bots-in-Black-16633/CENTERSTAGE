@@ -14,10 +14,10 @@ public final class Constants{
 
     public static final class DriveConstants{
         public static IMU.Parameters imuParam = new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT, RevHubOrientationOnRobot.UsbFacingDirection.UP));
-        public static double APRIL_TAG_SPEED_GAIN  =  0.05  ;   //  Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
+        public static double APRIL_TAG_SPEED_GAIN  =  0.04;   //  Forward Speed Control "Gain". eg: Ramp up to 50% power at a 25 inch error.   (0.50 / 25.0)
         public static double APRIL_TAG_STRAFE_GAIN =  0.03 ;   //  Strafe Speed Control "Gain".  eg: Ramp up to 25% power at a 25 degree Yaw error.   (0.25 / 25.0)
-        public static double APRIL_TAG_TURN_GAIN   =  0.03 ;
-       public static int DESIRED_DISTANCE = 5;
+        public static double APRIL_TAG_TURN_GAIN   =  0.015 ;
+       public static int DESIRED_DISTANCE = 2;
 
     }
     @Config

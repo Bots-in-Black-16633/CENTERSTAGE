@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.auto.util;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -19,7 +20,7 @@ public class AprilTagDriveTOActionTest extends SampleAuto {
 
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.REDRIGHTSTART);
+        robot  = new BaseRobot(hardwareMap, new Pose2d(new Vector2d(0,0), Math.toRadians(180)));
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 

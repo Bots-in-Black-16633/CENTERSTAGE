@@ -119,7 +119,7 @@ public class AutoUtil {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,-44))
-                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(190))
+                            .strafeToLinearHeading(new Vector2d(35,-40), Math.toRadians(190))
                             .build();
                 }
                 else if(zone==2){
@@ -142,15 +142,118 @@ public class AutoUtil {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,44))
-                            .strafeToLinearHeading(new Vector2d(40,44), Math.toRadians(130))
+                            .strafeToLinearHeading(new Vector2d(40,44), Math.toRadians(150))
 
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(12,44))
-                            .strafeToLinearHeading(new Vector2d(40,44), Math.toRadians(130))
+                            .strafeToLinearHeading(new Vector2d(35,40), Math.toRadians(158))
 
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+                            .strafeToLinearHeading(new Vector2d(37,44), Math.toRadians(130))
+                            .build();
+            }
+            else if(side == AutoUtil.RIGHT){
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-34,44))
+                            .turn(Math.toRadians(-20))
+                            .strafeTo(new Vector2d(-36,10))
+                            .strafeTo(new Vector2d(12, 10))
+                            .strafeToLinearHeading(new Vector2d(48,12), Math.toRadians(230))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-36,44))
+                            .splineToConstantHeading(new Vector2d(-55, 10), Math.toRadians(270))
+                            .strafeTo(new Vector2d(12, 10))
+                            .strafeToLinearHeading(new Vector2d(48,10), Math.toRadians(230))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-36,44))
+                            .turn(Math.toRadians(20))
+                            .strafeTo(new Vector2d(-36,10))
+                            .strafeTo(new Vector2d(12, 10))
+                            .strafeToLinearHeading(new Vector2d(48,10), Math.toRadians(230))
+                            .build();
+            }
+            else return null;
+        }
+        else return null;
+    }
+    public  Action getBackdropAutoActionNoAprilTag(int color, int side, int zone){
+        if(color==AutoUtil.RED){
+            if(side == AutoUtil.LEFT){
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-34,-44))
+                            .turn(Math.toRadians(-20))
+                            .strafeTo(new Vector2d(-36,-12))
+                            .strafeTo(new Vector2d(12, -12))
+                            .strafeToLinearHeading(new Vector2d(48,-12),Math.toRadians(-180))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-36,-44))
+                            .splineToConstantHeading(new Vector2d(-55, -12), Math.toRadians(90.00))
+                            .strafeTo(new Vector2d(12, -12))
+                            .strafeToLinearHeading(new Vector2d(48,-12),Math.toRadians(-180))
+
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(-36,-44))
+                            .turn(Math.toRadians(20))
+                            .strafeTo(new Vector2d(-36,-12))
+                            .strafeTo(new Vector2d(12, -12))
+                            .strafeToLinearHeading(new Vector2d(48,-12),Math.toRadians(-180))
+                            .build();
+
+            }
+            else if(side == AutoUtil.RIGHT){
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(14,-44))
+                            .strafeToLinearHeading(new Vector2d(35,-40), Math.toRadians(190))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(12,-44))
+                            .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(210))
+
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(14,-50))
+                            .strafeToLinearHeading(new Vector2d(37,-55), Math.toRadians(230))
+
+                            .build();
+            }
+            else return null;
+        }
+        else if(color ==AutoUtil.BLUE) {
+            if(side == AutoUtil.LEFT) {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(12,44))
+                            .strafeToLinearHeading(new Vector2d(40,40), Math.toRadians(158))
+                            .strafeToConstantHeading(new Vector2d(53, 40))
+
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeTo(new Vector2d(12,40))
+                            .strafeToLinearHeading(new Vector2d(40,35), Math.toRadians(158))
+                            .strafeToConstantHeading(new Vector2d(53, 35))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
@@ -189,7 +292,6 @@ public class AutoUtil {
         }
         else return null;
     }
-
     public  Action getSpikeAutoAction(int color, int side, int zone){
         if(color==AutoUtil.RED){
             if(side == AutoUtil.LEFT){
@@ -231,13 +333,16 @@ public class AutoUtil {
             if (side == AutoUtil.LEFT) {
                 if (zone == 1) {
                     return drive.actionBuilder(BLUELEFTSTART)
-                            .strafeToLinearHeading(new Vector2d(16, 40), Math.toRadians(110)).build();
+                            .strafeToLinearHeading(new Vector2d(18.5, 40), Math.toRadians(110)).build();
                 } else if (zone == 2) {
                     return drive.actionBuilder(BLUELEFTSTART)
                             .strafeTo(new Vector2d(12, 35)).build();
                 } else {
                     return drive.actionBuilder(BLUELEFTSTART)
-                            .strafeToLinearHeading(new Vector2d(8, 40), Math.toRadians(70)).build();
+                            .strafeToConstantHeading(new Vector2d(24.06, 48.51))
+                            .strafeToLinearHeading(new Vector2d(7.83, 35.33), Math.toRadians(20))
+                            .strafeToLinearHeading(new Vector2d(38.39, 44.69), Math.toRadians(130.00))
+                            .build();
                 }
             } else if (side == AutoUtil.RIGHT) {
                 if (zone == 1) {

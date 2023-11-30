@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
+import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -26,7 +27,7 @@ public class AprilTagProcessorWrapper {
 
     final static double MAX_AUTO_SPEED = 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
     final static double MAX_AUTO_STRAFE= 0.2;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_TURN  = 0.15;   //  Clip the turn speed to this max value (adjust for your robot)
+    final static double MAX_AUTO_TURN  = 0.2;   //  Clip the turn speed to this max value (adjust for your robot)
 
 
     public static void startAprilTagDetection(WebcamName camera, ColorfulTelemetry pen){
@@ -45,7 +46,7 @@ public class AprilTagProcessorWrapper {
         if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
             exposureControl.setMode(ExposureControl.Mode.Manual);
         }
-        exposureControl.setExposure((long)6, TimeUnit.MILLISECONDS);
+        exposureControl.setExposure((long)10, TimeUnit.MILLISECONDS);
         GainControl gainControl = vp.getCameraControl(GainControl.class);
         gainControl.setGain(250);
         atTarget=false;
@@ -72,17 +73,15 @@ public class AprilTagProcessorWrapper {
     public static AprilTagDetection getAprilTagInfo(int id){
         return atp.getDetections().stream().filter(tag->tag.id==id).findFirst().orElse(null);
     }
-    public static double[] getSuggestedPower(int id){
+    public static double[] getSuggestedPower(int id, Drive drive){
 
         AprilTagDetection desiredTag = getAprilTagInfo(id);
         if(desiredTag == null)return null;
         else{
             double[] out = new double[6];
             double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
-            double  headingError    = desiredTag.ftcPose.bearing;
+            double  headingError    = desiredTag.ftcPose.bearing/**(Math.toRadians(180)-drive.getHeading())**/;
             double  yawError        = desiredTag.ftcPose.yaw;
-            if(Math.abs(rangeError) < 4 && Math.abs(headingError)<4 && Math.abs(yawError)<4)atTarget =true;
-            else atTarget = false;
 
 
             // Use the speed and turn "gains" to calculate how we want the robot to move.
@@ -94,6 +93,9 @@ public class AprilTagProcessorWrapper {
            //TURN Power
             out[2]= -Range.clip(headingError * Constants.DriveConstants.APRIL_TAG_TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
 
+
+            if((Math.abs(rangeError) < 2 && Math.abs(headingError)<10 && Math.abs(yawError)<4)||(Math.abs(out[0]) <=.1 && Math.abs(out[1])<=.1 && Math.abs(out[1])<=.1))atTarget =true;
+            else atTarget = false;
             out[3]=rangeError;
             out[4]=headingError;
             out[5]=yawError;

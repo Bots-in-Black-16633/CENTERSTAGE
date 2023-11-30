@@ -27,10 +27,20 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
     ColorfulTelemetry t = null;
     ElapsedTime timer = null;
+    double headingOffset = 0;
+     static ElapsedTime turnTimer = null;
+     static int turnTimeTarget = 0;
+     static int turnPower = 1;
+
+     static ElapsedTime alignTimer = null;
+     static boolean hasCorrected = false;
+
 
 
     public Drive(HardwareMap hardwareMap, Pose2d startPose) {
+
         super(hardwareMap, startPose);
+        headingOffset = -Math.toRadians(startPose.heading.log());
     }
 
     /**
@@ -59,6 +69,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         }
 
         setDrivePowers(new PoseVelocity2d(new Vector2d(xPow, yPow), rotPow));
+        updatePoseEstimate();
 
 
 
@@ -66,11 +77,9 @@ public class Drive extends MecanumDrive implements SubsystemBase {
     }
 
     public void drive(double xPow, double yPow, double rotPow){
+        setDrivePowers(new PoseVelocity2d(new Vector2d(xPow,yPow),rotPow));
+        updatePoseEstimate();
 
-        leftFront.setPower(yPow + xPow + rotPow);
-        leftBack.setPower(yPow - xPow + rotPow);
-        rightFront.setPower(yPow - xPow - rotPow);
-        rightBack.setPower(yPow + xPow - rotPow);
     }
 
     class DriveToAprilTag implements Action {
@@ -78,9 +87,11 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         AprilTagDetection tag;
         WebcamName camera;
         ColorfulTelemetry pen;
-        public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){
+        Drive drive;
+        public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen, Drive drive){
             this.camera = camera;
             this.pen = pen;
+            this.drive = drive;
             if(color == AutoUtil.BLUE){
                 if(zone==1)id=1;
                 else if(zone==2)id=2;
@@ -95,8 +106,11 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             AprilTagProcessorWrapper.startAprilTagDetection(camera, pen);
+            alignTimer = new ElapsedTime();
             while(true){
-                double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id);
+                if(AprilTagProcessorWrapper.isAtTarget() || alignTimer.seconds() > 10)break;
+
+                double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id, drive);
                 if(powers != null){
                     drive(powers[0],powers[1],powers[2]);
                     pen.addLine("FORWARD: " + powers[1]);
@@ -105,11 +119,12 @@ public class Drive extends MecanumDrive implements SubsystemBase {
                     pen.addLine("Range Error" + powers[3]);
                     pen.addLine("Heading Error" + powers[4]);
                     pen.addLine("Yaw Error" + powers[5]);
-
                     pen.update();
-                    updatePoseEstimate();
                 }
-                if(AprilTagProcessorWrapper.isAtTarget())break;
+                else{//turn in one direction
+                    drive(0,0,.3);
+                }
+                drawRobot(pen.getPacket().fieldOverlay(), pose);
 
             }
             AprilTagProcessorWrapper.endAprilTagDetection();
@@ -118,7 +133,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         }
     }
 
-    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){return new DriveToAprilTag(color, zone, camera, pen);}
+    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){return new DriveToAprilTag(color, zone, camera, pen, this);}
 
 
 
@@ -146,7 +161,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
 
     public double getHeading(){
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)-Math.toRadians(headingOffset);
     }
 
     /**
@@ -187,6 +202,10 @@ public class Drive extends MecanumDrive implements SubsystemBase {
     public void turnLeft(double time, double power){
         setPowers(new double[]{-power, -power, power, power}, time);
     }
+    public void resetHeading(){
+        headingOffset = Math.toDegrees(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+    }
+
 
 
 
