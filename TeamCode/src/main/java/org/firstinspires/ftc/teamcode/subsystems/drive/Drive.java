@@ -88,6 +88,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         WebcamName camera;
         ColorfulTelemetry pen;
         Drive drive;
+        ElapsedTime notSeenTimer = null;
         public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen, Drive drive){
             this.camera = camera;
             this.pen = pen;
@@ -110,7 +111,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
             while(true){
                 if(AprilTagProcessorWrapper.isAtTarget() || alignTimer.seconds() > 10)break;
 
-                double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id, drive);
+                double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id, drive,pen);
                 if(powers != null){
                     drive(powers[0],powers[1],powers[2]);
                     pen.addLine("FORWARD: " + powers[1]);
@@ -119,12 +120,16 @@ public class Drive extends MecanumDrive implements SubsystemBase {
                     pen.addLine("Range Error" + powers[3]);
                     pen.addLine("Heading Error" + powers[4]);
                     pen.addLine("Yaw Error" + powers[5]);
-                    pen.update();
+                    notSeenTimer = null;
                 }
-                else{//turn in one direction
-                    drive(0,0,.3);
+                else{
+                    notSeenTimer = new ElapsedTime();
+                }
+                if(notSeenTimer != null && notSeenTimer.seconds() > 2){//turn in one direction
+                    drive(0,0,.2);
                 }
                 drawRobot(pen.getPacket().fieldOverlay(), pose);
+                pen.update();
 
             }
             AprilTagProcessorWrapper.endAprilTagDetection();

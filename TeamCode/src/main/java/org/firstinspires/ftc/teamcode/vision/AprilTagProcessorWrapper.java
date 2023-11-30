@@ -17,6 +17,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AprilTagProcessorWrapper {
@@ -70,12 +71,33 @@ public class AprilTagProcessorWrapper {
         atTarget=false;
     }
 
-    public static AprilTagDetection getAprilTagInfo(int id){
+    public static AprilTagDetection getAprilTagInfo(int id, ColorfulTelemetry pen){
+        List<AprilTagDetection> currentDetections = atp.getDetections();
+        pen.addData("# AprilTags Detected", currentDetections.size());
+
+        // Step through the list of detections and display info for each one.
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                pen.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+                pen.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
+                pen.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
+                pen.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+            } else {
+                pen.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+                pen.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+            }
+        }   // end for() loop
+
+        // Add "key" information to telemetry
+        pen.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
+        pen.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
+        pen.addLine("RBE = Range, Bearing & Elevation");
+
         return atp.getDetections().stream().filter(tag->tag.id==id).findFirst().orElse(null);
     }
-    public static double[] getSuggestedPower(int id, Drive drive){
+    public static double[] getSuggestedPower(int id, Drive drive, ColorfulTelemetry pen){
 
-        AprilTagDetection desiredTag = getAprilTagInfo(id);
+        AprilTagDetection desiredTag = getAprilTagInfo(id, pen);
         if(desiredTag == null)return null;
         else{
             double[] out = new double[6];

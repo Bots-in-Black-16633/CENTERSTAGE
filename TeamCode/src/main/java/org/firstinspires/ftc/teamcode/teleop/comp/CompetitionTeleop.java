@@ -178,29 +178,29 @@ public class CompetitionTeleop extends SampleTeleop {
             if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
                 AprilTagProcessorWrapper.resumeAprilTagDetection(pen);
                 if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) && g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-                    if(AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive);
+                    if(AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen) !=null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen);
                     }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive);
+                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
                     }
                 }
                 else if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-                    if(AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive);
+                    if(AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen) !=null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen);
                     }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive);
+                    else if(AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen) != null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen);
                     }
                 }
                 else if(g1.isDown(GamepadKeys.Button.DPAD_RIGHT)){
 
-                    if(AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive);
+                    if(AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen) !=null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen);
 
                     }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive);
+                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
+                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
 
                     }
                 }
