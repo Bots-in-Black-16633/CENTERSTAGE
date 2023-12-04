@@ -7,6 +7,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Actions;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -142,16 +143,33 @@ public class BaseRobot implements SubsystemBase{
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            linkage.raise();
+
+            drive.forward(.5,.5);
+            linkage.lower();
+            time = new ElapsedTime();
+            while(time.seconds() < 1.5){
+
+            }
+            drive.backward(.5,.5);
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
-            linkage.raise();
-            time = new ElapsedTime();
+            drive.forward(.5,.5);
+
+            time.reset();
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
                 if(hopper.leftHopperSensor.pixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
                 if(hopper.rightHopperSensor.pixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
             }
+            hopper.intake(Hopper.ALL);
+            intake.setMode(Intake.OUTTAKE);
+            time.reset();
+            while(time.seconds() < 2){
+
+            }
             hopper.rest(Hopper.ALL);
             intake.setMode(Intake.REST);
+
 
             return false;
         }
@@ -184,6 +202,9 @@ public class BaseRobot implements SubsystemBase{
 
 
 
+
+
+
     public Action resetToIntake(){
         return new ResetToIntake();
     }
@@ -191,6 +212,7 @@ public class BaseRobot implements SubsystemBase{
     public Action distanceOuttake(){return new DistanceOuttake();}
     public Action highOuttake(){return new HighOuttake();}
     public Action stackIntake(){return new PixelStackIntake();}
+
 
 
 }

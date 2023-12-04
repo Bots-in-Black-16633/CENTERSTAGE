@@ -118,7 +118,7 @@ public final class Constants{
         public static long partitionExposure = 30;
         public static int partitionGain = 0;
 
-        public static long aprilTagExposure = 10;
+        public static long aprilTagExposure = 5;
         public static int aprilTagGain = 0;
 
     }

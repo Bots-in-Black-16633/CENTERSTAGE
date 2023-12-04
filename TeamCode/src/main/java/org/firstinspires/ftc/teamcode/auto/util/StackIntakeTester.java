@@ -18,7 +18,6 @@ public class StackIntakeTester extends SampleAuto {
     @Override
     public void onInit() {
         robot  = new BaseRobot(hardwareMap, new Pose2d(new Vector2d(0,0), Math.toRadians(180)));
-        TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 
     @Override
@@ -31,7 +30,7 @@ public class StackIntakeTester extends SampleAuto {
 
     @Override
     public void onStop() {
-        AprilTagProcessorWrapper.endAprilTagDetection();
+
     }
 
 

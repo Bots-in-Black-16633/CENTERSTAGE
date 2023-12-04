@@ -37,7 +37,7 @@ public class BackdropBlueLeft extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
         //TODO uncomment this
-        //Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
+        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
         Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         Actions.runBlocking(robot.resetToIntake());

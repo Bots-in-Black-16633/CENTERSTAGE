@@ -117,7 +117,7 @@ public class AprilTagProcessorWrapper {
             out[2]=- Range.clip(headingError * Constants.DriveConstants.APRIL_TAG_TURN_GAIN, -Constants.DriveConstants.MAX_AUTO_TURN, Constants.DriveConstants.MAX_AUTO_SPEED) ;
 
 
-            if((Math.abs(rangeError) < 1 && Math.abs(headingError)<3 && Math.abs(yawError)<4)||(Math.abs(out[0]) <=.1 && Math.abs(out[1])<=.1 && Math.abs(out[1])<=.11))atTarget =true;
+            if((Math.abs(out[0]) <=.15 && Math.abs(out[2])<=.15 && Math.abs(out[1])<=.18))atTarget =true;
             else atTarget = false;
             out[3]=rangeError;
             out[4]=headingError;

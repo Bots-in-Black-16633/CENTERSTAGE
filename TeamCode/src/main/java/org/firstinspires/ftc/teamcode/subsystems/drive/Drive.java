@@ -8,6 +8,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -90,7 +91,14 @@ public class Drive extends MecanumDrive implements SubsystemBase {
        updatePoseEstimate();
 
     }
+    class SlowBackwards implements Action{
 
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            backward(1.5,.25);
+            return false;
+        }
+    }
     class DriveToAprilTag implements Action {
         int id = 0;
         AprilTagDetection tag;
@@ -148,6 +156,9 @@ public class Drive extends MecanumDrive implements SubsystemBase {
             }
             AprilTagProcessorWrapper.endAprilTagDetection();
             drive(0,0,0);
+            pen.addLine("FINISHED ALIGNMENT");
+            pen.update();
+            Actions.runBlocking(new SlowBackwards());
             return false;
         }
     }
