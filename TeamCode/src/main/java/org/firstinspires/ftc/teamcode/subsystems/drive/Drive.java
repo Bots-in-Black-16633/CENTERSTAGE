@@ -27,20 +27,19 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
     ColorfulTelemetry t = null;
     ElapsedTime timer = null;
-    double headingOffset = 0;
-     static ElapsedTime turnTimer = null;
-     static int turnTimeTarget = 0;
-     static int turnPower = 1;
+//    double headingOffset = 0;
+//    double initialHeading = 0;
+
 
      static ElapsedTime alignTimer = null;
-     static boolean hasCorrected = false;
 
 
 
     public Drive(HardwareMap hardwareMap, Pose2d startPose) {
 
         super(hardwareMap, startPose);
-        headingOffset = -Math.toRadians(startPose.heading.log());
+        imu.resetYaw();
+        initialHeading = Math.toDegrees(startPose.heading.log());
     }
 
     /**
@@ -77,8 +76,18 @@ public class Drive extends MecanumDrive implements SubsystemBase {
     }
 
     public void drive(double xPow, double yPow, double rotPow){
-        setDrivePowers(new PoseVelocity2d(new Vector2d(xPow,yPow),rotPow));
-        updatePoseEstimate();
+
+
+        double leftFrontPower    =  yPow +xPow +rotPow;
+        double rightFrontPower   =  yPow -xPow -rotPow;
+        double leftBackPower     =  yPow -xPow +rotPow;
+        double rightBackPower    =  yPow +xPow -rotPow;
+        leftBack.setPower(leftBackPower);
+        leftFront.setPower(leftFrontPower);
+        rightBack.setPower(rightBackPower);
+        rightFront.setPower(rightFrontPower);
+//        setDrivePowers(new PoseVelocity2d(new Vector2d(yPow,xPow),rotPow));
+       updatePoseEstimate();
 
     }
 
@@ -113,6 +122,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
                 double[] powers = AprilTagProcessorWrapper.getSuggestedPower(id, drive,pen);
                 if(powers != null){
+                    if(notSeenTimer != null)drive(0,0,0);
                     drive(powers[0],powers[1],powers[2]);
                     pen.addLine("FORWARD: " + powers[1]);
                     pen.addLine("STRAFE: " + powers[0]);
@@ -120,16 +130,20 @@ public class Drive extends MecanumDrive implements SubsystemBase {
                     pen.addLine("Range Error" + powers[3]);
                     pen.addLine("Heading Error" + powers[4]);
                     pen.addLine("Yaw Error" + powers[5]);
+                    pen.addLine("HEading" + Math.toDegrees(getHeading()));
+                    pen.update();
+
                     notSeenTimer = null;
                 }
                 else{
-                    notSeenTimer = new ElapsedTime();
+                    if(notSeenTimer == null)notSeenTimer = new ElapsedTime();
                 }
-                if(notSeenTimer != null && notSeenTimer.seconds() > 2){//turn in one direction
-                    drive(0,0,.2);
+                if(notSeenTimer != null && notSeenTimer.seconds() > 5){//turn in one direction
+                    //drive(0,0,.3);
                 }
+                //pen.addLine("NotSeen" + (notSeenTimer!=null?notSeenTimer.seconds():"Null"));
+
                 drawRobot(pen.getPacket().fieldOverlay(), pose);
-                pen.update();
 
             }
             AprilTagProcessorWrapper.endAprilTagDetection();
@@ -146,15 +160,18 @@ public class Drive extends MecanumDrive implements SubsystemBase {
     public void printTelemetry(ColorfulTelemetry t) {
         this.t = t;
         t.addLine("DRIVE TELEMETRY");
-        t.addLine("POSITION: " + pose.position + "HEADING " + pose.heading.log()  + " " + pose.heading.real);
         t.addLine("XPOS: " + pose.position.x);
         t.addLine("YPOS: " + pose.position.y);
-        t.addLine("Heading: " +pose.heading.log());
+        t.addLine("Initital HEading" + initialHeading);
+        t.addLine("HEdaing Offset" + headingOffset);
+        t.addLine("ROBOT HEADING" + Math.toDegrees(getHeading()));
+        t.addLine("OdOHeading: " +Math.toDegrees(pose.heading.log()));
+        t.addLine("IMUHeading: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
         t.addLine("perp"+ ((ThreeDeadWheelLocalizer)localizer).perp.getPositionAndVelocity().position);
         t.addLine("par0"+ ((ThreeDeadWheelLocalizer)localizer).par0.getPositionAndVelocity().position);
         t.addLine("par1"+ ((ThreeDeadWheelLocalizer)localizer).par1.getPositionAndVelocity().position);
-        t.addLine("YAW: " + imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
         drawRobot(t.getPacket().fieldOverlay(), pose);
+
     }
 
     @Override
@@ -165,9 +182,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
 
 
-    public double getHeading(){
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)-Math.toRadians(headingOffset);
-    }
+
 
     /**
      * @param motorPowers array containg powers for each of he motors [leftFront, leftBack, rightFront, rightBack]

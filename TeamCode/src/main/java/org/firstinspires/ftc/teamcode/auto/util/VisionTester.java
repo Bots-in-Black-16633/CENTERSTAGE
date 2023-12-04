@@ -1,21 +1,18 @@
 package org.firstinspires.ftc.teamcode.auto.util;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
-import org.firstinspires.ftc.teamcode.vision.TeamPropDetector;
+import org.firstinspires.ftc.teamcode.vision.TeamPropContourDetector;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.opencv.core.Rect;
 
 
 @Autonomous
 public class VisionTester extends SampleAuto {
 
-    TeamPropDetector b;
+    TeamPropContourDetector b;
     VisionPortal v;
 
     WebcamName camera;

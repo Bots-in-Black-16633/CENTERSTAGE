@@ -26,9 +26,6 @@ public class AprilTagProcessorWrapper {
 
     static volatile boolean atTarget = false;
 
-    final static double MAX_AUTO_SPEED = 0.3;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_STRAFE= 0.2;   //  Clip the approach speed to this max value (adjust for your robot)
-    final static double MAX_AUTO_TURN  = 0.2;   //  Clip the turn speed to this max value (adjust for your robot)
 
 
     public static void startAprilTagDetection(WebcamName camera, ColorfulTelemetry pen){
@@ -47,9 +44,9 @@ public class AprilTagProcessorWrapper {
         if (exposureControl.getMode() != ExposureControl.Mode.Manual) {
             exposureControl.setMode(ExposureControl.Mode.Manual);
         }
-        exposureControl.setExposure((long)10, TimeUnit.MILLISECONDS);
+        exposureControl.setExposure((long)Constants.VisionConstants.aprilTagExposure, TimeUnit.MILLISECONDS);
         GainControl gainControl = vp.getCameraControl(GainControl.class);
-        gainControl.setGain(250);
+        gainControl.setGain(Constants.VisionConstants.aprilTagGain);
         atTarget=false;
     }
     public static void pauseAprilTagDetection(ColorfulTelemetry pen){
@@ -101,22 +98,26 @@ public class AprilTagProcessorWrapper {
         if(desiredTag == null)return null;
         else{
             double[] out = new double[6];
+            double convertedHeading = Math.toDegrees(drive.getHeading());
+            if(convertedHeading < 0){
+                convertedHeading = 360+convertedHeading;
+            }
             double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
-            double  headingError    = desiredTag.ftcPose.bearing/**(Math.toRadians(180)-drive.getHeading())**/;
+            double  headingError    = desiredTag.ftcPose.bearing/**Math.toDegrees(Math.toRadians(convertedHeading)-Math.toRadians(180))**/;
             double  yawError        = desiredTag.ftcPose.yaw;
 
 
             // Use the speed and turn "gains" to calculate how we want the robot to move.
-            //FORWARD power
-            out[1]=-Range.clip(rangeError * Constants.DriveConstants.APRIL_TAG_SPEED_GAIN, -MAX_AUTO_SPEED, MAX_AUTO_SPEED);
-            //strafe power
-            out[0]=Range.clip(-yawError * Constants.DriveConstants.APRIL_TAG_STRAFE_GAIN, -MAX_AUTO_STRAFE, MAX_AUTO_STRAFE);
+            //FORWARD power or YPow
+            out[1]=-Range.clip(rangeError * Constants.DriveConstants.APRIL_TAG_SPEED_GAIN, -Constants.DriveConstants.MAX_AUTO_SPEED, Constants.DriveConstants.MAX_AUTO_SPEED);
+            //strafe power or xPow
+            out[0]=Range.clip(-yawError * Constants.DriveConstants.APRIL_TAG_STRAFE_GAIN, -Constants.DriveConstants.MAX_AUTO_STRAFE, Constants.DriveConstants.MAX_AUTO_STRAFE);
 
            //TURN Power
-            out[2]= -Range.clip(headingError * Constants.DriveConstants.APRIL_TAG_TURN_GAIN, -MAX_AUTO_TURN, MAX_AUTO_TURN) ;
+            out[2]=- Range.clip(headingError * Constants.DriveConstants.APRIL_TAG_TURN_GAIN, -Constants.DriveConstants.MAX_AUTO_TURN, Constants.DriveConstants.MAX_AUTO_SPEED) ;
 
 
-            if((Math.abs(rangeError) < 2 && Math.abs(headingError)<10 && Math.abs(yawError)<4)||(Math.abs(out[0]) <=.1 && Math.abs(out[1])<=.1 && Math.abs(out[1])<=.1))atTarget =true;
+            if((Math.abs(rangeError) < 1 && Math.abs(headingError)<3 && Math.abs(yawError)<4)||(Math.abs(out[0]) <=.1 && Math.abs(out[1])<=.1 && Math.abs(out[1])<=.11))atTarget =true;
             else atTarget = false;
             out[3]=rangeError;
             out[4]=headingError;

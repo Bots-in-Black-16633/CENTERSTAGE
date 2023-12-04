@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.vision;
 
 import android.graphics.Canvas;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
@@ -23,7 +21,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamPropDetector implements VisionProcessor {
+public class TeamPropContourDetector implements VisionProcessor {
     Mat hsvThresholdOutputRed = new Mat();
     Mat hsvThresholdOutputBlue = new Mat();
 
@@ -56,7 +54,7 @@ public class TeamPropDetector implements VisionProcessor {
 
     public static VisionPortal portal;
     public static WebcamName camera;
-    public static TeamPropDetector propDetector;
+    public static TeamPropContourDetector propDetector;
 
     public static double redXPos = 0;
     public static double blueXPos = 0;
@@ -67,7 +65,7 @@ public class TeamPropDetector implements VisionProcessor {
 
 
 
-    public TeamPropDetector(ColorfulTelemetry telemetry){
+    public TeamPropContourDetector(ColorfulTelemetry telemetry){
         this.telemetry = telemetry;
     }
 
@@ -111,8 +109,8 @@ public class TeamPropDetector implements VisionProcessor {
         telemetry.addLine("CURREDX" + curRedX);
         telemetry.addLine("CUrBlueX" + curBlueX);
         telemetry.addLine("BLUEXPOS: " + blueXPos);
-        telemetry.addLine("BZONE: " + TeamPropDetector.getBluePropZone());
-        telemetry.addLine("RZONE: " + TeamPropDetector.getRedPropZone());
+        telemetry.addLine("BZONE: " + TeamPropContourDetector.getBluePropZone());
+        telemetry.addLine("RZONE: " + TeamPropContourDetector.getRedPropZone());
 
         Imgproc.line(frame, new Point(redXPos, 0), new Point(redXPos, frame.rows()-1), new Scalar(255,255,255));
         Imgproc.line(frame, new Point(blueXPos, 0), new Point(blueXPos, frame.rows()-1), new Scalar(255,255,255));
@@ -271,8 +269,8 @@ public class TeamPropDetector implements VisionProcessor {
      */
 
     public static void startPropDetection(WebcamName camera, ColorfulTelemetry pen){
-         propDetector = new TeamPropDetector(pen);
-        TeamPropDetector.camera = camera;
+         propDetector = new TeamPropContourDetector(pen);
+        TeamPropContourDetector.camera = camera;
          portal = VisionPortal.easyCreateWithDefaults(camera, propDetector);
 
     }

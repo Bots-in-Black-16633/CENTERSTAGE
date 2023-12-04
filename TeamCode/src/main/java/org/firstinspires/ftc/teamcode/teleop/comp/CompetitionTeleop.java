@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
 
 @TeleOp
 public class CompetitionTeleop extends SampleTeleop {
-    Pose2d startPos = new Pose2d(0,0,0);
+    Pose2d startPos = AutoUtil.REDRIGHTSTART;
 
     double shoulderPos;
     double sliderPos;
@@ -30,6 +30,7 @@ public class CompetitionTeleop extends SampleTeleop {
     Thread driveLoop;
 
     volatile boolean volStopRequested = false;
+
 
 
 
@@ -66,7 +67,9 @@ public class CompetitionTeleop extends SampleTeleop {
             resetPixelSubsystemTrackingVariables();
         }
         if(g2.wasJustPressed(GamepadKeys.Button.X)){
-            Actions.runBlocking(robot.outtake());
+
+            if(Math.abs(robot.shoulder.getPosition()-Constants.ShoulderConstants.shoulderOuttake)<.05) Actions.runBlocking(robot.distanceOuttake());
+            else Actions.runBlocking(robot.outtake());
             robot.hopper.unLock(Hopper.ALL);
             resetPixelSubsystemTrackingVariables();
         }
@@ -97,7 +100,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         //INTTAKE
-        if(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
+        if(g2.isDown(GamepadKeys.Button.DPAD_RIGHT) && !robot.hopper.hoppersFull()){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
         else if(g2.isDown(GamepadKeys.Button.DPAD_LEFT)){robot.intake.setMode(Intake.OUTTAKE);robot.hopper.outtake(Hopper.ALL);}
         else {
             robot.intake.setMode(Intake.REST);
@@ -119,14 +122,14 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         //Manual Fine adjustent controls
-        if(Math.abs(g2.getLeftY())>.5){
-            /*sliderPos += g2.getLeftY()*5;
-            robot.slider.runToPosition(sliderPos);*/
-            robot.slider.set(g2.getLeftY()*.1);
+        if(Math.abs(g2.getLeftY())>.01){
+            sliderPos += g2.getLeftY()*10;
+            robot.slider.runToPosition(sliderPos);
+            //robot.slider.set(g2.getLeftY()*.1);
         }
-        else {
-            robot.slider.set(0);
-        }
+//        else {
+//            robot.slider.set(0);
+//        }
         if(Math.abs(g2.getRightY())>.01){
 
             shoulderPos += -1*g2.getRightY()*.01;

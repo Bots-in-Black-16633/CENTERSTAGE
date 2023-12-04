@@ -5,8 +5,10 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Actions;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Const;
@@ -98,9 +100,11 @@ public class BaseRobot implements SubsystemBase{
     class Outtake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
-            AutoUtil.delay(.25);
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            if(slider.getPosition() < 200){
+                slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+                AutoUtil.delay(.25);
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            }
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
@@ -115,9 +119,11 @@ public class BaseRobot implements SubsystemBase{
     class HighOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
-            AutoUtil.delay(.25);
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            if(slider.getPosition() < 200){
+                slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+                AutoUtil.delay(.25);
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            }
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttakeHigh);
@@ -132,6 +138,48 @@ public class BaseRobot implements SubsystemBase{
             return false;
         }
     }
+    class PixelStackIntake implements Action {
+        ElapsedTime time;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.setMode(Intake.INTAKE);
+            hopper.intake(Hopper.ALL);
+            linkage.raise();
+            time = new ElapsedTime();
+            while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
+                if(hopper.leftHopperSensor.pixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
+                if(hopper.rightHopperSensor.pixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
+            }
+            hopper.rest(Hopper.ALL);
+            intake.setMode(Intake.REST);
+
+            return false;
+        }
+    }
+    class DistanceOuttake implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(slider.getPosition() < 200){
+                slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+                AutoUtil.delay(.25);
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            }
+
+
+            AutoUtil.delay(.25);
+            slider.runToPosition(Constants.SliderConstants.sliderDistanceDeposit);
+            AutoUtil.delay(.25);
+
+            wrist.setPosition(Constants.WristConstants.wristDistanceDeposit);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderDistanceDeposit);
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderDistanceDeposit) > 5){
+
+            }
+
+            return false;
+        }
+    }
+
 
 
 
@@ -140,7 +188,9 @@ public class BaseRobot implements SubsystemBase{
         return new ResetToIntake();
     }
     public Action outtake(){return new Outtake();}
+    public Action distanceOuttake(){return new DistanceOuttake();}
     public Action highOuttake(){return new HighOuttake();}
+    public Action stackIntake(){return new PixelStackIntake();}
 
 
 }

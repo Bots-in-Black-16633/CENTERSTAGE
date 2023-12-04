@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.Exposur
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.GainControl;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
@@ -35,12 +36,12 @@ public class TeamPropPartitionDetector implements VisionProcessor {
     Mat dilationOutputRed = new Mat();
     Mat dilationOutputBlue = new Mat();
 
-    private static double blueLeftFrame;
-    private static double redLeftFrame;
-    private static double blueMidFrame;
-    private static double redMidFrame;
-    private static double blueRightFrame;
-    private static double redRightFrame;
+    public static double blueLeftFrame;
+    public static double redLeftFrame;
+    public static double blueMidFrame;
+    public static double redMidFrame;
+    public static double blueRightFrame;
+    public static double redRightFrame;
 
     Mat hierarchy = new Mat();
 
@@ -106,18 +107,18 @@ public class TeamPropPartitionDetector implements VisionProcessor {
         Imgproc.rectangle(frame, new Rect(0, 0, ZONE1EDGE, frame.rows()), new Scalar(255,255,255));
         Imgproc.rectangle(frame, new Rect(ZONE1EDGE, 0, ZONE2EDGE-ZONE1EDGE, frame.rows()), new Scalar(255,255,255));
 
-        telemetry.addLine("leftFrame: " + blueLeftFrame);
-        telemetry.addLine("MidFrame:" + blueMidFrame);
-        telemetry.addLine("RightFrame:" + blueRightFrame);
-        telemetry.addLine("leftFrame: " + redLeftFrame);
-        telemetry.addLine("MidFrame:" + redMidFrame);
-        telemetry.addLine("RightFrame:" + redRightFrame);
-
-        telemetry.addLine();
-        telemetry.addLine("Blue Zone: " + TeamPropPartitionDetector.getBluePropZone());
-        telemetry.addLine("Red Zone: " + TeamPropPartitionDetector.getRedPropZone());
-
-        telemetry.update();
+//        telemetry.addLine("leftFrame: " + blueLeftFrame);
+//        telemetry.addLine("MidFrame:" + blueMidFrame);
+//        telemetry.addLine("RightFrame:" + blueRightFrame);
+//        telemetry.addLine("leftFrame: " + redLeftFrame);
+//        telemetry.addLine("MidFrame:" + redMidFrame);
+//        telemetry.addLine("RightFrame:" + redRightFrame);
+//
+//        telemetry.addLine();
+//        telemetry.addLine("Blue Zone: " + TeamPropPartitionDetector.getBluePropZone());
+//        telemetry.addLine("Red Zone: " + TeamPropPartitionDetector.getRedPropZone());
+//
+//        telemetry.update();
 
         return null;
     }
@@ -151,12 +152,13 @@ public class TeamPropPartitionDetector implements VisionProcessor {
             }
             pen.addData("Camera", "Ready");
             pen.update();
+
         }
         ExposureControl exposureControl = portal.getCameraControl(ExposureControl.class);
         exposureControl.setMode(ExposureControl.Mode.Manual);
-        exposureControl.setExposure((long)35, TimeUnit.MILLISECONDS);
-        //GainControl gainControl = portal.getCameraControl(GainControl.class);
-        //gainControl.setGain(10);
+        exposureControl.setExposure(Constants.VisionConstants.partitionExposure, TimeUnit.MILLISECONDS);
+        GainControl gainControl = portal.getCameraControl(GainControl.class);
+        gainControl.setGain(Constants.VisionConstants.partitionGain);
 
 
         }

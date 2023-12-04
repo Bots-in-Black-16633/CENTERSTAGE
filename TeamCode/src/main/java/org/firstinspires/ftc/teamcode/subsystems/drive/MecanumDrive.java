@@ -105,6 +105,8 @@ public class MecanumDrive {
     public Pose2d pose;
 
     private final LinkedList<Pose2d> poseHistory = new LinkedList<>();
+    double headingOffset = 0;
+    double initialHeading = 0;
 
     public class DriveLocalizer implements Localizer {
         public final Encoder leftFront, leftBack, rightBack, rightFront;
@@ -388,6 +390,7 @@ public class MecanumDrive {
     public PoseVelocity2d updatePoseEstimate() {
         Twist2dDual<Time> twist = localizer.update();
         pose = pose.plus(twist.value());
+        pose = new Pose2d( pose.position,Rotation2d.exp(getHeading()));
 
         poseHistory.add(pose);
         while (poseHistory.size() > 100) {
@@ -437,6 +440,10 @@ public class MecanumDrive {
                 defaultVelConstraint, defaultAccelConstraint,
                 0.25, 0.1
         );
+    }
+
+    public double getHeading(){
+        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)+Math.toRadians(initialHeading)-Math.toRadians(headingOffset);
     }
 
 

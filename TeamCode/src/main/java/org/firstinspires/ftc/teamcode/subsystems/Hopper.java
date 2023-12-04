@@ -37,7 +37,7 @@ public class Hopper implements SubsystemBase{
 
         leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
         rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
-        leftHopper.setInverted(true);
+        rightHopper.setInverted(true);
     }
 
    public class HopperOuttake implements Action {
@@ -52,6 +52,11 @@ public class Hopper implements SubsystemBase{
 
 
     public Action hopperOutake(){return new HopperOuttake();}
+
+
+    public boolean hoppersFull(){
+        return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
+    }
 
 
 

@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="AprilTagDriveTOActionTest")
-public class AprilTagDriveTOActionTest extends SampleAuto {
+@Autonomous(name="StackIntakeTester")
+public class StackIntakeTester extends SampleAuto {
     BaseRobot robot;
     int zone;
 
@@ -23,17 +23,7 @@ public class AprilTagDriveTOActionTest extends SampleAuto {
 
     @Override
     public void onStart() {
-        zone = TeamPropPartitionDetector.getBluePropZone();
-        TeamPropPartitionDetector.endPropDetection();
-        pen.addLine("ZONE: " + zone);
-        pen.addLine("REMINDER THIS ONLY WORKS FOR ZONE 3 RED RIGHT");
-        pen.update();
-        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.RED, 3, robot.camera, pen));
-        robot.drive.updatePoseEstimate();
-        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        while(opModeIsActive()){
-
-        }
+        Actions.runBlocking(robot.stackIntake());
 
 
     }
