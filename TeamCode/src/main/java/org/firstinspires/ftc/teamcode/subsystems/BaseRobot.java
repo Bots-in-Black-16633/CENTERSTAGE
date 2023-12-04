@@ -143,32 +143,40 @@ public class BaseRobot implements SubsystemBase{
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linkage.raise();
+            linkage.raise();//raise the linkage
 
-            drive.forward(.5,.5);
-            linkage.lower();
+            drive.forward(.5,.5);//drive forward
+            linkage.lower();//lower
             time = new ElapsedTime();
-            while(time.seconds() < 1.5){
+            while(time.seconds() < .5){//give the servo a quick second to lower
 
             }
-            drive.backward(.5,.5);
+            drive.backward(.5,.5);//drive backward knocking over the stack
+            //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
             drive.forward(.5,.5);
 
-            time.reset();
+            time.reset();//while the hoppers arent full keep inaking or the timeout seconds havent elapsed
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
                 if(hopper.leftHopperSensor.pixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
                 if(hopper.rightHopperSensor.pixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
             }
+            //bring slider up
+            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+            //wait for slider to come up
+            while(slider.getPosition() != Constants.SliderConstants.sliderSafeBackToOuttake)
+                //outtake any extra pixels picked up
             hopper.intake(Hopper.ALL);
             intake.setMode(Intake.OUTTAKE);
-            time.reset();
+            time.reset();//outtake for 2 seconds
             while(time.seconds() < 2){
 
-            }
+            }//rest
             hopper.rest(Hopper.ALL);
             intake.setMode(Intake.REST);
+
+            Actions.runBlocking(new ResetToIntake());
 
 
             return false;
