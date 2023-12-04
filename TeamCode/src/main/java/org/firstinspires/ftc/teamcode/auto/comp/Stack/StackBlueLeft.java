@@ -44,10 +44,10 @@ public class StackBlueLeft extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-
-        Actions.runBlocking(robot.autoGenerator.getPixelStackAutoAction(AutoUtil.BLUE));
-
-
+        Actions.runBlocking(robot.autoGenerator.getBackdropToStackAutoAction(AutoUtil.BLUE));
+        Actions.runBlocking(robot.stackIntake());
+        Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone));
+        Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
         Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT));
 
 
