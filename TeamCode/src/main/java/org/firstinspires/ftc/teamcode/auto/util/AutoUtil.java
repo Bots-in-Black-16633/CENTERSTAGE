@@ -502,6 +502,8 @@ public class AutoUtil {
         else return null;
     }
 
+
+    //Note: getPixelStackAutoAction is vesitigial
     public  Action getPixelStackAutoAction(int color){
         if(color == AutoUtil.RED){
             return drive.actionBuilder(drive.pose)
@@ -523,7 +525,88 @@ public class AutoUtil {
         else return null;
     }
 
+    //TODO write stack autos
+    public Action getBackdropToStackAutoAction(int color)
+    {
+        if(color==AutoUtil.BLUE)
+        {
+            return drive.actionBuilder(drive.pose)
+                    .splineTo(new Vector2d(24.75, 13.09), Math.toRadians(192.99))
+                    .splineTo(new Vector2d(-59.52, 10.02), Math.toRadians(179.28))
+                    .build();
+        }
+        else
+        {
+            return drive.actionBuilder(drive.pose)
+                    .splineTo(new Vector2d(24.75, -13.09), Math.toRadians(167.01))
+                    .splineTo(new Vector2d(-60.14, -10.43), Math.toRadians(179.28))
+                    .build();
 
+        }
+    }
+
+    public Action getStackToBackdropAutoAction(int color, int zone)
+    {
+        if(color==AutoUtil.RED)
+        {
+            if(zone==1)
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(43.00, -14.20))
+                        .strafeToConstantHeading(new Vector2d(50.30, -40.56))
+                        .build();
+            }
+            else if(zone==2)
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(43.00, -14.20))
+                        .strafeToConstantHeading(new Vector2d(46.65, -35.70))
+                        .build();
+
+            }
+            else
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(41.98, -14.81))
+                        .strafeToConstantHeading(new Vector2d(47.46, -28.80))
+                        .build();
+
+            }
+        }
+        else
+        {
+            if(zone == 1)
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(41.98, 14.81))
+                        .strafeToConstantHeading(new Vector2d(47.46, 28.80))
+                        .build();
+
+            }
+            else if (zone==2)
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(43.00, 14.20))
+                        .strafeToConstantHeading(new Vector2d(46.65, 35.70))
+                        .build();
+
+            }
+            else
+            {
+                return drive.actionBuilder(drive.pose)
+                        .strafeToConstantHeading(new Vector2d(43.00, 14.20))
+                        .strafeToConstantHeading(new Vector2d(50.30, 40.56))
+                        .build();
+
+            }
+        }
+    }
+
+    //TODO write an action to get from the stack in auto
+    public Action getIntakeFromStackAutoAction()
+    {
+        return null;
+    }
 
 
 
