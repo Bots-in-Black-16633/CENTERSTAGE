@@ -545,6 +545,10 @@ public class AutoUtil {
         }
     }
 
+
+
+    //These paths are pretty sub optimal, if we need to shave some time off the auto
+    //Converting these to splines would be a good start.
     public Action getStackToBackdropAutoAction(int color, int zone)
     {
         if(color==AutoUtil.RED)
