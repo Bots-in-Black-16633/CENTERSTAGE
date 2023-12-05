@@ -53,7 +53,7 @@ public final class Constants{
         public static double shoulderMax = 1;
 
         public static double shoulderRest = .13;
-        public static double shoulderTraveling = 0;
+        public static double shoulderTraveling = .05;
         public static double shoulderOuttake = .355;//.444
 
         public static double shoulderOuttakeHigh = .355;
@@ -69,7 +69,7 @@ public final class Constants{
         public static double wristMin = 0;
 
         public static double wristRest = .6;
-        public static double wristTraveling = 0;
+        public static double wristTraveling = .6;
         public static double wristOuttake = .585;//low outtae
         public static double wristOuttakeHigh = .585;//low outtae
 

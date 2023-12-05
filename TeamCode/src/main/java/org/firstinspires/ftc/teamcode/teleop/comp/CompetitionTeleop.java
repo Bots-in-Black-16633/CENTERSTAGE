@@ -65,7 +65,7 @@ public class CompetitionTeleop extends SampleTeleop {
             Actions.runBlocking(robot.resetToIntake());
 
             resetPixelSubsystemTrackingVariables();
-            AprilTagProcessorWrapper.pauseAprilTagDetection(pen);
+           // AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         }
         if(g2.wasJustPressed(GamepadKeys.Button.X)){
 
@@ -76,6 +76,10 @@ public class CompetitionTeleop extends SampleTeleop {
         }
         if(g2.wasJustPressed(GamepadKeys.Button.B)){
             robot.shooter.shoot();
+        }
+        if(g2.wasJustPressed(GamepadKeys.Button.BACK)){
+            Actions.runBlocking(robot.traveling());
+            resetPixelSubsystemTrackingVariables();
         }
 
 
@@ -102,7 +106,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
         //INTTAKE
         if(g2.isDown(GamepadKeys.Button.DPAD_RIGHT) && !robot.hopper.hoppersFull()){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
-        else if(g2.isDown(GamepadKeys.Button.DPAD_LEFT)){robot.intake.setMode(Intake.OUTTAKE);robot.hopper.outtake(Hopper.ALL);}
+        else if(g2.isDown(GamepadKeys.Button.DPAD_LEFT)){robot.intake.setMode(Intake.OUTTAKE);if(robot.slider.getPosition()<300){robot.hopper.outtake(Hopper.ALL);}}
         else {
             robot.intake.setMode(Intake.REST);
             if(!g2.isDown(GamepadKeys.Button.RIGHT_BUMPER))robot.hopper.rest(Hopper.RIGHT_HOPPER);
@@ -157,7 +161,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         if(robot.hopper.leftHopperSensor.pixelPresent() || robot.hopper.rightHopperSensor.pixelPresent() ){
-            AprilTagProcessorWrapper.startAprilTagDetection(robot.camera, pen);
+            //AprilTagProcessorWrapper.startAprilTagDetectionAsync(robot.camera, pen);
 
         }
 
@@ -183,8 +187,8 @@ public class CompetitionTeleop extends SampleTeleop {
         sliderPos = robot.slider.getPosition();
     }
     public void runDriveLoop(){
-        AprilTagProcessorWrapper.startAprilTagDetection(robot.camera, pen);
-        AprilTagProcessorWrapper.pauseAprilTagDetection(pen);
+        //AprilTagProcessorWrapper.startAprilTagDetectionAsync(robot.camera, pen);
+        //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         double[] suggestedPowers = null;
         while(!volStopRequested){
             if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
@@ -215,11 +219,11 @@ public class CompetitionTeleop extends SampleTeleop {
 
                     }
                 }
-                if(suggestedPowers==null)robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));
+                if(suggestedPowers==null)robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));
                 else robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
 
             }
-            else{AprilTagProcessorWrapper.pauseAprilTagDetection(pen);robot.drive.driveFieldcentric(g1.getLeftX(),g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));}
+            else{robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));}
 
             if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 

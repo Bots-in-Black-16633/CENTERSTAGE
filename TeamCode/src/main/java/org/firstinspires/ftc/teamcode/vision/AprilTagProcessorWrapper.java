@@ -26,6 +26,22 @@ public  class AprilTagProcessorWrapper {
 
     static volatile boolean atTarget = false;
 
+    static Thread startStopThread = null;
+    public static void startAprilTagDetectionAsync(WebcamName camera, ColorfulTelemetry pen){
+        startStopThread = new Thread(() -> AprilTagProcessorWrapper.startAprilTagDetection(camera, pen));
+        startStopThread.run();
+    }
+    public static void resumeAprilTagDetectionAsync(ColorfulTelemetry pen){
+        startStopThread = new Thread(()->AprilTagProcessorWrapper.resumeAprilTagDetection(pen));
+        startStopThread.run();
+
+    }
+    public static void pauseAprilTagDetectionAsync(ColorfulTelemetry pen){
+        startStopThread = new Thread(()->AprilTagProcessorWrapper.pauseAprilTagDetection(pen));
+        startStopThread.run();
+
+    }
+
 
 
     public static void startAprilTagDetection(WebcamName camera, ColorfulTelemetry pen){
@@ -130,6 +146,11 @@ public  class AprilTagProcessorWrapper {
     }
     public static void endAprilTagDetection(){
         vp.close();
+            try {
+                startStopThread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
     }
     public static String getStringCameraState(VisionPortal.CameraState state){
         if(state == VisionPortal.CameraState.STREAMING)return "Streaming";

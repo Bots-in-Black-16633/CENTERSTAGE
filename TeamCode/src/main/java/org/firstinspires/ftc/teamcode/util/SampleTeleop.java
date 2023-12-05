@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 
 public abstract class SampleTeleop extends LinearOpMode {
-    public ColorfulTelemetry pen;
+    public volatile ColorfulTelemetry pen;
     public volatile BaseRobot robot;
     @Override
     public void runOpMode() throws InterruptedException {

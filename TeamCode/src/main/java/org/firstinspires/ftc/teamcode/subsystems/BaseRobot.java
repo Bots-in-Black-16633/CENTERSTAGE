@@ -209,6 +209,28 @@ public class BaseRobot implements SubsystemBase{
         }
     }
 
+    //Traveling Position
+    class TravelingPosition implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            //if we are at rest
+            slider.runToPosition(Constants.SliderConstants.sliderTraveling);
+            while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
+
+            }
+
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
+            wrist.setPosition(Constants.WristConstants.wristTraveling);
+
+
+
+
+
+            return false;
+        }
+    }
+
 
 
 
@@ -223,6 +245,7 @@ public class BaseRobot implements SubsystemBase{
     public Action distanceOuttake(){return new DistanceOuttake();}
     public Action highOuttake(){return new HighOuttake();}
     public Action stackIntake(){return new PixelStackIntake();}
+    public Action traveling(){return new TravelingPosition();}
 
 
 
