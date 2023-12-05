@@ -20,9 +20,9 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class AprilTagProcessorWrapper {
-    static AprilTagProcessor atp;
-    static VisionPortal vp;
+public  class AprilTagProcessorWrapper {
+    static volatile AprilTagProcessor atp;
+    static volatile VisionPortal vp;
 
     static volatile boolean atTarget = false;
 

@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.Actions;
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -165,7 +165,9 @@ public class BaseRobot implements SubsystemBase{
             //bring slider up
             slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
             //wait for slider to come up
-            while(slider.getPosition() != Constants.SliderConstants.sliderSafeBackToOuttake)
+            while(slider.getPosition() != Constants.SliderConstants.sliderSafeBackToOuttake){
+
+            }
                 //outtake any extra pixels picked up
             hopper.intake(Hopper.ALL);
             intake.setMode(Intake.OUTTAKE);

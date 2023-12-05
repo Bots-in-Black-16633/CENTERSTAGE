@@ -65,6 +65,7 @@ public class CompetitionTeleop extends SampleTeleop {
             Actions.runBlocking(robot.resetToIntake());
 
             resetPixelSubsystemTrackingVariables();
+            AprilTagProcessorWrapper.pauseAprilTagDetection(pen);
         }
         if(g2.wasJustPressed(GamepadKeys.Button.X)){
 
@@ -122,14 +123,10 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         //Manual Fine adjustent controls
-        if(Math.abs(g2.getLeftY())>.01){
-            sliderPos += g2.getLeftY()*10;
+        if(Math.abs(g2.getLeftY())>.01) {
+            sliderPos += g2.getLeftY() * 10;
             robot.slider.runToPosition(sliderPos);
-            //robot.slider.set(g2.getLeftY()*.1);
         }
-//        else {
-//            robot.slider.set(0);
-//        }
         if(Math.abs(g2.getRightY())>.01){
 
             shoulderPos += -1*g2.getRightY()*.01;
@@ -147,7 +144,7 @@ public class CompetitionTeleop extends SampleTeleop {
             robot.climber.setMode(Climber.RAISE);
         }
         else if(g1.isDown(GamepadKeys.Button.X)){
-            robot.climber.setMode(Climber.UNCLIMB);
+            robot.climber.setMode(Climber.LOWER);
         }
         else if(g1.isDown(GamepadKeys.Button.Y)){
             robot.climber.setMode(Climber.CLIMB);
@@ -157,6 +154,12 @@ public class CompetitionTeleop extends SampleTeleop {
 //        }
 //        else robot.climber.setMode(Climber.REST);
 
+
+
+        if(robot.hopper.leftHopperSensor.pixelPresent() || robot.hopper.rightHopperSensor.pixelPresent() ){
+            AprilTagProcessorWrapper.startAprilTagDetection(robot.camera, pen);
+
+        }
 
         g1.readButtons();
         g2.readButtons();
@@ -185,7 +188,6 @@ public class CompetitionTeleop extends SampleTeleop {
         double[] suggestedPowers = null;
         while(!volStopRequested){
             if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
-                AprilTagProcessorWrapper.resumeAprilTagDetection(pen);
                 if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) && g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
                     if(AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen) !=null){
                         suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen);
