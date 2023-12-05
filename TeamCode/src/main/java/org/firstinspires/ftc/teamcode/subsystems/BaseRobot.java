@@ -145,7 +145,7 @@ public class BaseRobot implements SubsystemBase{
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             linkage.raise();//raise the linkage
 
-            drive.forward(.5,.5);//drive forward
+            drive.forward(.5,.3);//drive forward
             linkage.lower();//lower
             time = new ElapsedTime();
             while(time.seconds() < .5){//give the servo a quick second to lower
@@ -155,14 +155,15 @@ public class BaseRobot implements SubsystemBase{
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
-            drive.forward(.5,.5);
+            drive.forward(.5,.3);
 
-            time.reset();//while the hoppers arent full keep inaking or the timeout seconds havent elapsed
+            time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
                 if(hopper.leftHopperSensor.pixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
                 if(hopper.rightHopperSensor.pixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
             }
             //bring slider up
+            intake.setMode(Intake.REST);
             slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
             //wait for slider to come up
             while(slider.getPosition() != Constants.SliderConstants.sliderSafeBackToOuttake){
@@ -178,7 +179,7 @@ public class BaseRobot implements SubsystemBase{
             hopper.rest(Hopper.ALL);
             intake.setMode(Intake.REST);
 
-            Actions.runBlocking(new ResetToIntake());
+            Actions.runBlocking( resetToIntake());
 
 
             return false;

@@ -526,20 +526,19 @@ public class AutoUtil {
     }
 
     //TODO write stack autos
-    public Action getBackdropToStackAutoAction(int color)
-    {
+    public Action getBackdropToStackAutoAction(int color) {
         if(color==AutoUtil.BLUE)
         {
             return drive.actionBuilder(drive.pose)
                     .splineTo(new Vector2d(24.75, 13.09), Math.toRadians(192.99))
-                    .splineTo(new Vector2d(-59.52, 10.02), Math.toRadians(179.28))
+                    .splineTo(new Vector2d(-55, 10.02), Math.toRadians(179.28))
                     .build();
         }
         else
         {
             return drive.actionBuilder(drive.pose)
                     .splineTo(new Vector2d(24.75, -13.09), Math.toRadians(167.01))
-                    .splineTo(new Vector2d(-60.14, -10.43), Math.toRadians(179.28))
+                    .splineTo(new Vector2d(-55, -10.43), Math.toRadians(179.28))
                     .build();
 
         }
@@ -549,8 +548,7 @@ public class AutoUtil {
 
     //These paths are pretty sub optimal, if we need to shave some time off the auto
     //Converting these to splines would be a good start.
-    public Action getStackToBackdropAutoAction(int color, int zone)
-    {
+    public Action getStackToBackdropAutoAction(int color, int zone) {
         if(color==AutoUtil.RED)
         {
             if(zone==1)
@@ -584,6 +582,7 @@ public class AutoUtil {
                 return drive.actionBuilder(drive.pose)
                         .strafeToConstantHeading(new Vector2d(41.98, 14.81))
                         .strafeToConstantHeading(new Vector2d(47.46, 28.80))
+                        .strafeToConstantHeading(new Vector2d(52, 41))
                         .build();
 
             }
@@ -591,7 +590,8 @@ public class AutoUtil {
             {
                 return drive.actionBuilder(drive.pose)
                         .strafeToConstantHeading(new Vector2d(43.00, 14.20))
-                        .strafeToConstantHeading(new Vector2d(46.65, 35.70))
+                        .strafeToConstantHeading(new Vector2d(46.65, 38))
+                        .strafeToConstantHeading(new Vector2d(52, 41))
                         .build();
 
             }
@@ -600,6 +600,7 @@ public class AutoUtil {
                 return drive.actionBuilder(drive.pose)
                         .strafeToConstantHeading(new Vector2d(43.00, 14.20))
                         .strafeToConstantHeading(new Vector2d(50.30, 40.56))
+                        .strafeToConstantHeading(new Vector2d(52, 41))
                         .build();
 
             }
