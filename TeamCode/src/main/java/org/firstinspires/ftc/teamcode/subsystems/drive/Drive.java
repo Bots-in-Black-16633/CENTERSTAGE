@@ -106,10 +106,12 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         ColorfulTelemetry pen;
         Drive drive;
         ElapsedTime notSeenTimer = null;
-        public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen, Drive drive){
+        boolean closeCameraWhenDone = false;
+        public DriveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen, Drive drive, boolean closeCameraWhenDone){
             this.camera = camera;
             this.pen = pen;
             this.drive = drive;
+            this.closeCameraWhenDone = closeCameraWhenDone;
             if(color == AutoUtil.BLUE){
                 if(zone==1)id=1;
                 else if(zone==2)id=2;
@@ -154,7 +156,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
                 drawRobot(pen.getPacket().fieldOverlay(), pose);
 
             }
-            AprilTagProcessorWrapper.endAprilTagDetection();
+            if(closeCameraWhenDone)AprilTagProcessorWrapper.endAprilTagDetection();
             drive(0,0,0);
             pen.addLine("FINISHED ALIGNMENT");
             pen.update();
@@ -163,7 +165,8 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         }
     }
 
-    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){return new DriveToAprilTag(color, zone, camera, pen, this);}
+    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen, boolean closeCameraWhenDone){return new DriveToAprilTag(color, zone, camera, pen, this, closeCameraWhenDone);}
+    public DriveToAprilTag driveToAprilTag(int color, int zone, WebcamName camera, ColorfulTelemetry pen){return new DriveToAprilTag(color, zone, camera, pen, this, true);}
 
 
 
