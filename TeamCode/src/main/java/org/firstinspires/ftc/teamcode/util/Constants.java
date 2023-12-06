@@ -82,7 +82,7 @@ public final class Constants{
     public static final class IntakeConstants{
         public static double intakePower = 1;
 
-        public static int autoStackIntakeTimeout=5;
+        public static int autoStackIntakeTimeout=2;
     }@Config
     public static final class HopperConstants{
         public static double hopperPower = 1;

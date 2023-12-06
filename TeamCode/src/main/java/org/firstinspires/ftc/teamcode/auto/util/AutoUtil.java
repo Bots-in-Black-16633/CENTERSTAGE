@@ -555,7 +555,7 @@ public class AutoUtil {
         {
             return drive.actionBuilder(drive.pose)
                     .splineTo(new Vector2d(24.75, 13.09), Math.toRadians(192.99))
-                    .splineTo(new Vector2d(-55, 10.02), Math.toRadians(179.28))
+                    .splineTo(new Vector2d(-50, 10.02), Math.toRadians(179.28))
                     .build();
         }
         else

@@ -65,7 +65,7 @@ public class CompetitionTeleop extends SampleTeleop {
             Actions.runBlocking(robot.resetToIntake());
 
             resetPixelSubsystemTrackingVariables();
-           // AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
+            //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         }
         if(g2.wasJustPressed(GamepadKeys.Button.X)){
 
@@ -133,14 +133,14 @@ public class CompetitionTeleop extends SampleTeleop {
         }
         if(Math.abs(g2.getRightY())>.01){
 
-            shoulderPos += -1*g2.getRightY()*.01;
+            shoulderPos += -1*g2.getRightY()*.05;
 
 
         }
         robot.shoulder.setPosition(shoulderPos);
 
         if(Math.abs((g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)))>.01){
-            wristPos += (g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))*.01;
+            wristPos += (g2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)-g2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))*.05;
         }
         robot.wrist.setPosition(wristPos);
 
@@ -162,7 +162,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         if(robot.hopper.leftHopperSensor.pixelPresent() || robot.hopper.rightHopperSensor.pixelPresent() ){
-            //AprilTagProcessorWrapper.startAprilTagDetectionAsync(robot.camera, pen);
+            //AprilTagProcessorWrapper.resumeAprilTagDetectionAsync(robot.camera, pen);
 
         }
 
@@ -180,7 +180,7 @@ public class CompetitionTeleop extends SampleTeleop {
         catch(InterruptedException e){
 
         }
-        AprilTagProcessorWrapper.endAprilTagDetection();
+        //AprilTagProcessorWrapper.endAprilTagDetection();
     }
 
     private void resetPixelSubsystemTrackingVariables(){
@@ -189,7 +189,7 @@ public class CompetitionTeleop extends SampleTeleop {
         sliderPos = robot.slider.getPosition();
     }
     public void runDriveLoop(){
-        AprilTagProcessorWrapper.startAprilTagDetectionAsync(robot.camera, pen);
+        //AprilTagProcessorWrapper.startAprilTagDetectionAsync(robot.camera, pen);
         //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         double[] suggestedPowers = null;
         while(!volStopRequested){

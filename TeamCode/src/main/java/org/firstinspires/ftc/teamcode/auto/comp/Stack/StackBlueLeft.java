@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
@@ -44,12 +45,22 @@ public class StackBlueLeft extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
+        robot.linkage.raise();//raise the linkage
+
         Actions.runBlocking(robot.autoGenerator.getBackdropToStackAutoAction(AutoUtil.BLUE));
         Actions.runBlocking(robot.stackIntake());
+
+       robot.intake.setMode(Intake.OUTTAKE);
+
+
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone));
-        //Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
+        robot.intake.setMode(Intake.REST);
+
         Actions.runBlocking(robot.highOuttake());
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT));
+            Actions.runBlocking(robot.hopper.hopperOutake());
+            Actions.runBlocking(robot.resetToIntake());
+
+        //Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT));
 
 
 

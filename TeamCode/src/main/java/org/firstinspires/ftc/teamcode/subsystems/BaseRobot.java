@@ -36,7 +36,7 @@ public class BaseRobot implements SubsystemBase{
     public Drive drive;
     public Shooter shooter;
     public Linkage linkage;
-    public WebcamName camera;
+    public volatile WebcamName camera;
 
     public AutoUtil autoGenerator;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
@@ -101,6 +101,7 @@ public class BaseRobot implements SubsystemBase{
     class Outtake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            hopper.intake(Hopper.ALL);
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
@@ -110,6 +111,7 @@ public class BaseRobot implements SubsystemBase{
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
             AutoUtil.delay(.25);
+            hopper.rest(Hopper.ALL);
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
@@ -120,6 +122,7 @@ public class BaseRobot implements SubsystemBase{
     class HighOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            hopper.intake(Hopper.ALL);
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
@@ -129,6 +132,7 @@ public class BaseRobot implements SubsystemBase{
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttakeHigh);
             AutoUtil.delay(.25);
+            hopper.rest(Hopper.ALL);
 
             wrist.setPosition(Constants.WristConstants.wristOuttakeHigh);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttakeHigh);
@@ -143,12 +147,11 @@ public class BaseRobot implements SubsystemBase{
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            linkage.raise();//raise the linkage
 
-            drive.forward(.5,.3);//drive forward
+            drive.forward(.5,.5);//drive forward
             linkage.lower();//lower
             time = new ElapsedTime();
-            while(time.seconds() < .5){//give the servo a quick second to lower
+            while(time.seconds() < .25){//give the servo a quick second to lower
 
             }
             drive.backward(.5,.5);//drive backward knocking over the stack
@@ -164,22 +167,9 @@ public class BaseRobot implements SubsystemBase{
             }
             //bring slider up
             intake.setMode(Intake.REST);
-            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
-            //wait for slider to come up
-            while(slider.getPosition() != Constants.SliderConstants.sliderSafeBackToOuttake){
-
-            }
-                //outtake any extra pixels picked up
-            hopper.intake(Hopper.ALL);
-            intake.setMode(Intake.OUTTAKE);
-            time.reset();//outtake for 2 seconds
-            while(time.seconds() < 2){
-
-            }//rest
             hopper.rest(Hopper.ALL);
-            intake.setMode(Intake.REST);
+            Actions.runBlocking(traveling());
 
-            Actions.runBlocking( resetToIntake());
 
 
             return false;

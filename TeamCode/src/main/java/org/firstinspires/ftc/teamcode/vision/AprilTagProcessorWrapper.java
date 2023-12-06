@@ -29,16 +29,16 @@ public  class AprilTagProcessorWrapper {
     static Thread startStopThread = null;
     public static void startAprilTagDetectionAsync(WebcamName camera, ColorfulTelemetry pen){
         startStopThread = new Thread(() -> AprilTagProcessorWrapper.startAprilTagDetection(camera, pen));
-        startStopThread.run();
+        startStopThread.start();
     }
     public static void resumeAprilTagDetectionAsync(ColorfulTelemetry pen){
         startStopThread = new Thread(()->AprilTagProcessorWrapper.resumeAprilTagDetection(pen));
-        startStopThread.run();
+        startStopThread.start();
 
     }
     public static void pauseAprilTagDetectionAsync(ColorfulTelemetry pen){
         startStopThread = new Thread(()->AprilTagProcessorWrapper.pauseAprilTagDetection(pen));
-        startStopThread.run();
+        startStopThread.start();
 
     }
 
