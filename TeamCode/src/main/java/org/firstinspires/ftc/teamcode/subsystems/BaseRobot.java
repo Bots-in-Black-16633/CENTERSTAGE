@@ -215,13 +215,28 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //if we are at rest
-            slider.runToPosition(Constants.SliderConstants.sliderTraveling);
-            while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
 
+
+            if(Math.abs(slider.getPosition() -Constants.SliderConstants.sliderRest)<10){
+                slider.runToPosition(Constants.SliderConstants.sliderTraveling);
+                while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
+                }
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
+                wrist.setPosition(Constants.WristConstants.wristTraveling);
+                while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderTraveling)>.05){
+
+                }
+            }else{
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
+                wrist.setPosition(Constants.WristConstants.wristTraveling);
+                while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderTraveling)>.05){
+
+                }
+                slider.runToPosition(Constants.SliderConstants.sliderTraveling);
+                while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
+                }
             }
 
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
-            wrist.setPosition(Constants.WristConstants.wristTraveling);
 
 
 

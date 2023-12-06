@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
+import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
 @Autonomous(name="BACKDROPBLueLeft", group="Backdrop")
@@ -22,7 +23,7 @@ public class BackdropBlueLeft extends SampleAuto {
 
     @Override
     public void onStart() {
-        zone = TeamPropPartitionDetector.getBluePropZone();
+        zone = TeamPropPartitionDetector.getRedPropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
@@ -36,9 +37,8 @@ public class BackdropBlueLeft extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        //TODO uncomment this
         Actions.runBlocking(robot.drive.driveToAprilTag(AutoUtil.BLUE,zone, robot.camera, pen));
-        Actions.runBlocking(robot.outtake());
+        Actions.runBlocking(robot.distanceOuttake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         Actions.runBlocking(robot.resetToIntake());
         robot.drive.updatePoseEstimate();

@@ -30,12 +30,12 @@ public final class Constants{
 
         public static  double kP = .1;
         public static  double sliderTolerance=20;
-        public static  double sliderPower = .5;
+        public static  double sliderPower = .75;
         public static int sliderMaxPosition = 3000;
         public static int sliderMinPosition = 0;
 
         public static double sliderRest = 0;
-        public static double sliderTraveling = 0;
+        public static double sliderTraveling = 150;
         public static double sliderOuttake = 1080;//outtke row1
         public static double sliderOuttakeHigh = 2360;//outtke row1
 
@@ -53,7 +53,7 @@ public final class Constants{
         public static double shoulderMax = 1;
 
         public static double shoulderRest = .13;
-        public static double shoulderTraveling = .05;
+        public static double shoulderTraveling = .11;
         public static double shoulderOuttake = .355;//.444
 
         public static double shoulderOuttakeHigh = .355;
@@ -69,7 +69,7 @@ public final class Constants{
         public static double wristMin = 0;
 
         public static double wristRest = .6;
-        public static double wristTraveling = .6;
+        public static double wristTraveling = .8;
         public static double wristOuttake = .585;//low outtae
         public static double wristOuttakeHigh = .585;//low outtae
 

@@ -95,7 +95,7 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(-36,-15))
                             .strafeTo(new Vector2d(12, -15))
                             .strafeToLinearHeading(new Vector2d(40,-23),Math.toRadians(-180))
-                            .strafeTo(new Vector2d(40, -27))
+                            .strafeTo(new Vector2d(40, -32))
                             .build();
                 }
                 else if(zone==2){

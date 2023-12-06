@@ -146,11 +146,14 @@ public  class AprilTagProcessorWrapper {
     }
     public static void endAprilTagDetection(){
         vp.close();
+        if(startStopThread != null){
             try {
                 startStopThread.join();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+
     }
     public static String getStringCameraState(VisionPortal.CameraState state){
         if(state == VisionPortal.CameraState.STREAMING)return "Streaming";
