@@ -95,7 +95,7 @@ public class Drive extends MecanumDrive implements SubsystemBase {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            backward(1,.5);
+            backward(1.5,.5);
             return false;
         }
     }

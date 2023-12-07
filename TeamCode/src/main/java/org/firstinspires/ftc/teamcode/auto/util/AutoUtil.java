@@ -178,7 +178,7 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(-36,37))
                             .strafeTo(new Vector2d(-36,15))
                             .strafeToLinearHeading(new Vector2d(40,15),Math.toRadians(-180))
-                            .strafeToConstantHeading(new Vector2d(40, 45))
+                            .strafeToConstantHeading(new Vector2d(40, 51))
                             .build();
 
                 }
@@ -575,59 +575,20 @@ public class AutoUtil {
     public Action getStackToBackdropAutoAction(int color, int zone) {
         if(color==AutoUtil.RED)
         {
-            if(zone==1)
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(43.00, -14.20))
-                        .strafeToConstantHeading(new Vector2d(50.30, -40.56))
-                        .build();
-            }
-            else if(zone==2)
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(43.00, -14.20))
-                        .strafeToConstantHeading(new Vector2d(46.65, -35.70))
-                        .build();
+            return drive.actionBuilder(drive.pose)
+                    .strafeToConstantHeading(new Vector2d(43.00, -14.20))
+                    .strafeToConstantHeading(new Vector2d(48, -40.56))
+                    .build();
 
-            }
-            else
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(41.98, -14.81))
-                        .strafeToConstantHeading(new Vector2d(47.46, -28.80))
-                        .build();
-
-            }
         }
         else
         {
-            if(zone == 1)
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(41.98, 14.81))
-                        .strafeToConstantHeading(new Vector2d(47.46, 28.80))
-                        .strafeToConstantHeading(new Vector2d(52, 41))
-                        .build();
+            return drive.actionBuilder(drive.pose)
+                    .strafeToConstantHeading(new Vector2d(43.00, 14.20))
+                    .strafeToConstantHeading(new Vector2d(50.30, 40.56))
+                    .strafeToConstantHeading(new Vector2d(52, 41))
+                    .build();
 
-            }
-            else if (zone==2)
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(43.00, 14.20))
-                        .strafeToConstantHeading(new Vector2d(46.65, 38))
-                        .strafeToConstantHeading(new Vector2d(52, 41))
-                        .build();
-
-            }
-            else
-            {
-                return drive.actionBuilder(drive.pose)
-                        .strafeToConstantHeading(new Vector2d(43.00, 14.20))
-                        .strafeToConstantHeading(new Vector2d(50.30, 40.56))
-                        .strafeToConstantHeading(new Vector2d(52, 41))
-                        .build();
-
-            }
         }
     }
 

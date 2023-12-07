@@ -116,6 +116,10 @@ public class BaseRobot implements SubsystemBase{
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
 
+            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05){
+
+            }
+            AutoUtil.delay(1);
             return false;
         }
     }
@@ -158,7 +162,7 @@ public class BaseRobot implements SubsystemBase{
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
-            drive.forward(.5,.3);
+            drive.forward(.7,.3);
 
             time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
