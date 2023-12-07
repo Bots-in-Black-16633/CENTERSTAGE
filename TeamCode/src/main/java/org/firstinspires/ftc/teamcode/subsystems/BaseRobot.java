@@ -102,16 +102,19 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             hopper.intake(Hopper.ALL);
+            intake.setPower(.5);
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
             }
+            intake.setMode(Intake.REST);
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
             AutoUtil.delay(.25);
             hopper.rest(Hopper.ALL);
+
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
@@ -127,11 +130,15 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             hopper.intake(Hopper.ALL);
+            intake.setPower(.5);
+
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
             }
+            intake.setMode(Intake.REST);
+
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttakeHigh);
@@ -182,11 +189,16 @@ public class BaseRobot implements SubsystemBase{
     class DistanceOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.setPower(.5);
+            hopper.intake(Hopper.ALL);
+
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
             }
+            intake.setMode(Intake.REST);
+            hopper.rest(Hopper.ALL);
 
 
             AutoUtil.delay(.25);
