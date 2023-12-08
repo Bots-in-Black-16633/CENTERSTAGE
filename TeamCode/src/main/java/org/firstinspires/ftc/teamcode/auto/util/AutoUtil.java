@@ -50,8 +50,8 @@ public class AutoUtil {
         if(color == AutoUtil.BLUE){
             if(side == AutoUtil.RIGHT){
                 return drive.actionBuilder(drive.pose)
-                        .strafeTo(new Vector2d(40,18))
-                        .strafeTo(new Vector2d(48, 18))
+                        .strafeTo(new Vector2d(35,19.5                                          ))
+                        .strafeTo(new Vector2d(48, 19.5))
 
                         .build();
             }
@@ -187,9 +187,9 @@ public class AutoUtil {
                     return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(-36,44))
                             .strafeToConstantHeading(new Vector2d(-50, 44))
-                            .splineToLinearHeading(new Pose2d(-50, 12, Math.toRadians(180)), Math.toRadians(270))
-                            .strafeTo(new Vector2d(12, 12))
-                            .strafeToConstantHeading(new Vector2d(38,12))
+                            .splineToLinearHeading(new Pose2d(-50, 12, Math.toRadians(180)), Math.toRadians(250))
+                            .strafeTo(new Vector2d(12, 13))
+                            .strafeToConstantHeading(new Vector2d(38,14))
                             .strafeToConstantHeading(new Vector2d(38, 45))
                             .build();
                 }
