@@ -66,7 +66,7 @@ public class AutoUtil {
         }else if(color == AutoUtil.RED){
             if(side == AutoUtil.LEFT){
                 return drive.actionBuilder(drive.pose)
-                        .strafeTo(new Vector2d(43,-10))
+                        .strafeTo(new Vector2d(37,-10))
                         .strafeTo(new Vector2d(48, -10))
 
                         .build();
@@ -104,7 +104,7 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(-45,-46))
                             .splineToLinearHeading(new Pose2d(-55, -15, Math.toRadians(180)), Math.toRadians(90.00))
                             .strafeTo(new Vector2d(30, -15))
-                            .strafeToLinearHeading(new Vector2d(40,-40),Math.toRadians(-180))
+                            .strafeToLinearHeading(new Vector2d(37,-36.5),Math.toRadians(-180))
 
                             .build();
                 }
@@ -343,7 +343,7 @@ public class AutoUtil {
                 if (zone == 1) {
                     //Works
                     return drive.actionBuilder(REDLEFTSTART)
-                            .strafeToLinearHeading(new Vector2d(-44, -40), Math.toRadians(290)).build();
+                            .strafeToLinearHeading(new Vector2d(-45.5, -40), Math.toRadians(290)).build();
                 }
                 else if (zone == 2) {
                     //Works
