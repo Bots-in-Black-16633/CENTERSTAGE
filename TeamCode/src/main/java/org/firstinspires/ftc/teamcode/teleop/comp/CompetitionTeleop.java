@@ -158,13 +158,13 @@ public class CompetitionTeleop extends SampleTeleop {
         if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
             robot.climber.rightClimberServo.setPower(1);
         }
-        else if(!g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X)){
+        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X))){
             robot.climber.rightClimberServo.setPower(0);
         }
         if (g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
             robot.climber.leftClimberServo.setPower(1);
         }
-        else if(!g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X)){
+        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X))){
             robot.climber.leftClimberServo.setPower(0);
         }
 
