@@ -154,9 +154,20 @@ public class CompetitionTeleop extends SampleTeleop {
         else if(g1.isDown(GamepadKeys.Button.Y)){
             robot.climber.setMode(Climber.CLIMB);
         }
-//        else if(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-//            robot.climber.setMode(Climber.LOWER);
-//        }
+
+        if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+            robot.climber.rightClimberServo.setPower(1);
+        }
+        else if(!g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X)){
+            robot.climber.rightClimberServo.setPower(0);
+        }
+        if (g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+            robot.climber.leftClimberServo.setPower(1);
+        }
+        else if(!g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X)){
+            robot.climber.leftClimberServo.setPower(0);
+        }
+
         else robot.climber.setMode(Climber.REST);
 
 
@@ -193,40 +204,40 @@ public class CompetitionTeleop extends SampleTeleop {
         //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         double[] suggestedPowers = null;
         while(!volStopRequested){
-            if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
-                if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) && g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-                    if(AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen);
-                    }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
-                    }
-                }
-                else if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-                    if(AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen);
-                    }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen);
-                    }
-                }
-                else if(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-
-                    if(AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen) !=null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen);
-
-                    }
-                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
-                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
-
-                    }
-                }
-                else{suggestedPowers=null;}
-                if(suggestedPowers==null)robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));
-                else robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
-
-            }
-            else{robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));}
+//            if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) || g1.isDown(GamepadKeys.Button.RIGHT_BUMPER) ){
+//                if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER) && g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+//                    if(AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen) !=null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(2, robot.drive, pen);
+//                    }
+//                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
+//                    }
+//                }
+//                else if(g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+//                    if(AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen) !=null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(1, robot.drive,pen);
+//                    }
+//                    else if(AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen) != null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(4, robot.drive,pen);
+//                    }
+//                }
+//                else if(g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+//
+//                    if(AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen) !=null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(3, robot.drive,pen);
+//
+//                    }
+//                    else if(AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen) != null){
+//                        suggestedPowers = AprilTagProcessorWrapper.getSuggestedPower(5, robot.drive,pen);
+//
+//                    }
+//                }
+//                else{suggestedPowers=null;}
+//                if(suggestedPowers==null)robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));
+//                else robot.drive.drive(suggestedPowers[0],suggestedPowers[1],suggestedPowers[2]);
+//
+//            }
+            /**else{**/robot.drive.driveFieldcentric(-g1.getLeftX(),-g1.getLeftY(), -g1.getRightX(), Math.min(((g1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER)>.2)?.5:1), (g1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)>.1)?.2:1));/**}**/
 
             if(g1.wasJustPressed(GamepadKeys.Button.A)){robot.drive.resetHeading();}
 
