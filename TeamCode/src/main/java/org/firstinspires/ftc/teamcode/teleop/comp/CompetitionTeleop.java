@@ -102,7 +102,7 @@ public class CompetitionTeleop extends SampleTeleop {
             robot.hopper.outtake(Hopper.RIGHT_HOPPER);
         }
         else if(!(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)||g2.isDown(GamepadKeys.Button.DPAD_LEFT))){robot.hopper.rest(Hopper.RIGHT_HOPPER);}
-a
+
 
         //INTTAKE
         if(g2.isDown(GamepadKeys.Button.DPAD_RIGHT) && !robot.hopper.hoppersFull()){robot.intake.setMode(Intake.INTAKE);robot.hopper.intake(Hopper.ALL);}
@@ -155,6 +155,9 @@ a
             robot.climber.setMode(Climber.CLIMB);
         }
 
+
+        else robot.climber.setMode(Climber.REST);
+
         if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
             robot.climber.rightClimberServo.setPower(1);
         }
@@ -168,7 +171,6 @@ a
             robot.climber.leftClimberServo.setPower(0);
         }
 
-        else robot.climber.setMode(Climber.REST);
 
 
 
