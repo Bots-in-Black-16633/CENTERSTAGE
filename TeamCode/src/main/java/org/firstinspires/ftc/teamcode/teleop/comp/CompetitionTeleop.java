@@ -154,6 +154,7 @@ public class CompetitionTeleop extends SampleTeleop {
         else if(g1.isDown(GamepadKeys.Button.Y)){
             robot.climber.setMode(Climber.CLIMB);
         }
+        else robot.climber.setMode(Climber.REST);
 
         if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
             robot.climber.rightClimberServo.setPower(1);
@@ -168,7 +169,6 @@ public class CompetitionTeleop extends SampleTeleop {
             robot.climber.leftClimberServo.setPower(0);
         }
 
-        else robot.climber.setMode(Climber.REST);
 
 
 

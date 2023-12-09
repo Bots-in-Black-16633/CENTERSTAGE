@@ -52,8 +52,8 @@ public class Climber implements SubsystemBase{
         }
         else if(mode == CLIMB){
             climber.setPower(Constants.ClimberConstants.climberPower);
-            if(!unSpooled) {Thread lowerClimberThread = new Thread(this::timedLowerClimbers);
-            lowerClimberThread.start();}
+//            if(!unSpooled) {Thread lowerClimberThread = new Thread(this::timedLowerClimbers);
+//            lowerClimberThread.start();}
         }
         else if(mode == UNCLIMB){
             climber.setPower(-Constants.ClimberConstants.climberPower);
