@@ -135,7 +135,7 @@ public class AutoUtil {
                 else return drive.actionBuilder(drive.pose)
                             .strafeTo(new Vector2d(14,-50))
                             .strafeToLinearHeading(new Vector2d(37,-55), Math.toRadians(180))
-                            .strafeTo(new Vector2d(37,-37))
+                            .strafeTo(new Vector2d(37,-40))
 
                             .build();
             }
