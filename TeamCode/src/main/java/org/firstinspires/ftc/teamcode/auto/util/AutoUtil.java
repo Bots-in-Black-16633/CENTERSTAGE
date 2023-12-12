@@ -45,7 +45,6 @@ public class AutoUtil {
         this.drive = drive;
         startPose = drive.pose;
     }
-
     public  Action getBackStageParkAutoAction(int color, int side){
         if(color == AutoUtil.BLUE){
             if(side == AutoUtil.RIGHT){
@@ -592,11 +591,120 @@ public class AutoUtil {
         }
     }
 
-    //TODO write an action to get from the stack in auto
-    public Action getIntakeFromStackAutoAction()
+
+    public Action getQuickBackdropAutoAction(int color, int side, int zone)
     {
+        if(color==RED)
+        {
+            if(side==LEFT)
+            {
+                if(zone==1) {
+                    return drive.actionBuilder(REDLEFTSTART)
+                            .strafeToConstantHeading(new Vector2d(-47.45, -40.70))
+                            .strafeToConstantHeading(new Vector2d(-38.25, -43.98))
+                            .splineTo(new Vector2d(-25.16, -11.05), Math.toRadians(27.99))
+                            .splineTo(new Vector2d(18.82, -19.84), Math.toRadians(-14.82))
+                            .splineToSplineHeading(new Pose2d(50.73, -30.48, Math.toRadians(180.00)), Math.toRadians(17.32))
+                            .strafeToConstantHeading(new Vector2d(48.5, -15))
+                            .build();
+
+                }
+                else if(zone ==2) {
+                    return drive.actionBuilder(REDLEFTSTART)
+                            .strafeToConstantHeading(new Vector2d(-35.90, -34.07))
+                            .strafeToConstantHeading(new Vector2d(-50.70, -37.32))
+                            .splineTo(new Vector2d(-45.43, -18.86), Math.toRadians(29.52))
+                            .splineTo(new Vector2d(10.14, -17.44), Math.toRadians(-21.97))
+                            .splineToSplineHeading(new Pose2d(50.00, -36.00, Math.toRadians(-180.00)), Math.toRadians(-11.94))
+                            .build();
+
+                }
+                else if(zone ==3) {
+                    return drive.actionBuilder(new Pose2d(-36.00, -63.00, Math.toRadians(270.00)))
+                            .splineTo(new Vector2d(-29.61, -37.32), Math.toRadians(45.00))
+                            .strafeToConstantHeading(new Vector2d(-32.86, -38.94))
+                            .strafeToLinearHeading(new Vector2d(-45.03, -15.21), Math.toRadians(-180.00))
+                            .splineTo(new Vector2d(12.57, -17.04), Math.toRadians(-27.05))
+                            .splineTo(new Vector2d(50.00, -42.00), Math.toRadians(315.00))
+                            .build();
+
+                }
+            }
+            else if(side == RIGHT)
+            {
+                if(zone==1) {
+                    return drive.actionBuilder(REDRIGHTSTART).setReversed(true)
+                            .splineToSplineHeading(new Pose2d(10.55, -30.83, Math.toRadians(0.00)), Math.toRadians(180.00))
+                            .setReversed(false)
+                            .splineToSplineHeading(new Pose2d(50.00, -30.00, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .build();
+
+                }
+                else if(zone ==2) {
+                    return drive.actionBuilder(REDRIGHTSTART)
+                            .setReversed(true)
+                            .splineToSplineHeading(new Pose2d(15.41, -34.48, Math.toRadians(270.00)), Math.toRadians(90.00))
+                            .setReversed(false)
+                            .splineTo(new Vector2d(50.00, -36.00), Math.toRadians(0.00))
+                            .build();
+
+                }
+                else if(zone==3) {
+                    return drive.actionBuilder(REDRIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(23.12, -43.00))
+                            .splineToSplineHeading(new Pose2d(50.00, -42.00, Math.toRadians(180.00)), Math.toRadians(0.00))
+                            .build();
+
+                }
+            }
+        }
+        else if(color==BLUE)
+        {
+            if(side==LEFT) {
+                if(zone==1) {
+
+                }
+                else if(zone ==2) {
+
+                }
+                else {
+
+                }
+            }
+            else if(side==RIGHT) {
+                if(zone==1) {
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .splineTo(new Vector2d(-29.61, 37.32), Math.toRadians(45.00))
+                            .strafeToConstantHeading(new Vector2d(-32.86, 38.94))
+                            .strafeToLinearHeading(new Vector2d(-45.03, 15.21), Math.toRadians(-180.00))
+                            .splineTo(new Vector2d(12.57, 17.04), Math.toRadians(-27.05))
+                            .splineTo(new Vector2d(50.00, 42.00), Math.toRadians(315.00))
+                            .build();
+                }
+                else if(zone ==2) {
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(-35.90, 34.07))
+                            .strafeToConstantHeading(new Vector2d(-50.70, 37.32))
+                            .splineTo(new Vector2d(-45.43, 18.86), Math.toRadians(29.52))
+                            .splineTo(new Vector2d(10.14, 17.44), Math.toRadians(-21.97))
+                            .splineToSplineHeading(new Pose2d(50.00, 36.00, Math.toRadians(-180.00)), Math.toRadians(-11.94))
+                            .build();
+                }
+                else {
+                    return drive.actionBuilder(BLUERIGHTSTART)
+                            .strafeToConstantHeading(new Vector2d(-47.45, 40.70))
+                            .strafeToConstantHeading(new Vector2d(-38.25, 43.98))
+                            .splineTo(new Vector2d(-25.16, 11.05), Math.toRadians(27.99))
+                            .splineTo(new Vector2d(18.82, 19.84), Math.toRadians(-14.82))
+                            .splineToSplineHeading(new Pose2d(50.73, 30.48, Math.toRadians(180.00)), Math.toRadians(17.32))
+                            .strafeToConstantHeading(new Vector2d(48.5, 15))
+                            .build();
+                }
+            }
+        }
         return null;
     }
+
 
 
 
