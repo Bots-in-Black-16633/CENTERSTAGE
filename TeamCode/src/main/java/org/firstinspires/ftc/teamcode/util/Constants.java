@@ -46,6 +46,8 @@ public final class Constants{
         public static double backdropRowConstant = 200;
 
         public static double sliderDistanceDeposit = 800;//low distanc
+
+        public static double sliderOuttakeMid = 1300;
     }
     @Config
     public static final class ShoulderConstants{

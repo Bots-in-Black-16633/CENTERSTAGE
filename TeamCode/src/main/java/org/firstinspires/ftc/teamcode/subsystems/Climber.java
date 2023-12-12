@@ -25,7 +25,7 @@ public class Climber implements SubsystemBase{
     public static final int CLIMB = 3;
     public static final int UNCLIMB = 4;
     public volatile boolean unSpooled = false;
-    volatile ElapsedTime timer;
+    volatile public ElapsedTime timer;
 
     public Climber(HardwareMap hwMap){
         climber = hwMap.dcMotor.get("climber");
@@ -52,12 +52,13 @@ public class Climber implements SubsystemBase{
         }
         else if(mode == CLIMB){
             climber.setPower(Constants.ClimberConstants.climberPower);
-//            if(!unSpooled) {Thread lowerClimberThread = new Thread(this::timedLowerClimbers);
-//            lowerClimberThread.start();}
+            if(!unSpooled) {Thread lowerClimberThread = new Thread(this::timedLowerClimbers);
+            lowerClimberThread.start();}
         }
         else if(mode == UNCLIMB){
             climber.setPower(-Constants.ClimberConstants.climberPower);
         }
+
     }
 
     private void timedLowerClimbers(){
