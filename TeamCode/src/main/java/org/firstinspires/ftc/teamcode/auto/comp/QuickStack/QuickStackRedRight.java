@@ -36,7 +36,16 @@ public class QuickStackRedRight extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.RIGHT));
+        Actions.runBlocking(robot.autoGenerator.getQuickToSpikeAutoAction(AutoUtil.RED, 3));
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
+        pen.update();
+        Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
+        robot.drive.updatePoseEstimate();
+        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
+        pen.update();
     }
 
 
