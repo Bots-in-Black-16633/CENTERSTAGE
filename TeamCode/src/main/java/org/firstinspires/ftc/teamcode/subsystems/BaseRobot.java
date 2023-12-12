@@ -126,6 +126,35 @@ public class BaseRobot implements SubsystemBase{
             return false;
         }
     }
+    class MidOuttake implements Action{
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            hopper.intake(Hopper.ALL);
+            intake.setPower(.5);
+            if(slider.getPosition() < 200){
+                slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+                AutoUtil.delay(.25);
+                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+            }
+            intake.setMode(Intake.REST);
+
+            AutoUtil.delay(.25);
+            slider.runToPosition(Constants.SliderConstants.sliderOuttakeMid);
+            AutoUtil.delay(.25);
+            hopper.rest(Hopper.ALL);
+
+
+            wrist.setPosition(Constants.WristConstants.wristOuttake);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
+
+            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05){
+
+            }
+            AutoUtil.delay(1);
+            return false;
+        }
+    }
     class HighOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -267,6 +296,7 @@ public class BaseRobot implements SubsystemBase{
     public Action highOuttake(){return new HighOuttake();}
     public Action stackIntake(){return new PixelStackIntake();}
     public Action traveling(){return new TravelingPosition();}
+    public Action midOuttake(){return new MidOuttake();}
 
 
 
