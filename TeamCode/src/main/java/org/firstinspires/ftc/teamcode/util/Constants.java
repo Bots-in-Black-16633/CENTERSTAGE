@@ -103,6 +103,13 @@ public final class Constants{
     public static final class LinkageConstants{
         public static double linkageUp = .9;
         public static double linkageDown = .65;
+
+        //TODO tune these positions
+        public static double  linkagePixelOne = .85;
+        public static double  linkagePixelTwo = .8;
+        public static double linkagePixelThree = .75;
+        public static double linkagePixelFour = .7;
+        public static double linkagePixelFive = .5;
     }
     @Config
     public static final class ColorSensorWrapperConstants{

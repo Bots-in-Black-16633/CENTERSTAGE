@@ -23,6 +23,29 @@ public class Linkage implements SubsystemBase{
         linkage.setPosition(Constants.LinkageConstants.linkageDown);
     }
 
+    public void stackLevel(int level)
+    {
+        if(level==1)
+        {
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelOne);
+        }
+        else if(level==2)
+        {
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelTwo);
+        }
+        else if(level==3)
+        {
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelThree);
+        }
+        else if(level==4)
+        {
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelFour);
+        }
+        else if(level==5)
+        {
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelFive);
+        }
+    }
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
 
