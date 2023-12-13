@@ -4,6 +4,8 @@ import static java.lang.Thread.sleep;
 
 import android.graphics.Color;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
@@ -78,7 +80,7 @@ public  class AprilTagProcessorWrapper {
         if(vp!=null)vp.resumeStreaming();
         while(vp.getCameraState() != VisionPortal.CameraState.STREAMING) {
             pen.addLine("Waiting for Camera to Resume Streaming");
-            pen.addLine("STATUS" + getStringCameraState(vp.getCameraState()));
+            pen.addLine("STATUS " + getStringCameraState(vp.getCameraState()));
             pen.update();
         }
         atTarget=false;
@@ -174,4 +176,49 @@ public  class AprilTagProcessorWrapper {
 
     }
 
+    public static Pose2d getRobotPoseEstimateAprilTag(int id, ColorfulTelemetry pen) {
+        AprilTagDetection desiredTag = getAprilTagInfo(id, pen);
+        Vector2d aprilTag = getAprilTagPose(id);
+        double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
+        double  headingError    = desiredTag.ftcPose.bearing/**Math.toDegrees(Math.toRadians(convertedHeading)-Math.toRadians(180))**/;
+        double  yawError        = desiredTag.ftcPose.yaw;
+
+        //TODO make sure the error variables are adjusting the correct axis and in the right direction
+        double estimatedX = aprilTag.x+rangeError;
+        double estimatedY = aprilTag.y+yawError;
+
+        //This next line is sorta confusing. If I interpreted headingError correctly, it's how far
+        //off from facing the april tag straight on we are, which would be when heading is 180.
+        double estimatedHeading = Math.toRadians(180)+headingError;
+        return new Pose2d(estimatedX, estimatedY, estimatedHeading);
+    }
+
+    public static Vector2d getAprilTagPose(int id)
+    {
+        if(id==1)
+        {
+            return Constants.VisionConstants.APRIL_TAG_ONE;
+        }
+        else if(id==2)
+        {
+            return Constants.VisionConstants.APRIL_TAG_TWO;
+        }
+        else if(id==3)
+        {
+            return Constants.VisionConstants.APRIL_TAG_THREE;
+        }
+        else if(id==4)
+        {
+            return Constants.VisionConstants.APRIL_TAG_FOUR;
+        }
+        else if(id==5)
+        {
+            return Constants.VisionConstants.APRIL_TAG_FIVE;
+        }
+        else if(id==6)
+        {
+            return Constants.VisionConstants.APRIL_TAG_SIX;
+        }
+        return null;
+    }
 }

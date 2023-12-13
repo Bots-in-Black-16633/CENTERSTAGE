@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
+import org.firstinspires.ftc.teamcode.util.Constants;
 
 import java.util.Vector;
 
@@ -742,6 +743,21 @@ public class AutoUtil {
         return null;
     }
 
+    public Pose2d adjustForAprilTag(Pose2d odoPose, Pose2d aprilTagPose)
+    {
+        double xDifference = odoPose.component1().x-aprilTagPose.component1().x;
+        double yDifference = odoPose.component1().y-aprilTagPose.component1().y;
+
+        //TODO If stuff is acting weird, check with cole that this is how you retrieve heading from a pose2d
+        double headingDifference = odoPose.heading.component1()-aprilTagPose.heading.component1();
+        xDifference*= Constants.VisionConstants.aprilTagPositionWeight;
+        yDifference*= Constants.VisionConstants.aprilTagPositionWeight;
+        headingDifference*= Constants.VisionConstants.aprilTagHeadingWeight;
+        Pose2d pose = new Pose2d(odoPose.position.x+xDifference,
+                odoPose.position.y+yDifference,
+                odoPose.heading.component1()+headingDifference);
+        return pose;
+    }
 
 
 

@@ -130,5 +130,9 @@ public final class Constants{
         public static long aprilTagExposure = 5;
         public static int aprilTagGain = 0;
 
+        //TODO tune these
+        public static double aprilTagPositionWeight = 1;
+        public static double aprilTagHeadingWeight = 1;
     }
+
 }
