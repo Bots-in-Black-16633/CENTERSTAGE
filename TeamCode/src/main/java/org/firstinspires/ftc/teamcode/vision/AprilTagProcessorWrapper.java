@@ -179,13 +179,11 @@ public  class AprilTagProcessorWrapper {
     public static Pose2d getRobotPoseEstimateAprilTag(int id, ColorfulTelemetry pen) {
         AprilTagDetection desiredTag = getAprilTagInfo(id, pen);
         Vector2d aprilTag = getAprilTagPose(id);
-        double  rangeError      = (desiredTag.ftcPose.range - Constants.DriveConstants.DESIRED_DISTANCE);
-        double  headingError    = desiredTag.ftcPose.bearing/**Math.toDegrees(Math.toRadians(convertedHeading)-Math.toRadians(180))**/;
-        double  yawError        = desiredTag.ftcPose.yaw;
-
-        //TODO make sure the error variables are adjusting the correct axis and in the right direction
-        double estimatedX = aprilTag.x+rangeError;
-        double estimatedY = aprilTag.y+yawError;
+        double xError = desiredTag.ftcPose.x;
+        double  headingError    = desiredTag.ftcPose.yaw/**Math.toDegrees(Math.toRadians(convertedHeading)-Math.toRadians(180))**/;
+        double yError = desiredTag.ftcPose.y;
+        double estimatedX = aprilTag.x+xError;
+        double estimatedY = aprilTag.y+yError;
 
         //This next line is sorta confusing. If I interpreted headingError correctly, it's how far
         //off from facing the april tag straight on we are, which would be when heading is 180.
