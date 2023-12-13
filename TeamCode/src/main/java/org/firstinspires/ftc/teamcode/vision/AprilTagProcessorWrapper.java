@@ -178,45 +178,55 @@ public  class AprilTagProcessorWrapper {
 
     public static Pose2d getRobotPoseEstimateAprilTag(int id, ColorfulTelemetry pen) {
         AprilTagDetection desiredTag = getAprilTagInfo(id, pen);
+
         Vector2d aprilTag = getAprilTagPose(id);
-        double xError = desiredTag.ftcPose.x;
-        double  headingError    = desiredTag.ftcPose.yaw/**Math.toDegrees(Math.toRadians(convertedHeading)-Math.toRadians(180))**/;
-        double yError = desiredTag.ftcPose.y;
+        if(aprilTag == null || desiredTag == null)return null;
+
+
+        double yError = -desiredTag.ftcPose.x;//because tags are located on x plane
+        double  headingError    = desiredTag.ftcPose.bearing;
+        double xError = desiredTag.ftcPose.y;
         double estimatedX = aprilTag.x+xError;
         double estimatedY = aprilTag.y+yError;
 
         //This next line is sorta confusing. If I interpreted headingError correctly, it's how far
         //off from facing the april tag straight on we are, which would be when heading is 180.
         double estimatedHeading = Math.toRadians(180)+headingError;
+        pen.addLine("X ERROR" + xError);
+        pen.addLine("Y ERROR" + yError);
+        pen.addLine("headingError" + headingError);
+        pen.addLine("ESTIMATED X" + estimatedX);
+        pen.addLine("ESTIMATED Y " + estimatedY);
+        pen.addLine("ESTIMATED HEADING" + estimatedHeading);
         return new Pose2d(estimatedX, estimatedY, estimatedHeading);
     }
 
     public static Vector2d getAprilTagPose(int id)
     {
-        if(id==1)
-        {
-            return Constants.VisionConstants.APRIL_TAG_ONE;
+        switch(id){
+            case 1:
+                 return Constants.VisionConstants.APRIL_TAG_ONE;
+            case 2:
+                return Constants.VisionConstants.APRIL_TAG_TWO;
+            case 3:
+                return Constants.VisionConstants.APRIL_TAG_THREE;
+            case 4:
+                return Constants.VisionConstants.APRIL_TAG_FOUR;
+            case 5:
+                return Constants.VisionConstants.APRIL_TAG_FIVE;
+            case 6:
+                return Constants.VisionConstants.APRIL_TAG_SIX;
+            case 7:
+                return Constants.VisionConstants.APRIL_TAG_SEVEN;
+            case 8:
+                return Constants.VisionConstants.APRIL_TAG_EIGHT;
+            case 9:
+                return Constants.VisionConstants.APRIL_TAG_NINE;
+            case 10:
+                return Constants.VisionConstants.APRIL_TAG_TEN;
+            default:
+                return null;
         }
-        else if(id==2)
-        {
-            return Constants.VisionConstants.APRIL_TAG_TWO;
-        }
-        else if(id==3)
-        {
-            return Constants.VisionConstants.APRIL_TAG_THREE;
-        }
-        else if(id==4)
-        {
-            return Constants.VisionConstants.APRIL_TAG_FOUR;
-        }
-        else if(id==5)
-        {
-            return Constants.VisionConstants.APRIL_TAG_FIVE;
-        }
-        else if(id==6)
-        {
-            return Constants.VisionConstants.APRIL_TAG_SIX;
-        }
-        return null;
+
     }
 }

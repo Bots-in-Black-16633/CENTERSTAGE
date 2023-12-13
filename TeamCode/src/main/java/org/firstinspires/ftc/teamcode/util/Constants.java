@@ -70,15 +70,15 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .6;
-        public static double wristTraveling = .8;
-        public static double wristOuttake = .585;//low outtae
-        public static double wristOuttakeHigh = .585;//low outtae
+        public static double wristRest = .488;
+        public static double wristTraveling = .688;
+        public static double wristOuttake = .473;//low outtae
+        public static double wristOuttakeHigh = .473;//low outtae
 
-        public static double wristSafeBackToIntake = .77;
+        public static double wristSafeBackToIntake = .658;
 
-        public static double wristSafeBackToOuttake = .77;
-        public static double wristDistanceDeposit = .564;
+        public static double wristSafeBackToOuttake = .658;
+        public static double wristDistanceDeposit = .452;
     }
     @Config
     public static final class IntakeConstants{
@@ -123,6 +123,12 @@ public final class Constants{
         public final static Vector2d APRIL_TAG_FOUR = new Vector2d(60, -29);
         public final static Vector2d APRIL_TAG_FIVE = new Vector2d(60, -35.25);
         public final static Vector2d APRIL_TAG_SIX = new Vector2d(60, -41.4);
+        public final static Vector2d APRIL_TAG_SEVEN = new Vector2d(-72, -40);
+        public final static Vector2d APRIL_TAG_EIGHT = new Vector2d(-72, -36);
+        public final static Vector2d APRIL_TAG_NINE = new Vector2d(-72, 36);
+        public final static Vector2d APRIL_TAG_TEN = new Vector2d(-72, 40);
+
+
 
         public static long partitionExposure = 30;
         public static int partitionGain = 0;
