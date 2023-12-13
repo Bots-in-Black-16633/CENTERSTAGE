@@ -215,6 +215,48 @@ public class BaseRobot implements SubsystemBase{
             return false;
         }
     }
+    class FirstStackIntake implements Action {
+        ElapsedTime time;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            time = new ElapsedTime();
+            linkage.raise();
+            drive.forward(.4, .4);
+            intake.setMode(Intake.INTAKE);
+            linkage.stackLevel(1);
+            time.reset();
+            while(time.seconds()<.5){}
+            AutoUtil.delay(.5);
+            linkage.stackLevel(2);
+            time.reset();
+            while(time.seconds()<.5){}
+            linkage.raise();
+            intake.setMode(Intake.REST);
+            drive.backward(.4,.4);
+            return false;
+        }
+    }
+    class SecondStackIntake implements Action {
+        ElapsedTime time;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            time = new ElapsedTime();
+            linkage.raise();
+            drive.forward(.4, .4);
+            intake.setMode(Intake.INTAKE);
+            linkage.stackLevel(3);
+            time.reset();
+            while(time.seconds()<.5){}
+            AutoUtil.delay(.5);
+            linkage.stackLevel(4);
+            time.reset();
+            while(time.seconds()<.5){}
+            linkage.raise();
+            intake.setMode(Intake.REST);
+            drive.backward(.4,.4);
+            return false;
+        }
+    }
     class DistanceOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -297,7 +339,7 @@ public class BaseRobot implements SubsystemBase{
     public Action stackIntake(){return new PixelStackIntake();}
     public Action traveling(){return new TravelingPosition();}
     public Action midOuttake(){return new MidOuttake();}
-
-
+    public Action firstStack(){return new FirstStackIntake();}
+    public Action secondStack(){return new SecondStackIntake();}
 
 }

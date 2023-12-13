@@ -42,7 +42,7 @@ public class QuickStackRedRight extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
-        //TODO add intake
+        Actions.runBlocking(robot.firstStack());
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         robot.drive.updatePoseEstimate();
@@ -60,7 +60,7 @@ public class QuickStackRedRight extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
-        //TODO add intake
+        Actions.runBlocking(robot.secondStack());
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         robot.drive.updatePoseEstimate();

@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.auto.comp.QuickStack;
 
+import android.os.ParcelFileDescriptor;
+
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
@@ -42,7 +45,8 @@ public class QuickStackRedLeft extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
-        //TODO add intake
+        //INTAKE SEQUENCE
+        robot.firstStack();
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         robot.drive.updatePoseEstimate();
@@ -60,7 +64,9 @@ public class QuickStackRedLeft extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
-        //TODO add intake
+        //INTAKE SEQUENCE
+        Actions.runBlocking(robot.secondStack());
+
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         robot.drive.updatePoseEstimate();
