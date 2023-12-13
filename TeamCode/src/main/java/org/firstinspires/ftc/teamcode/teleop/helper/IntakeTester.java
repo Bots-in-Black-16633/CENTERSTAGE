@@ -34,7 +34,7 @@ public class IntakeTester extends SampleTeleop {
         else if(gamepad1.dpad_right){robot.linkage.stackLevel(3);}
         else if(gamepad1.dpad_down){robot.linkage.stackLevel(4);}
         else if(gamepad1.x){robot.linkage.raise();}
-        else{robot.linkage.lower();}
+        else if(gamepad1.y){robot.linkage.lower();}
     }
 
     @Override
