@@ -46,7 +46,7 @@ public class QuickStackRedLeft extends SampleAuto {
         pen.update();
 
         //INTAKE SEQUENCE
-        robot.firstStack();
+        Actions.runBlocking(robot.firstStack());
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         robot.drive.updatePoseEstimate();
