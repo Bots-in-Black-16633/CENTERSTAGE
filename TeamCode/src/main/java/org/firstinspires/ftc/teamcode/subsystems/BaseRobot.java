@@ -223,18 +223,29 @@ public class BaseRobot implements SubsystemBase{
             linkage.raise();
             drive.forward(.4, .4);
             intake.setMode(Intake.INTAKE);
-            linkage.stackLevel(1);
+            hopper.intake(Hopper.ALL);
+            linkage.stackLevel(5);
             time.reset();
             while(time.seconds()<.5){}
             AutoUtil.delay(.5);
-            linkage.stackLevel(2);
+            drive.backward(.4, .4);
+            intake.setMode(Intake.OUTTAKE);
+            linkage.lower();
             time.reset();
             while(time.seconds()<.5){}
-            linkage.raise();
+            intake.setMode(Intake.INTAKE);
+            hopper.intake(Hopper.ALL);
+            drive.forward(1, .2);
+            time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
+            while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout) {
+                if (hopper.leftHopperSensor.pixelPresent()) hopper.rest(Hopper.LEFT_HOPPER);
+                if (hopper.rightHopperSensor.pixelPresent()) hopper.rest(Hopper.RIGHT_HOPPER);
+            }
             intake.setMode(Intake.REST);
-            drive.backward(.4,.4);
+            hopper.rest(Hopper.ALL);
             return false;
         }
+
     }
     class SecondStackIntake implements Action {
         ElapsedTime time;

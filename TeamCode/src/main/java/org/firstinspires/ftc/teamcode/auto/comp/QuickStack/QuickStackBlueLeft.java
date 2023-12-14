@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
@@ -26,6 +27,7 @@ public class QuickStackBlueLeft extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
         Actions.runBlocking(robot.autoGenerator.getQuickBackdropAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, zone));
+        robot.drive.backward(.2, .5);
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
@@ -45,7 +47,9 @@ public class QuickStackBlueLeft extends SampleAuto {
 
         Actions.runBlocking(robot.firstStack());
 
+        robot.intake.setMode(Intake.OUTTAKE);
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone));
+        robot.intake.setMode(Intake.REST);
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
