@@ -221,28 +221,18 @@ public class BaseRobot implements SubsystemBase{
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             time = new ElapsedTime();
             linkage.raise();
-            drive.forward(.4, .4);
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
-            linkage.stackLevel(5);
+            drive.forward(.4, .5);
             time.reset();
-            while(time.seconds()<.5){}
-            AutoUtil.delay(.5);
-            drive.backward(.4, .4);
-            intake.setMode(Intake.OUTTAKE);
+            while(time.seconds()<1){}
+            drive.backward(.5, .5);
             linkage.lower();
+            intake.setMode(Intake.OUTTAKE);
             time.reset();
-            while(time.seconds()<.5){}
+            while(time.seconds()<1){}
             intake.setMode(Intake.INTAKE);
-            hopper.intake(Hopper.ALL);
-            drive.forward(1, .2);
-            time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
-            while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout) {
-                if (hopper.leftHopperSensor.pixelPresent()) hopper.rest(Hopper.LEFT_HOPPER);
-                if (hopper.rightHopperSensor.pixelPresent()) hopper.rest(Hopper.RIGHT_HOPPER);
-            }
-            intake.setMode(Intake.REST);
-            hopper.rest(Hopper.ALL);
+            drive.forward(.5, .5);
             return false;
         }
 

@@ -65,9 +65,10 @@ public class QuickStackBlueLeft extends SampleAuto {
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
 
-        Actions.runBlocking(robot.secondStack());
+        Actions.runBlocking(robot.firstStack());
 
         Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone));
+        robot.intake.setMode(Intake.REST);
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);

@@ -101,11 +101,11 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkage1Up = .05;
-        public static double linkage1Down = .6;
+        public static double linkage1Up = 1;
+        public static double linkage1Down = .3;
 
-        public static double linkage2Up = .05;
-        public static double linkage2Down = .6;
+        public static double linkage2Up = 1;
+        public static double linkage2Down = .5;
 
         //TODO tune these positions
 

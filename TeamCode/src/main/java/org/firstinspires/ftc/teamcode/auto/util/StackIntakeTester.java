@@ -22,7 +22,7 @@ public class StackIntakeTester extends SampleAuto {
 
     @Override
     public void onStart() {
-        Actions.runBlocking(robot.stackIntake());
+        Actions.runBlocking(robot.firstStack());
 
 
     }
