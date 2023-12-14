@@ -145,32 +145,32 @@ public class CompetitionTeleop extends SampleTeleop {
         robot.wrist.setPosition(wristPos);
 
 
-        if(g1.isDown(GamepadKeys.Button.B)){
-            robot.climber.setMode(Climber.RAISE);
-        }
-        else if(g1.isDown(GamepadKeys.Button.X)){
-            robot.climber.setMode(Climber.LOWER);
-        }
-        else if(g1.isDown(GamepadKeys.Button.Y)){
-            robot.climber.setMode(Climber.CLIMB);
-        }
-
-
-        else robot.climber.setMode(Climber.REST);
-
-        if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-            robot.climber.rightClimberServo.setPower(1);
-        }
-        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
-            robot.climber.rightClimberServo.setPower(0);
-        }
-        if (g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-            robot.climber.leftClimberServo.setPower(1);
-        }
-        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
-            robot.climber.leftClimberServo.setPower(0);
-        }
-        if(robot.climber.timer != null)pen.addLine("SPOOL TIMER" + robot.climber.timer.seconds());
+//        if(g1.isDown(GamepadKeys.Button.B)){
+//            robot.climber.setMode(Climber.RAISE);
+//        }
+//        else if(g1.isDown(GamepadKeys.Button.X)){
+//            robot.climber.setMode(Climber.LOWER);
+//        }
+//        else if(g1.isDown(GamepadKeys.Button.Y)){
+//            robot.climber.setMode(Climber.CLIMB);
+//        }
+//
+//
+//        else robot.climber.setMode(Climber.REST);
+//
+//        if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+//            robot.climber.rightClimberServo.setPower(1);
+//        }
+//        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
+//            robot.climber.rightClimberServo.setPower(0);
+//        }
+//        if (g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+//            robot.climber.leftClimberServo.setPower(1);
+//        }
+//        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
+//            robot.climber.leftClimberServo.setPower(0);
+//        }
+//        if(robot.climber.timer != null)pen.addLine("SPOOL TIMER" + robot.climber.timer.seconds());
 
 
 

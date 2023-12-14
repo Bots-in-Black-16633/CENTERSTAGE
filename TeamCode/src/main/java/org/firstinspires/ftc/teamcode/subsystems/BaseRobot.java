@@ -32,7 +32,6 @@ public class BaseRobot implements SubsystemBase{
    public Wrist wrist;
    public Shoulder shoulder;
    public Intake intake;
-   public Climber climber;
     public Drive drive;
     public Shooter shooter;
     public Linkage linkage;
@@ -42,7 +41,6 @@ public class BaseRobot implements SubsystemBase{
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
-        climber = new Climber(hwMap);
         drive = new Drive(hwMap, startPose);
         shoulder = new Shoulder(hwMap);
         wrist = new Wrist(hwMap);

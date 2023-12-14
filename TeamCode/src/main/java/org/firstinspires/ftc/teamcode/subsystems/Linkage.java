@@ -11,50 +11,50 @@ public class Linkage implements SubsystemBase{
 
 
     public HardwareMap hwMap;
-    public Servo linkage1;
-    public Servo linkage2;
+    public Servo linkageLeft;
+    public Servo linkageRight;
     public Linkage(HardwareMap hwMap){
-        linkage1 = hwMap.servo.get("linkage");
-        linkage2 = hwMap.servo.get("linkage2");
+        linkageLeft = hwMap.servo.get("linkageLeft");
+        linkageRight = hwMap.servo.get("linkageRight");
     }
 
     public void raise(){
 
-        linkage1.setPosition(Constants.LinkageConstants.linkage1Up);
-        linkage2.setPosition(Constants.LinkageConstants.linkage2Up);
+        linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftUp);
+        linkageRight.setPosition(Constants.LinkageConstants.linkageRightUp);
     }
     public void lower() {
 
-        linkage1.setPosition(Constants.LinkageConstants.linkage1Down);
-        linkage2.setPosition(Constants.LinkageConstants.linkage2Down);
+        linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftDown);
+        linkageRight.setPosition(Constants.LinkageConstants.linkageRightDown);
     }
 
     public void stackLevel(int level)
     {
         if(level==1)
         {
-            linkage1.setPosition(Constants.LinkageConstants.linkage1PixelOne);
-            linkage2.setPosition(Constants.LinkageConstants.linkage2PixelOne);
+            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelOne);
+            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelOne);
         }
         else if(level==2)
         {
-            linkage1.setPosition(Constants.LinkageConstants.linkage1PixelTwo);
-            linkage2.setPosition(Constants.LinkageConstants.linkage2PixelTwo);
+            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelTwo);
+            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelTwo);
         }
         else if(level==3)
         {
-            linkage1.setPosition(Constants.LinkageConstants.linkage1PixelThree);
-            linkage2.setPosition(Constants.LinkageConstants.linkage2PixelThree);
+            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelThree);
+            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelThree);
         }
         else if(level==4)
         {
-            linkage1.setPosition(Constants.LinkageConstants.linkage1PixelFour);
-            linkage2.setPosition(Constants.LinkageConstants.linkage2PixelFour);
+            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelFour);
+            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelFour);
         }
         else if(level==5)
         {
-            linkage1.setPosition(Constants.LinkageConstants.linkage1PixelFive);
-            linkage2.setPosition(Constants.LinkageConstants.linkage2PixelFive);
+            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelFive);
+            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelFive);
         }
     }
     @Override

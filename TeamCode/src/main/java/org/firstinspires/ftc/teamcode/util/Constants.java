@@ -101,27 +101,27 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkage1Up = 1;
-        public static double linkage1Down = .3;
+        public static double linkageLeftUp = .63;
+        public static double linkageLeftDown = .44;
 
-        public static double linkage2Up = 1;
-        public static double linkage2Down = .5;
+        public static double linkageRightUp = .37;
+        public static double linkageRightDown = .56;
 
         //TODO tune these positions
 
         //LINKAGE 1 POSITIONS
-        public static double  linkage1PixelOne = .2;
-        public static double  linkage1PixelTwo = .25;
-        public static double linkage1PixelThree = .35;
-        public static double linkage1PixelFour = .4;
-        public static double linkage1PixelFive = .6;
+        public static double  linkageLeftPixelOne = .2;
+        public static double  linkageLeftPixelTwo = .25;
+        public static double linkageLeftPixelThree = .35;
+        public static double linkageLeftPixelFour = .4;
+        public static double linkageLeftPixelFive = .6;
 
         //LINKAGE 2 POSITIONS
-        public static double  linkage2PixelOne = .2;
-        public static double  linkage2PixelTwo = .25;
-        public static double linkage2PixelThree = .35;
-        public static double linkage2PixelFour = .4;
-        public static double linkage2PixelFive = .6;
+        public static double  linkageRightPixelOne = .2;
+        public static double  linkageRightPixelTwo = .25;
+        public static double linkageRightPixelThree = .35;
+        public static double linkageRightPixelFour = .4;
+        public static double linkageRightPixelFive = .6;
     }
     @Config
     public static final class ColorSensorWrapperConstants{
