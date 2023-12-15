@@ -38,6 +38,8 @@ public class BaseRobot implements SubsystemBase{
     public volatile WebcamName camera;
 
     public AutoUtil autoGenerator;
+    public ElapsedTime timeout = new ElapsedTime();
+    public final static double timeOutSec = .1;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
@@ -87,7 +89,8 @@ public class BaseRobot implements SubsystemBase{
 
 
             slider.runToPosition(Constants.SliderConstants.sliderRest);
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5){
+            timeout.reset();
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5 && timeout.seconds() < timeOutSec){
 
             }
             wrist.setPosition(Constants.WristConstants.wristRest);
@@ -110,14 +113,13 @@ public class BaseRobot implements SubsystemBase{
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
-            AutoUtil.delay(.25);
-            hopper.rest(Hopper.ALL);
 
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
-
-            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05){
+            hopper.rest(Hopper.ALL);
+            timeout.reset();
+            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
 
             }
             AutoUtil.delay(1);
@@ -145,8 +147,8 @@ public class BaseRobot implements SubsystemBase{
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
-
-            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05){
+            timeout.reset();
+            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
 
             }
             AutoUtil.delay(1);
@@ -174,7 +176,8 @@ public class BaseRobot implements SubsystemBase{
 
             wrist.setPosition(Constants.WristConstants.wristOuttakeHigh);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttakeHigh);
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderOuttakeHigh) > 5){
+            timeout.reset();
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderOuttakeHigh) > 5 && timeout.seconds() < timeOutSec){
 
             }
 

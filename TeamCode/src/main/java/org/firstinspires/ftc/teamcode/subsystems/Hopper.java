@@ -35,8 +35,8 @@ public class Hopper implements SubsystemBase{
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
 
-        leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
-        rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
+        //leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
+        //rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
         rightHopper.setInverted(true);
     }
 
@@ -55,7 +55,8 @@ public class Hopper implements SubsystemBase{
 
 
     public boolean hoppersFull(){
-        return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
+        return true;
+        //return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
     }
 
 
@@ -102,8 +103,8 @@ public class Hopper implements SubsystemBase{
         t.addLine("LEFT HOPPER: " + leftHopperSensor.pixelPresent());
         t.addLine("RIGHT HOPPER: " + rightHopperSensor.pixelPresent());
 
-        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
-        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
+        //t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
+        //t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
     }
 
     @Override

@@ -30,7 +30,7 @@ public final class Constants{
 
         public static  double kP = .1;
         public static  double sliderTolerance=20;
-        public static  double sliderPower = .75;
+        public static  double sliderPower = 1;
         public static int sliderMaxPosition = 3000;
         public static int sliderMinPosition = 0;
 
