@@ -70,15 +70,16 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .488;
-        public static double wristTraveling = .688;
-        public static double wristOuttake = .473;//low outtae
-        public static double wristOuttakeHigh = .473;//low outtae
+        public static double wristRest = .621;//.621
+        public static double wristTraveling = .821; //+.2
+        public static double wristOuttake = .606;//low outtae - .015
+        public static double wristOuttakeHigh = .606;//low outtae - .015
 
-        public static double wristSafeBackToIntake = .658;
+        public static double wristSafeBackToIntake = .791; //+.17
 
-        public static double wristSafeBackToOuttake = .658;
-        public static double wristDistanceDeposit = .452;
+        public static double wristSafeBackToOuttake = .801;//+.18
+        public static double wristDistanceDeposit = .585;//-.036
+        public static double wristAdjustingPosition = .291;
     }
     @Config
     public static final class IntakeConstants{
@@ -95,8 +96,7 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterHold =.75;
-        public static double shooterRelease = .55;
+        public static double shooterSpeed =-1;
 
     }
     @Config

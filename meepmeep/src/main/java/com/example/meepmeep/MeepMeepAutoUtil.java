@@ -38,20 +38,20 @@ public class MeepMeepAutoUtil {
 
     public MeepMeepAutoUtil(DriveShim drive){
         this.drive = drive;
-        startPose = drive.getPoseEstimate();
+        startPose = MeepMeepTesting.drivePose;
     }
 
     public  Action getBackStageParkAutoAction(int color, int side){
         if(color == MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.RIGHT){
-                return drive.actionBuilder(drive.getPoseEstimate())
+                return drive.actionBuilder(MeepMeepTesting.drivePose)
                         .strafeTo(new Vector2d(35,19.5                                          ))
                         .strafeTo(new Vector2d(48, 19.5))
 
                         .build();
             }
             else if(side == MeepMeepAutoUtil.LEFT){
-                return drive.actionBuilder(drive.getPoseEstimate())
+                return drive.actionBuilder(MeepMeepTesting.drivePose)
 
                         .strafeTo(new Vector2d(40,64))
                         .strafeTo(new Vector2d(48, 64))
@@ -60,14 +60,14 @@ public class MeepMeepAutoUtil {
             else return null;
         }else if(color == MeepMeepAutoUtil.RED){
             if(side == MeepMeepAutoUtil.LEFT){
-                return drive.actionBuilder(drive.getPoseEstimate())
+                return drive.actionBuilder(MeepMeepTesting.drivePose)
                         .strafeTo(new Vector2d(37,-10))
                         .strafeTo(new Vector2d(48, -10))
 
                         .build();
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
-                return drive.actionBuilder(drive.getPoseEstimate())
+                return drive.actionBuilder(MeepMeepTesting.drivePose)
                         .strafeTo(new Vector2d(45,-60))
 
                         .strafeTo(new Vector2d(60,-60))
@@ -84,7 +84,7 @@ public class MeepMeepAutoUtil {
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
                     //Works
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,-44))
                             .turn(Math.toRadians(-20))
                             .strafeTo(new Vector2d(-36,-15))
@@ -95,7 +95,7 @@ public class MeepMeepAutoUtil {
                 }
                 else if(zone==2){
                     //Works
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-45,-46))
                             .splineToLinearHeading(new Pose2d(-55, -15, Math.toRadians(180)), Math.toRadians(90.00))
                             .strafeTo(new Vector2d(30, -15))
@@ -104,7 +104,7 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 //Not tested, probably doesn't work
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,-44))
                             .strafeTo(new Vector2d(-36,-15))
                             .strafeTo(new Vector2d(12, -15))
@@ -115,19 +115,19 @@ public class MeepMeepAutoUtil {
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-44))
                             .strafeToLinearHeading(new Vector2d(35,-30), Math.toRadians(180))
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,-44))
                             .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(210))
 
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-50))
                             .strafeToLinearHeading(new Vector2d(37,-55), Math.toRadians(180))
                             .strafeTo(new Vector2d(37,-37))
@@ -139,26 +139,26 @@ public class MeepMeepAutoUtil {
         else if(color ==MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,44))
                             .strafeToLinearHeading(new Vector2d(40,44), Math.toRadians(180))
 
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,44))
                             .strafeToLinearHeading(new Vector2d(35,40), Math.toRadians(180))
 
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeToLinearHeading(new Vector2d(37,38), Math.toRadians(180))
                             .build();
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    /*return drive.actionBuilder(drive.getPoseEstimate())
+                    /*return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeToConstantHeading(new Vector2d(-40, 37))
                             .strafeTo(new Vector2d(-34,44))
                             .turn(Math.toRadians(-20))
@@ -169,7 +169,7 @@ public class MeepMeepAutoUtil {
 
                      */
                     //Good
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,37))
                             .strafeTo(new Vector2d(-36,15))
                             .strafeToLinearHeading(new Vector2d(40,15),Math.toRadians(-180))
@@ -179,7 +179,7 @@ public class MeepMeepAutoUtil {
                 }
                 else if(zone==2){
                     //Good
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .strafeToConstantHeading(new Vector2d(-50, 44))
                             .splineToLinearHeading(new Pose2d(-50, 12, Math.toRadians(180)), Math.toRadians(250))
@@ -189,7 +189,7 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 //Good
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .turn(Math.toRadians(20))
                             .strafeTo(new Vector2d(-36,12))
@@ -207,7 +207,7 @@ public class MeepMeepAutoUtil {
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
                     //Works
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-34,-44))
                             .turn(Math.toRadians(-20))
                             .strafeTo(new Vector2d(-36,-15))
@@ -219,7 +219,7 @@ public class MeepMeepAutoUtil {
                 }
                 else if(zone==2){
                     //Works
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-45,-46))
                             .splineToLinearHeading(new Pose2d(-55, -15, Math.toRadians(180)), Math.toRadians(90.00))
                             .strafeTo(new Vector2d(12, -15))
@@ -228,7 +228,7 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 //Not tested, probably doesn't work
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,-44))
                             .strafeTo(new Vector2d(-36,-15))
                             .strafeTo(new Vector2d(12, -15))
@@ -240,20 +240,20 @@ public class MeepMeepAutoUtil {
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-44))
                             .strafeToLinearHeading(new Vector2d(35,-40), Math.toRadians(200))
                             .strafeToConstantHeading(new Vector2d(50, -32))
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,-44))
                             .strafeToLinearHeading(new Vector2d(40,-44), Math.toRadians(210))
                             .strafeToConstantHeading(new Vector2d(50, -40))
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-50))
                             .strafeToLinearHeading(new Vector2d(37,-55), Math.toRadians(180))
                             .strafeTo(new Vector2d(37,-37))
@@ -265,27 +265,27 @@ public class MeepMeepAutoUtil {
         else if(color ==MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,44))
                             .strafeToLinearHeading(new Vector2d(40,44), Math.toRadians(180))
                             .strafeToConstantHeading(new Vector2d(50, 48))
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,44))
                             .strafeToLinearHeading(new Vector2d(35,40), Math.toRadians(180))
                             .strafeToConstantHeading(new Vector2d(50, 36))
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeToLinearHeading(new Vector2d(37,38), Math.toRadians(180))
                             .strafeToConstantHeading(new Vector2d(50, 30))
                             .build();
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    /*return drive.actionBuilder(drive.getPoseEstimate())
+                    /*return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeToConstantHeading(new Vector2d(-40, 37))
                             .strafeTo(new Vector2d(-34,44))
                             .turn(Math.toRadians(-20))
@@ -296,7 +296,7 @@ public class MeepMeepAutoUtil {
 
                      */
                     //Good
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,37))
                             .strafeTo(new Vector2d(-36,15))
                             .strafeToLinearHeading(new Vector2d(40,15),Math.toRadians(-180))
@@ -307,7 +307,7 @@ public class MeepMeepAutoUtil {
                 }
                 else if(zone==2){
                     //Good
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .strafeToConstantHeading(new Vector2d(-50, 44))
                             .splineToLinearHeading(new Pose2d(-50, 16, Math.toRadians(180)), Math.toRadians(270))
@@ -318,7 +318,7 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 //Good
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .turn(Math.toRadians(20))
                             .strafeTo(new Vector2d(-36,12))
@@ -419,7 +419,7 @@ public class MeepMeepAutoUtil {
         if(color==MeepMeepAutoUtil.RED){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-34,-44))
                             .turn(Math.toRadians(-20))
                             .strafeTo(new Vector2d(-36,-12))
@@ -428,7 +428,7 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,-44))
                             .splineToConstantHeading(new Vector2d(-55, -12), Math.toRadians(90.00))
                             .strafeTo(new Vector2d(60, -12))
@@ -436,7 +436,7 @@ public class MeepMeepAutoUtil {
 
                             .build();
                 }
-                else {return drive.actionBuilder(drive.getPoseEstimate())
+                else {return drive.actionBuilder(MeepMeepTesting.drivePose)
                         .strafeTo(new Vector2d(-36,-44))
                         .turn(Math.toRadians(20))
                         .strafeTo(new Vector2d(-36,-12))
@@ -446,7 +446,7 @@ public class MeepMeepAutoUtil {
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-44))
                             .strafeToLinearHeading(new Vector2d(14, -60), Math.toRadians(270))
                             .strafeTo(new Vector2d(57,-65))
@@ -454,13 +454,13 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,-44))
                             .strafeTo(new Vector2d(12,-60))
                             .strafeTo(new Vector2d(57,-65))
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,-50))
                             .strafeToLinearHeading(new Vector2d(14, -60), Math.toRadians(270))
                             .strafeTo(new Vector2d(57,-65))
@@ -472,7 +472,7 @@ public class MeepMeepAutoUtil {
         else if(color ==MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.LEFT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,50))
                             .strafeToLinearHeading(new Vector2d(14, 60), Math.toRadians(90))
                             .strafeTo(new Vector2d(60,60))
@@ -480,13 +480,13 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(12,44))
                             .strafeTo(new Vector2d(12,60))
                             .strafeTo(new Vector2d(60,60))
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(14,44))
                             .strafeToLinearHeading(new Vector2d(14, 60), Math.toRadians(90))
                             .strafeTo(new Vector2d(60,60))
@@ -495,7 +495,7 @@ public class MeepMeepAutoUtil {
             }
             else if(side == MeepMeepAutoUtil.RIGHT){
                 if(zone==1){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-34,44))
                             .turn(Math.toRadians(-20))
                             .strafeTo(new Vector2d(-36,10))
@@ -503,13 +503,13 @@ public class MeepMeepAutoUtil {
                             .build();
                 }
                 else if(zone==2){
-                    return drive.actionBuilder(drive.getPoseEstimate())
+                    return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .splineToConstantHeading(new Vector2d(-55, 10), Math.toRadians(270))
                             .strafeTo(new Vector2d(60, 10))
                             .build();
                 }
-                else return drive.actionBuilder(drive.getPoseEstimate())
+                else return drive.actionBuilder(MeepMeepTesting.drivePose)
                             .strafeTo(new Vector2d(-36,44))
                             .turn(Math.toRadians(20))
                             .strafeTo(new Vector2d(-36,10))
@@ -526,7 +526,7 @@ public class MeepMeepAutoUtil {
     //Note: getPixelStackAutoAction is vesitigial
     public  Action getPixelStackAutoAction(int color){
         if(color == MeepMeepAutoUtil.RED){
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .splineToLinearHeading(new Pose2d(31.51, -6.30, Math.toRadians(180)), Math.toRadians(180.00))
                     .splineToConstantHeading(new Vector2d(-60.35, -9.93), Math.toRadians(180))
                     .waitSeconds(1)
@@ -535,7 +535,7 @@ public class MeepMeepAutoUtil {
 
         }
         else if(color == MeepMeepAutoUtil.BLUE){
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .splineToLinearHeading(new Pose2d(31.51, 6.30, Math.toRadians(180)), Math.toRadians(180.00))
                     .splineToConstantHeading(new Vector2d(-60.35, 9.93), Math.toRadians(180))
                     .waitSeconds(1)
@@ -548,14 +548,14 @@ public class MeepMeepAutoUtil {
     public Action getBackdropToStackAutoAction(int color) {
         if(color==MeepMeepAutoUtil.BLUE)
         {
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .splineTo(new Vector2d(24.75, 13.09), Math.toRadians(192.99))
                     .splineTo(new Vector2d(-50, 10.02), Math.toRadians(179.28))
                     .build();
         }
         else
         {
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .splineTo(new Vector2d(24.75, -13.09), Math.toRadians(167.01))
                     .splineTo(new Vector2d(-55, -10.43), Math.toRadians(179.28))
                     .build();
@@ -570,7 +570,7 @@ public class MeepMeepAutoUtil {
     public Action getStackToBackdropAutoAction(int color, int zone) {
         if(color==MeepMeepAutoUtil.RED)
         {
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .strafeToConstantHeading(new Vector2d(43.00, -14.20))
                     .strafeToConstantHeading(new Vector2d(48, -40.56))
                     .build();
@@ -578,7 +578,7 @@ public class MeepMeepAutoUtil {
         }
         else
         {
-            return drive.actionBuilder(drive.getPoseEstimate())
+            return drive.actionBuilder(MeepMeepTesting.drivePose)
                     .strafeToConstantHeading(new Vector2d(43.00, 14.20))
                     .strafeToConstantHeading(new Vector2d(50.30, 40.56))
                     .strafeToConstantHeading(new Vector2d(52, 41))

@@ -43,7 +43,7 @@ public class CompetitionTeleop extends SampleTeleop {
         shoulderPos = Constants.ShoulderConstants.shoulderRest;
         wristPos = Constants.WristConstants.wristRest;
         sliderPos = Constants.SliderConstants.sliderRest;
-        robot.shooter.reset();
+        robot.shooter.rest();
     }
 
     @Override
@@ -74,12 +74,19 @@ public class CompetitionTeleop extends SampleTeleop {
             robot.hopper.unLock(Hopper.ALL);
             resetPixelSubsystemTrackingVariables();
         }
-        if(g2.wasJustPressed(GamepadKeys.Button.B)){
+        if(g2.isDown(GamepadKeys.Button.B)){
             robot.shooter.shoot();
         }
+        else{
+            robot.shooter.rest();
+        }
         if(g2.wasJustPressed(GamepadKeys.Button.BACK)){
-            Actions.runBlocking(robot.traveling());
-            resetPixelSubsystemTrackingVariables();
+            if(robot.slider.getPosition()>400){
+                robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPosition);
+                wristPos = Constants.WristConstants.wristAdjustingPosition;
+            }
+//            Actions.runBlocking(robot.traveling());
+//            resetPixelSubsystemTrackingVariables();
         }
 
 

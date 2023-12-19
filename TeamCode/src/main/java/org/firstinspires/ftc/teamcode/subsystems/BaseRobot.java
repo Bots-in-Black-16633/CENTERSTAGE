@@ -87,15 +87,18 @@ public class BaseRobot implements SubsystemBase{
 
             AutoUtil.delay(.25);
 
-
-            slider.runToPosition(Constants.SliderConstants.sliderRest);
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
             timeout.reset();
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5 && timeout.seconds() < timeOutSec){
+            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderRest) > .05 && timeout.seconds() < timeOutSec){
 
             }
+            slider.runToPosition(Constants.SliderConstants.sliderRest);
+            timeout.reset();
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5 && timeout.seconds() < 5){
+
+            }
+
             wrist.setPosition(Constants.WristConstants.wristRest);
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
-            AutoUtil.delay(.1);
             return false;
         }
     }

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -11,16 +12,16 @@ public class Shooter implements SubsystemBase{
 
 
     public HardwareMap hwMap;
-    public Servo shooter;
+    public DcMotor shooter;
     public Shooter(HardwareMap hwMap){
-        shooter = hwMap.servo.get("shooter");
+        shooter = hwMap.dcMotor.get("shooter");
     }
 
     public void shoot(){
-        shooter.setPosition(Constants.ShooterConstants.shooterRelease);
+        shooter.setPower(Constants.ShooterConstants.shooterSpeed);
     }
-    public void reset(){
-        shooter.setPosition(Constants.ShooterConstants.shooterHold);
+    public void rest(){
+        shooter.setPower(0);
     }
 
     @Override

@@ -35,8 +35,8 @@ public class Hopper implements SubsystemBase{
         leftHopper = new CRServo(hwMap, "leftHopper");
         rightHopper = new CRServo(hwMap, "rightHopper");
 
-        //leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
-        //rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
+        leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
+        rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
         rightHopper.setInverted(true);
     }
 
@@ -55,8 +55,7 @@ public class Hopper implements SubsystemBase{
 
 
     public boolean hoppersFull(){
-        return true;
-        //return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
+        return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
     }
 
 
@@ -98,13 +97,13 @@ public class Hopper implements SubsystemBase{
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____HOPPER_____");
-//        t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
-//        t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
+        //t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
+        //t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
         t.addLine("LEFT HOPPER: " + leftHopperSensor.pixelPresent());
         t.addLine("RIGHT HOPPER: " + rightHopperSensor.pixelPresent());
 
-        //t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
-        //t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
+        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
+        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
     }
 
     @Override
