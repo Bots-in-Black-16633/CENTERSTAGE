@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import androidx.annotation.NonNull;
 
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.util.RevBlinkinLedDriver;
 
 public class LEDStrip implements SubsystemBase{
     RevBlinkinLedDriver strip;

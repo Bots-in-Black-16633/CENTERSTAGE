@@ -41,6 +41,33 @@ public class MeepMeepAutoUtil {
         startPose = MeepMeepTesting.drivePose;
     }
 
+    /**
+     * Actions
+     *
+     * OLD
+     * spikeAutoAction
+     * spikePark
+     * BackstageParkAutoAction
+     * BackdropAutoAction
+     *
+     *SEMI OLD
+     * BackdropAutoActionNoAprilTag
+     * stackToBackdrop
+     * backdropToStack
+     *
+     *
+     * NeW
+     * speedyBackdrop
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     */
+
     public  Action getBackStageParkAutoAction(int color, int side){
         if(color == MeepMeepAutoUtil.BLUE){
             if(side == MeepMeepAutoUtil.RIGHT){
@@ -337,6 +364,7 @@ public class MeepMeepAutoUtil {
             if (side == MeepMeepAutoUtil.LEFT) {
                 if (zone == 1) {
                     //Works
+
                     return drive.actionBuilder(REDLEFTSTART)
                             .strafeToLinearHeading(new Vector2d(-45.5, -40), Math.toRadians(290)).build();
                 }
@@ -346,6 +374,7 @@ public class MeepMeepAutoUtil {
                             .strafeTo(new Vector2d(-36, -35)).build();
                 }
                 else {
+                    drive.setPoseEstimate(REDLEFTSTART);
                     //Not tested but probably works
                     return drive.actionBuilder(REDLEFTSTART)
                             .strafeToConstantHeading(new Vector2d(-48.07, -48.07))
@@ -413,8 +442,6 @@ public class MeepMeepAutoUtil {
             else return null;
         } else return null;
     }
-
-
     public  Action getSpikeParkAction(int color, int side, int zone){
         if(color==MeepMeepAutoUtil.RED){
             if(side == MeepMeepAutoUtil.LEFT){
@@ -523,27 +550,6 @@ public class MeepMeepAutoUtil {
     }
 
 
-    //Note: getPixelStackAutoAction is vesitigial
-    public  Action getPixelStackAutoAction(int color){
-        if(color == MeepMeepAutoUtil.RED){
-            return drive.actionBuilder(MeepMeepTesting.drivePose)
-                    .splineToLinearHeading(new Pose2d(31.51, -6.30, Math.toRadians(180)), Math.toRadians(180.00))
-                    .splineToConstantHeading(new Vector2d(-60.35, -9.93), Math.toRadians(180))
-                    .waitSeconds(1)
-                    .strafeTo(new Vector2d(50, -12))
-                    .build();
-
-        }
-        else if(color == MeepMeepAutoUtil.BLUE){
-            return drive.actionBuilder(MeepMeepTesting.drivePose)
-                    .splineToLinearHeading(new Pose2d(31.51, 6.30, Math.toRadians(180)), Math.toRadians(180.00))
-                    .splineToConstantHeading(new Vector2d(-60.35, 9.93), Math.toRadians(180))
-                    .waitSeconds(1)
-                    .strafeTo(new Vector2d(50, 12))
-                    .build();
-        }
-        else return null;
-    }
 
     public Action getBackdropToStackAutoAction(int color) {
         if(color==MeepMeepAutoUtil.BLUE)
@@ -587,10 +593,54 @@ public class MeepMeepAutoUtil {
         }
     }
 
-    //TODO write an action to get from the stack in auto
-    public Action getIntakeFromStackAutoAction()
-    {
-        return null;
+
+
+
+    public  Action getSpeedyBackdrop(int color, int side, int zone){
+        if(color==MeepMeepAutoUtil.RED){
+            if(side == MeepMeepAutoUtil.LEFT){
+                if(zone==1){
+                    return null;
+                }
+                else if(zone==2){
+                    return null;
+                }
+                else {return null;}
+
+            }
+            else if(side == MeepMeepAutoUtil.RIGHT){
+                if(zone==1){
+                    return null;
+                }
+                else if(zone==2){
+                    return null;
+                }
+                else return null;
+            }
+            else return null;
+        }
+        else if(color ==MeepMeepAutoUtil.BLUE){
+            if(side == MeepMeepAutoUtil.LEFT){
+                if(zone==1){
+                    return null;
+                }
+                else if(zone==2){
+                    return null;
+                }
+                else return null;
+            }
+            else if(side == MeepMeepAutoUtil.RIGHT){
+                if(zone==1){
+                    return null;
+                }
+                else if(zone==2){
+                    return null;
+                }
+                else return null;
+            }
+            else return null;
+        }
+        else return null;
     }
 
 
