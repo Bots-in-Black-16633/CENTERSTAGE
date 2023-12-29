@@ -127,6 +127,11 @@ public final class Constants{
     public static final class ColorSensorWrapperConstants{
         public static Scalar emptyHopperHSV = new Scalar(.08,.1,.13);
         public static double maxDistanceFromEmptyHopperColor = 1;
+        public enum Pixel{
+             GREEN, PURPLE, YELLOW, NONE, WHITE;
+
+
+        }
     }
     public static final class VisionConstants {
         public final static Vector2d APRIL_TAG_ONE = new Vector2d(60, 41.4);
@@ -152,5 +157,6 @@ public final class Constants{
         public static double aprilTagPositionWeight = 1;
         public static double aprilTagHeadingWeight = 1;
     }
+
 
 }

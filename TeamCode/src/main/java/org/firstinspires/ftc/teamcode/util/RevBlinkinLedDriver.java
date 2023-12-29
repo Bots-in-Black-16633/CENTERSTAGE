@@ -170,7 +170,40 @@ public class RevBlinkinLedDriver implements HardwareDevice {
         WHITE,
         GRAY,
         DARK_GRAY,
-        BLACK;
+        BLACK,
+        /**splits are in Left Right Ordre**/
+        splitGreenPurple,
+        splitGreenYellow,
+        splitGreenBlack,
+        splitGreenWhite,
+
+        splitPurpleGreen,
+        splitPurpleYellow,
+        splitPurpleBlack,
+        splitPurpleWhite,
+
+        splitYellowGreen,
+        splitYellowPurple,
+
+        splitYellowBlack,
+        splitYellowWhite,
+
+        splitBlackGreen,
+        splitBlackPurple,
+        splitBlackYellow,
+        splitBlackWhite,
+
+        splitWhiteGreen,
+        splitWhitePurple,
+        splitWhiteYellow,
+        splitWhiteBlack;
+
+
+
+
+
+
+
 
         private static BlinkinPattern[] elements = values();
 

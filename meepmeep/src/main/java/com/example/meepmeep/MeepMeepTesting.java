@@ -19,8 +19,9 @@ public class MeepMeepTesting {
         MeepMeep meepMeep = new MeepMeep(500);
          myBot = new DefaultBotBuilder(meepMeep).setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 14.27).build();
         MeepMeepAutoUtil auto = new MeepMeepAutoUtil(myBot.getDrive());
-
+        /** test here**/
         myBot.runAction(auto.getSpikeAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 3));
+        /**test here**/
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
