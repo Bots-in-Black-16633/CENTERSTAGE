@@ -15,6 +15,9 @@ import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.util.Constants.ColorSensorWrapperConstants.Pixel;
+
+import java.util.Arrays;
 
 public class Hopper implements SubsystemBase{
 
@@ -23,6 +26,8 @@ public class Hopper implements SubsystemBase{
 
     public ColorSensorWrapper leftHopperSensor;
     public ColorSensorWrapper rightHopperSensor;
+
+    public LEDStrip strip;
 
     public static final int RIGHT_HOPPER = 1;
     public static final int LEFT_HOPPER =2;
@@ -38,6 +43,8 @@ public class Hopper implements SubsystemBase{
         leftHopperSensor = new ColorSensorWrapper("leftHopperSensor", hwMap);
         rightHopperSensor = new ColorSensorWrapper("rightHopperSensor", hwMap);
         rightHopper.setInverted(true);
+        strip = new LEDStrip(hwMap);
+
     }
 
    public class HopperOuttake implements Action {
@@ -55,7 +62,14 @@ public class Hopper implements SubsystemBase{
 
 
     public boolean hoppersFull(){
-        return leftHopperSensor.pixelPresent() && rightHopperSensor.pixelPresent();
+        return leftHopperSensor.isPixelPresent() && rightHopperSensor.isPixelPresent();
+    }
+
+    public Pixel getPixelColor(int hopperType){
+        if(hopperType == LEFT_HOPPER){
+            return leftHopperSensor.getPixelPresent();
+        }
+        else return rightHopperSensor.getPixelPresent();
     }
 
 
@@ -97,17 +111,18 @@ public class Hopper implements SubsystemBase{
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____HOPPER_____");
-        //t.addLine("Left Hopper Port: " + leftHopper.motor.getPortNumber());
-        //t.addLine("Right Hopper Port" + rightHopper.motor.getPortNumber());
-        t.addLine("LEFT HOPPER: " + leftHopperSensor.pixelPresent());
-        t.addLine("RIGHT HOPPER: " + rightHopperSensor.pixelPresent());
 
-        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
-        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
+        t.addLine("LEFT HOPPER: " + leftHopperSensor.getPixelPresent().name());
+        t.addLine("     VAlue" + Arrays.toString(leftHopperSensor.getTelemetryData()));
+        t.addLine("RIGHT HOPPER: " + rightHopperSensor.getPixelPresent().name());
+        t.addLine("     VAlue" + Arrays.toString(rightHopperSensor.getTelemetryData()));
+
+//        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
+//        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
     }
 
     @Override
     public void periodic() {
-
+        strip.updateLEDPattern(getPixelColor(LEFT_HOPPER), getPixelColor(RIGHT_HOPPER));
     }
 }

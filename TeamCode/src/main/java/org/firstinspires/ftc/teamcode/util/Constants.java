@@ -126,11 +126,14 @@ public final class Constants{
     @Config
     public static final class ColorSensorWrapperConstants{
         public static Scalar emptyHopperHSV = new Scalar(.08,.1,.13);
+
+        public static Scalar purplePixelHSV = new Scalar(0,0,0);
+        public static Scalar greenPixelHSV = new Scalar(0,0,0);
+        public static Scalar yellowPixelHSV = new Scalar(0,0,0);
+        public static Scalar whitePixelHSV = new Scalar(0,0,0);
         public static double maxDistanceFromEmptyHopperColor = 1;
         public enum Pixel{
              GREEN, PURPLE, YELLOW, NONE, WHITE;
-
-
         }
     }
     public static final class VisionConstants {

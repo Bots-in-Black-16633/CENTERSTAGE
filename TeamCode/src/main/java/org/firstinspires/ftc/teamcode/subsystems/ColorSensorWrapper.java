@@ -7,7 +7,9 @@ import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
+import org.firstinspires.ftc.teamcode.util.Constants.ColorSensorWrapperConstants.Pixel;
 import org.firstinspires.ftc.teamcode.util.Constants;
+
 import org.opencv.core.Point3;
 import org.opencv.core.Scalar;
 
@@ -17,6 +19,7 @@ import java.util.Arrays;
 public class ColorSensorWrapper implements  SubsystemBase{
 
     NormalizedColorSensor colorSensor;
+    double[] lastDistances = {0,0,0,0,0,0};//PURPLE, gren, yellow, blac whit
 
     public ColorSensorWrapper(String name, HardwareMap hwMap){
         colorSensor= hwMap.get(NormalizedColorSensor.class, name);
@@ -33,17 +36,31 @@ public class ColorSensorWrapper implements  SubsystemBase{
 
     }
 
-    public boolean pixelPresent(){
+    public Pixel getPixelPresent(){
         //if the hsv colors from the scanner are different enough form the expected default than a pixel is present
         Scalar curHSVColor = new Scalar(getRed(), getGreen(), getBlue());
-        double distance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyHopperHSV);
-        if(distance > Constants.ColorSensorWrapperConstants.maxDistanceFromEmptyHopperColor)return true;
-        else return false;
 
+        double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purplePixelHSV);
+        double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenPixelHSV);
+        double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowPixelHSV);
+        double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whitePixelHSV);
+        double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyHopperHSV);
+        double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
+
+        lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
+        if(min == purpleDistance)return Pixel.PURPLE;
+        else if(min == greenDistance)return Pixel.GREEN;
+        else if (min == yellowDistance)return Pixel.YELLOW;
+        else if(min == whiteDistance)return Pixel.WHITE;
+        else return Pixel.NONE;
     }
-    public double distanceFromEmpty(){
-        return distance3D(new Scalar(getRed(), getGreen(), getBlue()), Constants.ColorSensorWrapperConstants.emptyHopperHSV);
+    public boolean isPixelPresent(){
+        return getPixelPresent() != Pixel.NONE;
     }
+    public double[] getTelemetryData(){
+        return lastDistances;
+    }
+
     public double distance3D(Scalar p1, Scalar p2){
         return Math.sqrt(Math.pow(p1.val[0]-p2.val[0],2) + Math.pow(p1.val[1]-p2.val[1],2) + Math.pow(p1.val[2]-p2.val[2], 2));
     }
@@ -88,6 +105,6 @@ public class ColorSensorWrapper implements  SubsystemBase{
 
     @Override
     public String toString(){
-        return "HSV: " + Arrays.toString(getHSVValues()) + "  RGB VALUES: " + Arrays.toString(getRGB()) + " Dist: " + distanceFromEmpty();
+        return "HSV: " + Arrays.toString(getHSVValues()) + "  RGB VALUES: " + Arrays.toString(getRGB());
     }
 }
