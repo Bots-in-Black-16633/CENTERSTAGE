@@ -206,8 +206,8 @@ public class BaseRobot implements SubsystemBase{
 
             time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
-                if(hopper.leftHopperSensor.pixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
-                if(hopper.rightHopperSensor.pixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
+                if(hopper.leftHopperSensor.isPixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
+                if(hopper.rightHopperSensor.isPixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
             }
             //bring slider up
             intake.setMode(Intake.REST);
