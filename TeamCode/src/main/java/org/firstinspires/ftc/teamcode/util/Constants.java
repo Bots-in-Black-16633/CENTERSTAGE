@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.geometry.Translation2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.arcrobotics.ftclib.util.InterpLUT;
 
 import org.checkerframework.checker.units.qual.C;
 import org.opencv.core.Scalar;
@@ -99,6 +100,9 @@ public final class Constants{
         public static double shooterSpeed =-1;
         public static double kickerSpeed =1;
 
+        //TODO add these values
+        //Put speed that worked first in a pair of points, then the distance
+        public static double [][] testedDistances = new double[][] {};
 
     }
     @Config
