@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.Arrays;
-@TeleOp
+@TeleOp(name = "Sensor Tester", group = "helper")
 public class SensorTester extends LinearOpMode {
     public NormalizedColorSensor colorSensor = null;
     //Telemetry telemetry;

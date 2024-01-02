@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.teleop.comp;
 
 
+import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.REST;
+import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.SPINNING;
+
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -70,19 +73,19 @@ public class CompetitionTeleop extends SampleTeleop {
             robot.hopper.unLock(Hopper.ALL);
             resetPixelSubsystemTrackingVariables();
         }
-        if(g2.isDown(GamepadKeys.Button.B)){
-            robot.shooter.shoot();
+
+        if(g2.wasJustPressed(GamepadKeys.Button.B)){
+            if(robot.shooter.getState()==REST){robot.shooter.spinUp();}
+            else if(robot.shooter.getState()==SPINNING){robot.shooter.shoot();}
+            else robot.shooter.rest();
         }
-        else{
-            robot.shooter.rest();
-        }
+
         if(g2.wasJustPressed(GamepadKeys.Button.BACK)){
             if(robot.slider.getPosition()>400){
                 robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPosition);
                 wristPos = Constants.WristConstants.wristAdjustingPosition;
             }
-//            Actions.runBlocking(robot.traveling());
-//            resetPixelSubsystemTrackingVariables();
+
         }
 
 
@@ -90,9 +93,9 @@ public class CompetitionTeleop extends SampleTeleop {
         //HOPPER OUTTAKE
         //IF YOU ARE INTAKING AND THE RIGHT BUMPER IS PRESSED
 
-        if((sliderPos < 20) && robot.hopper.rightHopperSensor.pixelPresent()){robot.hopper.rest(Hopper.RIGHT_HOPPER);robot.hopper.lock(Hopper.RIGHT_HOPPER);}
+        if((sliderPos < 20) && robot.hopper.rightHopperSensor.isPixelPresent()){robot.hopper.rest(Hopper.RIGHT_HOPPER);robot.hopper.lock(Hopper.RIGHT_HOPPER);}
         else{robot.hopper.unLock(Hopper.RIGHT_HOPPER);}
-         if((sliderPos < 20) && robot.hopper.leftHopperSensor.pixelPresent()){robot.hopper.rest(Hopper.LEFT_HOPPER);robot.hopper.lock(Hopper.LEFT_HOPPER);}
+         if((sliderPos < 20) && robot.hopper.leftHopperSensor.isPixelPresent()){robot.hopper.rest(Hopper.LEFT_HOPPER);robot.hopper.lock(Hopper.LEFT_HOPPER);}
          else{robot.hopper.unLock(Hopper.LEFT_HOPPER);}
 
 
@@ -127,18 +130,13 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
 
-
-
         //Manual Fine adjustent controls
         if(Math.abs(g2.getLeftY())>.01) {
             sliderPos += g2.getLeftY() * 100;
             robot.slider.runToPosition(sliderPos);
         }
         if(Math.abs(g2.getRightY())>.01){
-
             shoulderPos += -1*g2.getRightY()*.05;
-
-
         }
         robot.shoulder.setPosition(shoulderPos);
 
@@ -148,40 +146,8 @@ public class CompetitionTeleop extends SampleTeleop {
         robot.wrist.setPosition(wristPos);
 
 
-//        if(g1.isDown(GamepadKeys.Button.B)){
-//            robot.climber.setMode(Climber.RAISE);
-//        }
-//        else if(g1.isDown(GamepadKeys.Button.X)){
-//            robot.climber.setMode(Climber.LOWER);
-//        }
-//        else if(g1.isDown(GamepadKeys.Button.Y)){
-//            robot.climber.setMode(Climber.CLIMB);
-//        }
-//
-//
-//        else robot.climber.setMode(Climber.REST);
-//
-//        if (g1.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
-//            robot.climber.rightClimberServo.setPower(1);
-//        }
-//        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
-//            robot.climber.rightClimberServo.setPower(0);
-//        }
-//        if (g1.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-//            robot.climber.leftClimberServo.setPower(1);
-//        }
-//        else if(!(g1.isDown(GamepadKeys.Button.B) || g1.isDown(GamepadKeys.Button.X) || (robot.climber.timer != null && robot.climber.timer.seconds() < 4))){
-//            robot.climber.leftClimberServo.setPower(0);
-//        }
-//        if(robot.climber.timer != null)pen.addLine("SPOOL TIMER" + robot.climber.timer.seconds());
 
 
-
-
-        if(robot.hopper.leftHopperSensor.pixelPresent() || robot.hopper.rightHopperSensor.pixelPresent() ){
-            //AprilTagProcessorWrapper.resumeAprilTagDetectionAsync(robot.camera, pen);
-
-        }
 
         g1.readButtons();
         g2.readButtons();
