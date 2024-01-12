@@ -54,9 +54,9 @@ public final class Constants{
         public static double shoulderMin = 0;
         public static double shoulderMax = 1;
 
-        public static double shoulderRest = .13;
+        public static double shoulderRest = .1382;
         public static double shoulderTraveling = .11;
-        public static double shoulderOuttake = .355;//.444
+        public static double shoulderOuttake = .305;//.444
 
         public static double shoulderOuttakeHigh = .355;
 
@@ -70,16 +70,16 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .621;//.621
-        public static double wristTraveling = .821; //+.2
-        public static double wristOuttake = .606;//low outtae - .015
-        public static double wristOuttakeHigh = .606;//low outtae - .015
+        public static double wristRest = .47;//.621
+        public static double wristTraveling = .67; //+.2
+        public static double wristOuttake = .430;//low outtae - .015
+        public static double wristOuttakeHigh = .455;//low outtae - .015
 
-        public static double wristSafeBackToIntake = .791; //+.17
+        public static double wristSafeBackToIntake = .627; //+.17
 
-        public static double wristSafeBackToOuttake = .801;//+.18
-        public static double wristDistanceDeposit = .585;//-.036
-        public static double wristAdjustingPosition = .291;
+        public static double wristSafeBackToOuttake = .65;//+.18
+        public static double wristDistanceDeposit = .434;//-.036
+        public static double wristAdjustingPosition = .14;//-.33
     }
     @Config
     public static final class IntakeConstants{
@@ -127,12 +127,18 @@ public final class Constants{
     }
     @Config
     public static final class ColorSensorWrapperConstants{
-        public static Scalar emptyHopperHSV = new Scalar(.08,.1,.13);
+        public static Scalar emptyHopperHSV = new Scalar(0,0,0);
 
-        public static Scalar purplePixelHSV = new Scalar(0,0,0);
-        public static Scalar greenPixelHSV = new Scalar(0,0,0);
-        public static Scalar yellowPixelHSV = new Scalar(0,0,0);
-        public static Scalar whitePixelHSV = new Scalar(0,0,0);
+        public static Scalar purplePixelHSV = new Scalar(210,.5,0);
+        public static Scalar greenPixelHSV = new Scalar(120,.6,0);
+        public static Scalar yellowPixelHSV = new Scalar(90,.6,0);
+        public static Scalar whitePixelHSV = new Scalar(160,.4,0);
+
+        public static Scalar emptyHopperRGB = new Scalar(0.08392,.14801252,.155642);
+        public static Scalar purplePixelRGB = new Scalar(.91554,1.6449,1.2573);
+        public static Scalar greenPixelRGB = new Scalar(.58747,.74464,1.471);
+        public static Scalar yellowPixelRGB = new Scalar(1.04219,.500495,1.54726);
+        public static Scalar whitePixelRGB = new Scalar(1.8219,3.1006,3.31884);
         public static double maxDistanceFromEmptyHopperColor = 1;
         public enum Pixel{
              GREEN, PURPLE, YELLOW, NONE, WHITE;

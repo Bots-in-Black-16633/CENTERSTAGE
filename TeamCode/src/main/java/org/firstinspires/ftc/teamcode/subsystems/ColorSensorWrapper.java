@@ -38,13 +38,31 @@ public class ColorSensorWrapper implements  SubsystemBase{
 
     public Pixel getPixelPresent(){
         //if the hsv colors from the scanner are different enough form the expected default than a pixel is present
-        Scalar curHSVColor = new Scalar(getRed(), getGreen(), getBlue());
+        Scalar curHSVColor = new Scalar(getHSVValues()[0], getHSVValues()[1], getHSVValues()[2]);
 
         double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purplePixelHSV);
         double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenPixelHSV);
         double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowPixelHSV);
         double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whitePixelHSV);
         double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyHopperHSV);
+        double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
+
+        lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
+        if(min == purpleDistance)return Pixel.PURPLE;
+        else if(min == greenDistance)return Pixel.GREEN;
+        else if (min == yellowDistance)return Pixel.YELLOW;
+        else if(min == whiteDistance)return Pixel.WHITE;
+        else return Pixel.NONE;
+    }
+    public Pixel getPixelPresentRGB(){
+        //if the hsv colors from the scanner are different enough form the expected default than a pixel is present
+        Scalar curRGBColor = new Scalar(getRGB()[0], getRGB()[1], getRGB()[2]);
+
+        double purpleDistance = distance3D(curRGBColor, Constants.ColorSensorWrapperConstants.purplePixelRGB);
+        double greenDistance = distance3D(curRGBColor, Constants.ColorSensorWrapperConstants.greenPixelRGB);
+        double yellowDistance = distance3D(curRGBColor, Constants.ColorSensorWrapperConstants.yellowPixelRGB);
+        double whiteDistance = distance3D(curRGBColor, Constants.ColorSensorWrapperConstants.whitePixelRGB);
+        double emptyDistance = distance3D(curRGBColor, Constants.ColorSensorWrapperConstants.emptyHopperRGB);
         double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
 
         lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};

@@ -2,6 +2,9 @@ package org.firstinspires.ftc.teamcode.teleop.helper;
 
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+@TeleOp(name = "BlinkinTester", group = "helper")
 
 public class BlinkinTester extends LinearOpMode {
     RevBlinkinLedDriver strip;

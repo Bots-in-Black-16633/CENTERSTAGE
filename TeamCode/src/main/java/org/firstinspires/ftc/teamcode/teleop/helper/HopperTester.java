@@ -25,7 +25,7 @@ public class HopperTester extends SampleTeleop {
     public void onLoop() {
         robot.hopper.setPower(Hopper.RIGHT_HOPPER, gamepad1.left_stick_y);
         robot.hopper.setPower(Hopper.LEFT_HOPPER, gamepad1.right_stick_y);
-
+        robot.hopper.periodic();
     }
 
     @Override

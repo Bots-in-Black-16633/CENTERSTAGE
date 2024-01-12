@@ -6,9 +6,12 @@ import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.SPI
 
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.outoftheboxrobotics.photoncore.Photon;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
@@ -20,10 +23,14 @@ import org.firstinspires.ftc.teamcode.util.SampleTeleop;
 @TeleOp
 public class CompetitionTeleop extends SampleTeleop {
     Pose2d startPos = AutoUtil.REDRIGHTSTART;
-
+    PIDController t;
     double shoulderPos;
     double sliderPos;
     double wristPos;
+
+    ElapsedTime loopTimes;
+    double lastLoops = 0;
+    double loops = 0;
     volatile GamepadEx g1;
     GamepadEx g2;
     Thread driveLoop;
@@ -43,17 +50,23 @@ public class CompetitionTeleop extends SampleTeleop {
         wristPos = Constants.WristConstants.wristRest;
         sliderPos = Constants.SliderConstants.sliderRest;
         robot.shooter.rest();
+        loopTimes = new ElapsedTime();
+        t = new PIDController(1,1,1);
     }
 
     @Override
     public void onStart() {
         driveLoop = new Thread(this::runDriveLoop);
         driveLoop.start();
+        loopTimes.reset();
 
     }
 
     @Override
     public void onLoop() {
+        t.calculate(2);
+
+
         //A BUTton goes to high outtake
         if(g2.wasJustPressed(GamepadKeys.Button.A)){
             Actions.runBlocking(robot.highOuttake());
@@ -87,6 +100,9 @@ public class CompetitionTeleop extends SampleTeleop {
             }
 
         }
+        pen.addLine("LOOP: " + t.getPeriod());
+
+
 
 
 
@@ -126,6 +142,16 @@ public class CompetitionTeleop extends SampleTeleop {
         if(g2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
             robot.linkage.lower();
         }
+
+        if(loopTimes.seconds() < 1){
+            loops ++;
+        }
+        else{
+            lastLoops = loops;
+            loopTimes.reset();
+            loops = 0;
+        }
+        pen.addLine("LPS: " + lastLoops);
 
 
 

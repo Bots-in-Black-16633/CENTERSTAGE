@@ -112,10 +112,10 @@ public class Hopper implements SubsystemBase{
         t.addLine();
         t.addLine("____HOPPER_____");
 
-        t.addLine("LEFT HOPPER: " + leftHopperSensor.getPixelPresent().name());
-        t.addLine("     VAlue" + Arrays.toString(leftHopperSensor.getTelemetryData()));
-        t.addLine("RIGHT HOPPER: " + rightHopperSensor.getPixelPresent().name());
-        t.addLine("     VAlue" + Arrays.toString(rightHopperSensor.getTelemetryData()));
+        t.addLine("LEFT HOPPER: HSV " + leftHopperSensor.getPixelPresent().name() + "RGB "  + leftHopperSensor.getPixelPresentRGB().name());
+        t.addLine("     VAlue" + leftHopperSensor.toString());
+        t.addLine("RIGHT HOPPER: HSV " + rightHopperSensor.getPixelPresent().name() + "RGB "  + rightHopperSensor.getPixelPresentRGB().name());
+        t.addLine("     VAlue" + rightHopperSensor.toString());
 
 //        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());
 //        t.addLine("RIGHT Sensor" + rightHopperSensor.toString());
