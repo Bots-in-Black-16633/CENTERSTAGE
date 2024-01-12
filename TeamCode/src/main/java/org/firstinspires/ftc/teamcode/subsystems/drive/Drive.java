@@ -240,6 +240,13 @@ public class Drive extends MecanumDrive implements SubsystemBase {
         headingOffset = Math.toDegrees(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
     }
 
+    public double getDistanceToZoneOne()
+    {
+        double x = pose.position.x+72;
+        double y = pose.position.y;
+        return Math.sqrt(x*x+y*y);
+    }
+
 
 
 
