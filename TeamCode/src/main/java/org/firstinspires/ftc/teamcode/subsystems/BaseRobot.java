@@ -35,6 +35,7 @@ public class BaseRobot implements SubsystemBase{
     public Drive drive;
     public Shooter shooter;
     public Linkage linkage;
+    public Gate gate;
     public volatile WebcamName camera;
 
     public AutoUtil autoGenerator;

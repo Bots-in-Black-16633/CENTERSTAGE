@@ -97,12 +97,20 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterSpeed =-1;
+        public static double shooterSpeed =-.55;
         public static double kickerSpeed =1;
 
         //TODO add these values
         //Put speed that worked first in a pair of points, then the distance
         public static double [][] testedDistances = new double[][] {};
+
+    }
+    @Config
+    public static final class GateConstant{
+        public static double gateOpen =-0;
+        public static double gateClose =1;
+
+
 
     }
     @Config

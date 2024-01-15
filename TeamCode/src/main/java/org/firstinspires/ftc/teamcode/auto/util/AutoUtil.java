@@ -741,6 +741,17 @@ public class AutoUtil {
         return null;
     }
 
+    //go straight to depositing on the backdrop skipping stack
+    public Action getQuickStartToBackdrop(int color, int side){
+        if(color == RED){
+            return null;
+        }
+        else if(color == BLUE){
+            return null;
+        }
+        else return null;
+    }
+
     public Pose2d adjustForAprilTag(Pose2d odoPose, Pose2d aprilTagPose)
     {
         double xDifference = odoPose.component1().x-aprilTagPose.component1().x;
