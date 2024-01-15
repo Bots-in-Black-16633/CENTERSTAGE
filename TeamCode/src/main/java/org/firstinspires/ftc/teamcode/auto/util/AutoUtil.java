@@ -742,12 +742,93 @@ public class AutoUtil {
     }
 
     //go straight to depositing on the backdrop skipping stack
-    public Action getQuickStartToBackdrop(int color, int side){
+    public Action getBSSStartToBackdrop(int color, int side, int zone){
         if(color == RED){
-            return null;
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToLinearHeading(new Vector2d(50,-27), Math.toRadians(180))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToLinearHeading(new Vector2d(50,-40), Math.toRadians(180))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+
+                            .strafeToLinearHeading(new Vector2d(50, -48), Math.toRadians(180))
+                            .build();
+            }
+            else return null;
+
         }
         else if(color == BLUE){
-            return null;
+            if(side == LEFT){
+               return null;
+            }
+            else return null;
+        }
+        else return null;
+    }
+    public Action getBSSBackToSpike(int color, int side, int zone){
+        if(color == RED){
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(3,-35))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(20,-25))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+
+                            .strafeToConstantHeading(new Vector2d(30,-38))
+                            .build();
+            }
+            else return null;
+
+        }
+        else if(color == BLUE){
+            if(side == LEFT){
+                return null;
+            }
+            else return null;
+        }
+        else return null;
+    }
+    public Action getBSSSpikeToStack(int color, int side, int zone){
+        if(color == RED){
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(10,-35))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(30,-25))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+
+                            .strafeToConstantHeading(new Vector2d(40,-38))
+                            .build();
+            }
+            else return null;
+
+        }
+        else if(color == BLUE){
+            if(side == LEFT){
+                return null;
+            }
+            else return null;
         }
         else return null;
     }
