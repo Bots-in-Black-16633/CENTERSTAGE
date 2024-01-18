@@ -40,7 +40,7 @@ public class BSSRedRight extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();while(robot.linkage.linkageLeft.getPosition()!= Constants.LinkageConstants.linkageLeftUp){}return false;});
+        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(1);return false;});
         Actions.runBlocking(robot.autoGenerator.getBSSSpikeToStack(AutoUtil.RED, AutoUtil.RIGHT, zone));
 
 

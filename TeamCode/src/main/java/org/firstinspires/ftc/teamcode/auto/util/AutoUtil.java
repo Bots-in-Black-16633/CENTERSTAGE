@@ -748,17 +748,17 @@ public class AutoUtil {
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToLinearHeading(new Vector2d(50,-27), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(49,-31), Math.toRadians(180))
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToLinearHeading(new Vector2d(50,-40), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(49,-36), Math.toRadians(180))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
 
-                            .strafeToLinearHeading(new Vector2d(50, -48), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(49, -42), Math.toRadians(180))
                             .build();
             }
             else return null;
@@ -778,17 +778,17 @@ public class AutoUtil {
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(3,-35))
+                            .strafeToConstantHeading(new Vector2d(10,-35))
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(20,-25))
+                            .strafeToConstantHeading(new Vector2d(19.5,-28))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
 
-                            .strafeToConstantHeading(new Vector2d(30,-38))
+                            .strafeToConstantHeading(new Vector2d(29,-32))
                             .build();
             }
             else return null;
@@ -808,7 +808,7 @@ public class AutoUtil {
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(10,-35))
+                            .strafeToConstantHeading(new Vector2d(20,-35))
                             .build();
                 }
                 else if(zone==2){
