@@ -57,9 +57,9 @@ public final class Constants{
 
         public static double shoulderRest = .1382;
         public static double shoulderTraveling = .11;
-        public static double shoulderOuttake = .305;//.444
+        public static double shoulderOuttake = .389;//.305
 
-        public static double shoulderOuttakeHigh = .355;
+        public static double shoulderOuttakeHigh = .319;
 
         public static double shoulderSafeBackToIntake = .09;
 
@@ -73,8 +73,8 @@ public final class Constants{
 
         public static double wristRest = .47;//.621
         public static double wristTraveling = .67; //+.2
-        public static double wristOuttake = .430;//low outtae - .015
-        public static double wristOuttakeHigh = .455;//low outtae - .015
+        public static double wristOuttake = .437;//rest - .33
+        public static double wristOuttakeHigh = .431;//rest - .09
 
         public static double wristSafeBackToIntake = .627; //+.17
 
@@ -115,11 +115,11 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkageLeftUp = .64;
-        public static double linkageLeftDown = .44;
+        public static double linkageLeftUp = .675;
+        public static double linkageLeftDown = .496;
 
-        public static double linkageRightUp = .37;
-        public static double linkageRightDown = .56;
+        public static double linkageRightUp = .675;
+        public static double linkageRightDown = .496;
 
         //TODO tune these positions
 

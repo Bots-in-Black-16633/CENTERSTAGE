@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -29,15 +32,15 @@ public class BSSRedRight extends SampleAuto {
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, AutoUtil.RIGHT, zone));
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, AutoUtil.RIGHT, zone),new SequentialAction(new SleepAction(1), robot.outtake())));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
-        Actions.runBlocking(robot.outtake());
+        //Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
-        Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, AutoUtil.RIGHT, zone));
+        //Actions.runBlocking(robot.resetToIntake());
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, AutoUtil.RIGHT, zone), new SequentialAction(new SleepAction(1),robot.resetToIntake())));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(1);return false;});

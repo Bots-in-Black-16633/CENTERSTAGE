@@ -13,11 +13,13 @@ import com.outoftheboxrobotics.photoncore.Photon;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.checkerframework.checker.signedness.qual.Constant;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.Constants;
+import org.firstinspires.ftc.teamcode.util.Line;
 import org.firstinspires.ftc.teamcode.util.SampleTeleop;
 
 @TeleOp
@@ -37,6 +39,12 @@ public class CompetitionTeleop extends SampleTeleop {
 
     volatile boolean volStopRequested = false;
 
+    boolean wristShoulderAutoAdjust = false;
+    boolean prevGuide = false;
+
+    Line wristCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.WristConstants.wristOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.WristConstants.wristOuttakeHigh);
+    Line shoulderCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.ShoulderConstants.shoulderOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.ShoulderConstants.shoulderOuttakeHigh);
+
 
 
 
@@ -51,7 +59,6 @@ public class CompetitionTeleop extends SampleTeleop {
         sliderPos = Constants.SliderConstants.sliderRest;
         robot.shooter.rest();
         loopTimes = new ElapsedTime();
-        t = new PIDController(1,1,1);
     }
 
     @Override
@@ -64,7 +71,6 @@ public class CompetitionTeleop extends SampleTeleop {
 
     @Override
     public void onLoop() {
-        t.calculate(2);
 
 
         //A BUTton goes to high outtake
@@ -98,9 +104,15 @@ public class CompetitionTeleop extends SampleTeleop {
                 robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPosition);
                 wristPos = Constants.WristConstants.wristAdjustingPosition;
             }
+            else{
+                if(wristShoulderAutoAdjust)wristShoulderAutoAdjust=false;
+                else wristShoulderAutoAdjust = true;
+            }
 
         }
-        pen.addLine("LOOP: " + t.getPeriod());
+
+
+        pen.addLine("wristShoulderAutoAdjust: " + wristShoulderAutoAdjust);
 
 
 
@@ -160,6 +172,13 @@ public class CompetitionTeleop extends SampleTeleop {
         if(Math.abs(g2.getLeftY())>.01) {
             sliderPos += g2.getLeftY() * 100;
             robot.slider.runToPosition(sliderPos);
+
+            if(wristShoulderAutoAdjust && sliderPos > 400){
+                wristPos = wristCalculator.calculate(sliderPos);
+                shoulderPos = shoulderCalculator.calculate(sliderPos);
+            }
+
+
         }
         if(Math.abs(g2.getRightY())>.01){
             shoulderPos += -1*g2.getRightY()*.05;

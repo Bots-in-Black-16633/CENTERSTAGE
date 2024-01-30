@@ -808,8 +808,9 @@ public class AutoUtil {
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(20,-35))
-                            .build();
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(11, -25), Math.toRadians(90))
+                            .splineToConstantHeading(new Vector2d(-60,-11.5), Math.toRadians(180)).build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)

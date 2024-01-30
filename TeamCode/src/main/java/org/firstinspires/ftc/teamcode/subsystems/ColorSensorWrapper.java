@@ -23,6 +23,7 @@ public class ColorSensorWrapper implements  SubsystemBase{
 
     public ColorSensorWrapper(String name, HardwareMap hwMap){
         colorSensor= hwMap.get(NormalizedColorSensor.class, name);
+
     }
 
 
