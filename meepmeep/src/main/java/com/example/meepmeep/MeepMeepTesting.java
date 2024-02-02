@@ -21,10 +21,15 @@ public class MeepMeepTesting {
          myBot = new DefaultBotBuilder(meepMeep).setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 14.27).build();
         MeepMeepAutoUtil auto = new MeepMeepAutoUtil(myBot.getDrive());
         /** test here**/
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(10,-35, Math.toRadians(180))).setReversed(true)
-                .splineToConstantHeading(new Vector2d(11, -25), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-60,-11.5), Math.toRadians(180))
+//        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(54,-34, Math.toRadians(180)))
+//                .splineToConstantHeading(new Vector2d(26.16, -5.35), Math.toRadians(180.00))
+//                .splineToConstantHeading(new Vector2d(-61.69, -12.60), Math.toRadians(180.00)).build());
+
+               myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-57,-11, Math.toRadians(180))).setReversed(true)
+                .splineToLinearHeading(new Pose2d(4.39, -1.72, Math.toRadians(180)), Math.toRadians(0))
+                .splineToConstantHeading(new Vector2d(52.71, -35.90), Math.toRadians(0))
                 .build());
+
         //myBot.runAction(auto.getQuickBackdropAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 3));
         /**test here**/
         meepMeep.setBackground(MeepMeep.Background.FIELD_CENTERSTAGE_JUICE_DARK)

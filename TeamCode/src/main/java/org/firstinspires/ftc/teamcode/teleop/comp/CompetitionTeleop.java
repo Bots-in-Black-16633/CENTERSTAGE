@@ -127,12 +127,12 @@ public class CompetitionTeleop extends SampleTeleop {
          else{robot.hopper.unLock(Hopper.LEFT_HOPPER);}
 
 
-       if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+       if(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
             robot.hopper.outtake(Hopper.LEFT_HOPPER);
         }
        else if(!(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)||g2.isDown(GamepadKeys.Button.DPAD_LEFT))){robot.hopper.rest(Hopper.LEFT_HOPPER);}
 
-        if(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER)){
+        if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
             robot.hopper.outtake(Hopper.RIGHT_HOPPER);
         }
         else if(!(g2.isDown(GamepadKeys.Button.DPAD_RIGHT)||g2.isDown(GamepadKeys.Button.DPAD_LEFT))){robot.hopper.rest(Hopper.RIGHT_HOPPER);}
@@ -143,8 +143,8 @@ public class CompetitionTeleop extends SampleTeleop {
         else if(g2.isDown(GamepadKeys.Button.DPAD_LEFT)){robot.intake.setMode(Intake.OUTTAKE);if(robot.slider.getPosition()<300){robot.hopper.outtake(Hopper.ALL);}}
         else {
             robot.intake.setMode(Intake.REST);
-            if(!g2.isDown(GamepadKeys.Button.RIGHT_BUMPER))robot.hopper.rest(Hopper.RIGHT_HOPPER);
-            if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER))robot.hopper.rest(Hopper.LEFT_HOPPER);
+            if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER))robot.hopper.rest(Hopper.RIGHT_HOPPER);
+            if(!g2.isDown(GamepadKeys.Button.RIGHT_BUMPER))robot.hopper.rest(Hopper.LEFT_HOPPER);
         }
 
 

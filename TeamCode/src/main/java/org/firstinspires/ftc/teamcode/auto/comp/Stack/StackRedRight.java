@@ -48,7 +48,7 @@ public class StackRedRight extends SampleAuto {
         robot.linkage.raise();//raise the linkage
 
         Actions.runBlocking(robot.autoGenerator.getBackdropToStackAutoAction(AutoUtil.RED));
-        Actions.runBlocking(robot.stackIntake());
+        //Actions.runBlocking(robot.stackIntake());
 
         robot.intake.setMode(Intake.OUTTAKE);
 

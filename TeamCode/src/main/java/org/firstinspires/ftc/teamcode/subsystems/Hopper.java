@@ -51,7 +51,7 @@ public class Hopper implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             outtake(Hopper.ALL);
-            AutoUtil.delay(1);
+            AutoUtil.delay(.5);
             rest(Hopper.ALL);
             return false;
         }
