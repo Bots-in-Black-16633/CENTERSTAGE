@@ -34,6 +34,7 @@ public class BSSRedRight extends SampleAuto {
         zone = TeamPropPartitionDetector.getRedPropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
+        zone = 3;
         pen.update();
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, RIGHT, zone),new SequentialAction(new SleepAction(1), robot.outtake())));
         robot.drive.updatePoseEstimate();

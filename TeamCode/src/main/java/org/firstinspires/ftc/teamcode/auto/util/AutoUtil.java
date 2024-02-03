@@ -756,12 +756,12 @@ public class AutoUtil {
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToLinearHeading(new Vector2d(49,-36), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,-37), Math.toRadians(180))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
 
-                            .strafeToLinearHeading(new Vector2d(49, -42), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51, -37), Math.toRadians(180))
                             .build();
             }
             else return null;
@@ -812,18 +812,19 @@ public class AutoUtil {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose)
                             .setReversed(true)
-                            .splineToConstantHeading(new Vector2d(11, -25), Math.toRadians(90))
+                            .splineToConstantHeading(new Vector2d(15, -25), Math.toRadians(90))
                             .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(30,-25))
-                            .build();
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else return drive.actionBuilder(drive.pose)
-
-                            .strafeToConstantHeading(new Vector2d(40,-38))
-                            .build();
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
             }
             else return null;
 

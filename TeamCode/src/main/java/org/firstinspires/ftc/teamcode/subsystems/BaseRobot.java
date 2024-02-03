@@ -81,7 +81,6 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //set the wrist and shoulder to a safe Position
-            wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
             AutoUtil.delay(.25);
 
