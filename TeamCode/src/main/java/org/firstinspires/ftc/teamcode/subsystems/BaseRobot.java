@@ -35,6 +35,7 @@ public class BaseRobot implements SubsystemBase{
     public Drive drive;
     public Shooter shooter;
     public Linkage linkage;
+    public Gate gate;
     public volatile WebcamName camera;
 
     public AutoUtil autoGenerator;
@@ -80,23 +81,16 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //set the wrist and shoulder to a safe Position
-            wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
             AutoUtil.delay(.25);
-            slider.runToPosition(Constants.SliderConstants.sliderSafeBackToIntake);
 
-            AutoUtil.delay(.25);
-
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
-            timeout.reset();
-            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderRest) > .05 && timeout.seconds() < timeOutSec){
-
-            }
             slider.runToPosition(Constants.SliderConstants.sliderRest);
             timeout.reset();
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 5 && timeout.seconds() < 5){
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 100 && timeout.seconds() < 3){
 
             }
+            shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
+
 
             wrist.setPosition(Constants.WristConstants.wristRest);
             return false;
@@ -110,7 +104,8 @@ public class BaseRobot implements SubsystemBase{
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
-                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+                wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
+
             }
             intake.setMode(Intake.REST);
 
@@ -187,7 +182,7 @@ public class BaseRobot implements SubsystemBase{
             return false;
         }
     }
-    class PixelStackIntake implements Action {
+    class DragAndSuckStackIntake implements Action {
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -198,11 +193,11 @@ public class BaseRobot implements SubsystemBase{
             while(time.seconds() < .25){//give the servo a quick second to lower
 
             }
-            drive.backward(.5,.5);//drive backward knocking over the stack
+            drive.backward(.3,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
-            drive.forward(.7,.3);
+            drive.forward(.7,.4);
 
             time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
             while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
@@ -212,36 +207,15 @@ public class BaseRobot implements SubsystemBase{
             //bring slider up
             intake.setMode(Intake.REST);
             hopper.rest(Hopper.ALL);
-            Actions.runBlocking(traveling());
+
+            drive.updatePoseEstimate();
 
 
 
             return false;
         }
     }
-    class FirstStackIntake implements Action {
-        ElapsedTime time;
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            time = new ElapsedTime();
-            linkage.raise();
-            intake.setMode(Intake.INTAKE);
-            hopper.intake(Hopper.ALL);
-            drive.forward(.4, .5);
-            time.reset();
-            while(time.seconds()<1){}
-            drive.backward(.5, .5);
-            linkage.lower();
-            intake.setMode(Intake.OUTTAKE);
-            time.reset();
-            while(time.seconds()<1){}
-            intake.setMode(Intake.INTAKE);
-            drive.forward(.5, .5);
-            return false;
-        }
-
-    }
-    class SecondStackIntake implements Action {
+    class offTheTopStackIntake implements Action {
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -259,9 +233,13 @@ public class BaseRobot implements SubsystemBase{
             linkage.raise();
             intake.setMode(Intake.REST);
             drive.backward(.4,.4);
+            drive.updatePoseEstimate();
+
             return false;
         }
+
     }
+
     class DistanceOuttake implements Action{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
@@ -341,10 +319,9 @@ public class BaseRobot implements SubsystemBase{
     public Action outtake(){return new Outtake();}
     public Action distanceOuttake(){return new DistanceOuttake();}
     public Action highOuttake(){return new HighOuttake();}
-    public Action stackIntake(){return new PixelStackIntake();}
     public Action traveling(){return new TravelingPosition();}
     public Action midOuttake(){return new MidOuttake();}
-    public Action firstStack(){return new FirstStackIntake();}
-    public Action secondStack(){return new SecondStackIntake();}
+    public Action dragAndSuckStackIntake(){return new DragAndSuckStackIntake();}
+    public Action offTheTopStackIntake(){return new offTheTopStackIntake();}
 
 }

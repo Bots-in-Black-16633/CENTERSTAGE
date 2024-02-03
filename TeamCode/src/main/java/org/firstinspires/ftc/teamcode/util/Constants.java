@@ -55,13 +55,13 @@ public final class Constants{
         public static double shoulderMin = 0;
         public static double shoulderMax = 1;
 
-        public static double shoulderRest = .1382;
+        public static double shoulderRest = .224;
         public static double shoulderTraveling = .11;
-        public static double shoulderOuttake = .305;//.444
+        public static double shoulderOuttake = .4734;//.305
 
-        public static double shoulderOuttakeHigh = .355;
+        public static double shoulderOuttakeHigh = .4073;
 
-        public static double shoulderSafeBackToIntake = .09;
+        public static double shoulderSafeBackToIntake = .168;
 
         public static double shoulderSafeBackToOuttake = .104;
         public static double shoulderDistanceDeposit = .477;
@@ -71,12 +71,12 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .47;//.621
+        public static double wristRest = .477;//.621
         public static double wristTraveling = .67; //+.2
-        public static double wristOuttake = .430;//low outtae - .015
-        public static double wristOuttakeHigh = .455;//low outtae - .015
+        public static double wristOuttake = .411;//rest - .33
+        public static double wristOuttakeHigh = .4061;//rest - .09
 
-        public static double wristSafeBackToIntake = .627; //+.17
+        public static double wristSafeBackToIntake = .82; //+.17
 
         public static double wristSafeBackToOuttake = .65;//+.18
         public static double wristDistanceDeposit = .434;//-.036
@@ -106,28 +106,30 @@ public final class Constants{
 
     }
     @Config
-    public static final class LinkageConstants{
-        public static double linkageLeftUp = .64;
-        public static double linkageLeftDown = .44;
+    public static final class GateConstant{
+        public static double gateOpen =-0;
+        public static double gateClose =1;
 
-        public static double linkageRightUp = .37;
-        public static double linkageRightDown = .56;
+
+
+    }
+    @Config
+    public static final class LinkageConstants{
+        public static double linkageUp = .726;
+        public static double linkageDown = .5;
+
 
         //TODO tune these positions
 
         //LINKAGE 1 POSITIONS
-        public static double  linkageLeftPixelOne = LinkageConstants.linkageLeftDown;
-        public static double  linkageLeftPixelTwo = .51;
-        public static double linkageLeftPixelThree = .54;
-        public static double linkageLeftPixelFour = .59;
-        public static double linkageLeftPixelFive = LinkageConstants.linkageLeftUp;
+        public static double  linkagePixelOne = LinkageConstants.linkageDown;
+        public static double  linkagePixelTwo = .565;
+        public static double linkagePixelThree = .618;
+        public static double linkagePixelFour = .657;
+        public static double linkagePixelFive = LinkageConstants.linkageUp;
 
         //LINKAGE 2 POSITIONS
-        public static double  linkageRightPixelOne = LinkageConstants.linkageRightDown;
-        public static double  linkageRightPixelTwo = .55;
-        public static double linkageRightPixelThree = .48;
-        public static double linkageRightPixelFour = .43;
-        public static double linkageRightPixelFive = LinkageConstants.linkageRightUp;
+
     }
     @Config
     public static final class ColorSensorWrapperConstants{

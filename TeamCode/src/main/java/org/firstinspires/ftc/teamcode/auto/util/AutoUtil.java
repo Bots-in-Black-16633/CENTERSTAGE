@@ -554,15 +554,15 @@ public class AutoUtil {
         if(color==AutoUtil.BLUE)
         {
             return drive.actionBuilder(drive.pose)
-                    .splineTo(new Vector2d(24.75, 13.09), Math.toRadians(192.99))
-                    .splineTo(new Vector2d(-50, 10.02), Math.toRadians(179.28))
+                    .splineToConstantHeading(new Vector2d(26.16, 5.35), Math.toRadians(180.00))
+                    .splineToConstantHeading(new Vector2d(-61.69, 12.60), Math.toRadians(180.00))
                     .build();
         }
         else
         {
             return drive.actionBuilder(drive.pose)
-                    .splineTo(new Vector2d(24.75, -13.09), Math.toRadians(167.01))
-                    .splineTo(new Vector2d(-55, -10.43), Math.toRadians(179.28))
+                    .splineToLinearHeading(new Pose2d(26.16, -12, Math.toRadians(180)), Math.toRadians(180.00))
+                    .splineToConstantHeading(new Vector2d(-61.69, -12.60), Math.toRadians(180.00))
                     .build();
 
         }
@@ -576,8 +576,11 @@ public class AutoUtil {
         if(color==AutoUtil.RED)
         {
             return drive.actionBuilder(drive.pose)
-                    .strafeToConstantHeading(new Vector2d(28.80, -12.17))
-                    .strafeToConstantHeading(new Vector2d(53.00, -36.00))
+                    .setReversed(true)
+                    .splineToConstantHeading(new Vector2d(4.39, -10), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(52.71, -35.90), Math.toRadians(0))
+//                    .strafeToConstantHeading(new Vector2d(28.80, -12.17))
+//                    .strafeToConstantHeading(new Vector2d(53.00, -36.00))
                     .build();
 
 
@@ -740,6 +743,101 @@ public class AutoUtil {
         }
         return null;
     }
+
+    //go straight to depositing on the backdrop skipping stack
+    public Action getBSSStartToBackdrop(int color, int side, int zone){
+        if(color == RED){
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToLinearHeading(new Vector2d(51.8,-32), Math.toRadians(180))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToLinearHeading(new Vector2d(51.8,-37), Math.toRadians(180))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+
+                            .strafeToLinearHeading(new Vector2d(51, -37), Math.toRadians(180))
+                            .build();
+            }
+            else return null;
+
+        }
+        else if(color == BLUE){
+            if(side == LEFT){
+               return null;
+            }
+            else return null;
+        }
+        else return null;
+    }
+    public Action getBSSBackToSpike(int color, int side, int zone){
+        if(color == RED){
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(8.25,-38))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .strafeToConstantHeading(new Vector2d(19.5,-28))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose)
+
+                            .strafeToConstantHeading(new Vector2d(29,-32))
+                            .build();
+            }
+            else return null;
+
+        }
+        else if(color == BLUE){
+            if(side == LEFT){
+                return null;
+            }
+            else return null;
+        }
+        else return null;
+    }
+    public Action getBSSSpikeToStack(int color, int side, int zone){
+        if(color == RED){
+            if(side == RIGHT)
+            {
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(15, -25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
+                }
+                else return drive.actionBuilder(drive.pose)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
+            }
+            else return null;
+
+        }
+        else if(color == BLUE){
+            if(side == LEFT){
+                return null;
+            }
+            else return null;
+        }
+        else return null;
+    }
+
 
     public Pose2d adjustForAprilTag(Pose2d odoPose, Pose2d aprilTagPose)
     {

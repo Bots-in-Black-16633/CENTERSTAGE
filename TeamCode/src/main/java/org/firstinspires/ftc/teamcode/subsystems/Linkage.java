@@ -11,50 +11,41 @@ public class Linkage implements SubsystemBase{
 
 
     public HardwareMap hwMap;
-    public Servo linkageLeft;
-    public Servo linkageRight;
+    public Servo linkage;
     public Linkage(HardwareMap hwMap){
-        linkageLeft = hwMap.servo.get("linkageLeft");
-        linkageRight = hwMap.servo.get("linkageRight");
+        linkage = hwMap.servo.get("linkage");
     }
 
     public void raise(){
 
-        linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftUp);
-        linkageRight.setPosition(Constants.LinkageConstants.linkageRightUp);
+        linkage.setPosition(Constants.LinkageConstants.linkageUp);
     }
     public void lower() {
 
-        linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftDown);
-        linkageRight.setPosition(Constants.LinkageConstants.linkageRightDown);
+        linkage.setPosition(Constants.LinkageConstants.linkageDown);
     }
 
     public void stackLevel(int level)
     {
         if(level==1)
         {
-            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelOne);
-            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelOne);
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelOne);
         }
         else if(level==2)
         {
-            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelTwo);
-            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelTwo);
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelTwo);
         }
         else if(level==3)
         {
-            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelThree);
-            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelThree);
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelThree);
         }
         else if(level==4)
         {
-            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelFour);
-            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelFour);
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelFour);
         }
         else if(level==5)
         {
-            linkageLeft.setPosition(Constants.LinkageConstants.linkageLeftPixelFive);
-            linkageRight.setPosition(Constants.LinkageConstants.linkageRightPixelFive);
+            linkage.setPosition(Constants.LinkageConstants.linkagePixelFive);
         }
     }
     @Override
