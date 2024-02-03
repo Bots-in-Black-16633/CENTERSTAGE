@@ -760,8 +760,7 @@ public class AutoUtil {
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
-
-                            .strafeToLinearHeading(new Vector2d(51, -37), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,-37), Math.toRadians(180))
                             .build();
             }
             else return null;
@@ -786,12 +785,12 @@ public class AutoUtil {
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose)
-                            .strafeToConstantHeading(new Vector2d(19.5,-28))
+                            .strafeToConstantHeading(new Vector2d(22,-26))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose)
 
-                            .strafeToConstantHeading(new Vector2d(29,-32))
+                            .strafeToConstantHeading(new Vector2d(34 ,-35))
                             .build();
             }
             else return null;
