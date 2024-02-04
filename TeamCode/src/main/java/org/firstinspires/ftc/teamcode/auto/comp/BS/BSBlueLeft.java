@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.Pose2dDual;
+import com.acmerobotics.roadrunner.PoseMap;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -20,9 +22,11 @@ import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 public class BSBlueLeft extends SampleAuto {
     BaseRobot robot;
     int zone;
+    PoseMap xAxisReflection = pose -> new Pose2dDual<>(
+            pose.position.x, pose.position.y.unaryMinus(), pose.heading.inverse());
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART, xAxisReflection);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 

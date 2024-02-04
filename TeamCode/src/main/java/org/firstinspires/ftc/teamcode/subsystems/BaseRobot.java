@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.PoseMap;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -42,7 +43,7 @@ public class BaseRobot implements SubsystemBase{
     public AutoUtil autoGenerator;
     public ElapsedTime timeout = new ElapsedTime();
     public final static double timeOutSec = .1;
-    public BaseRobot(HardwareMap hwMap, Pose2d startPose){
+    public BaseRobot(HardwareMap hwMap, Pose2d startPose, PoseMap transformation){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
         drive = new Drive(hwMap, startPose);
@@ -51,11 +52,14 @@ public class BaseRobot implements SubsystemBase{
         shooter = new Shooter(hwMap);
         slider = new Slider(hwMap);
         linkage = new Linkage(hwMap);
-        autoGenerator = new AutoUtil(drive);
+        autoGenerator = new AutoUtil(drive, transformation);
         camera = hwMap.get(WebcamName.class, "camera");
 
 
         addSubsystems(intake,  drive, hopper, shoulder, wrist, slider);
+    }
+    public BaseRobot(HardwareMap hwMap, Pose2d startPose){
+        new BaseRobot(hwMap,startPose,null);
     }
 
 

@@ -441,15 +441,14 @@ public class MecanumDrive {
                 0.25, 0.1
         );
     }
-    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose, double maxVel, double maxAccel){
+    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose, PoseMap map){
         return new TrajectoryActionBuilder(
                 TurnAction::new,
                 FollowTrajectoryAction::new,
                 beginPose, 1e-6, 0.0,
                 defaultTurnConstraints,
                 defaultVelConstraint, defaultAccelConstraint,
-                0.25, 0.1
-        );
+                0.25, 0.1,map);
     }
 
     public double getHeading(){
