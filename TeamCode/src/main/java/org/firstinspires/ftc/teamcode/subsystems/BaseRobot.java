@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.drive.Drive;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.teleop.comp.CompetitionTeleop;
 import org.firstinspires.ftc.teamcode.util.ColorfulTelemetry;
 import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.vision.AprilTagProcessorWrapper;
@@ -121,7 +122,6 @@ public class BaseRobot implements SubsystemBase{
             while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
 
             }
-            AutoUtil.delay(1);
             return false;
         }
     }
@@ -134,23 +134,23 @@ public class BaseRobot implements SubsystemBase{
             if(slider.getPosition() < 200){
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
-                shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToOuttake);
+                wrist.setPosition(Constants.WristConstants.wristSafeBackToOuttake);
             }
             intake.setMode(Intake.REST);
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttakeMid);
+
+
+
+            wrist.setPosition(CompetitionTeleop.wristCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid));
+            shoulder.setPosition(CompetitionTeleop.shoulderCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid));
             AutoUtil.delay(.25);
             hopper.rest(Hopper.ALL);
-
-
-            wrist.setPosition(Constants.WristConstants.wristOuttake);
-            shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
             timeout.reset();
-            while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
+            while(Math.abs(shoulder.getPosition()- CompetitionTeleop.shoulderCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid)) > .05 && timeout.seconds() < timeOutSec){
 
             }
-            AutoUtil.delay(1);
             return false;
         }
     }
@@ -307,6 +307,43 @@ public class BaseRobot implements SubsystemBase{
         }
     }
 
+    class OuttakeCustom implements Action{
+
+
+        public double sliderPos;
+
+        public OuttakeCustom(double sliderPos){
+            this.sliderPos = sliderPos;
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            hopper.intake(Hopper.ALL);
+            intake.setPower(.5);
+            if(slider.getPosition() < 200){
+                slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
+                AutoUtil.delay(.25);
+                wrist.setPosition(Constants.WristConstants.wristSafeBackToOuttake);
+            }
+            intake.setMode(Intake.REST);
+
+            AutoUtil.delay(.25);
+            slider.runToPosition(sliderPos);
+
+
+
+            wrist.setPosition(CompetitionTeleop.wristCalculator.calculate(sliderPos));
+            shoulder.setPosition(CompetitionTeleop.shoulderCalculator.calculate(sliderPos));
+            AutoUtil.delay(.25);
+            hopper.rest(Hopper.ALL);
+            timeout.reset();
+            while(Math.abs(shoulder.getPosition()- CompetitionTeleop.shoulderCalculator.calculate(sliderPos)) > .05 && timeout.seconds() < timeOutSec){
+
+            }
+            return false;
+        }
+
+    }
+
 
 
 
@@ -324,5 +361,7 @@ public class BaseRobot implements SubsystemBase{
     public Action midOuttake(){return new MidOuttake();}
     public Action dragAndSuckStackIntake(){return new DragAndSuckStackIntake();}
     public Action offTheTopStackIntake(){return new offTheTopStackIntake();}
+
+    public Action customOuttake(double sliderPos){return new OuttakeCustom(sliderPos);}
 
 }

@@ -42,8 +42,8 @@ public class CompetitionTeleop extends SampleTeleop {
     boolean wristShoulderAutoAdjust = false;
     boolean prevGuide = false;
 
-    Line wristCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.WristConstants.wristOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.WristConstants.wristOuttakeHigh);
-    Line shoulderCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.ShoulderConstants.shoulderOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.ShoulderConstants.shoulderOuttakeHigh);
+    static public Line wristCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.WristConstants.wristOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.WristConstants.wristOuttakeHigh);
+    static public Line shoulderCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.ShoulderConstants.shoulderOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.ShoulderConstants.shoulderOuttakeHigh);
 
 
 

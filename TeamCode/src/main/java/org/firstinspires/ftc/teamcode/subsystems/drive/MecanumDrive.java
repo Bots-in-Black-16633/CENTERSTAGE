@@ -441,6 +441,16 @@ public class MecanumDrive {
                 0.25, 0.1
         );
     }
+    public TrajectoryActionBuilder actionBuilder(Pose2d beginPose, double maxVel, double maxAccel){
+        return new TrajectoryActionBuilder(
+                TurnAction::new,
+                FollowTrajectoryAction::new,
+                beginPose, 1e-6, 0.0,
+                defaultTurnConstraints,
+                defaultVelConstraint, defaultAccelConstraint,
+                0.25, 0.1
+        );
+    }
 
     public double getHeading(){
         return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS)+Math.toRadians(initialHeading)-Math.toRadians(headingOffset);
