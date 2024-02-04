@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Pose2dDual;
 import com.acmerobotics.roadrunner.PoseMap;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -583,7 +584,7 @@ public class AutoUtil {
         {
             return drive.actionBuilder(drive.pose, transformation)
                     .setReversed(true)
-                    .splineToConstantHeading(new Vector2d(4.39, -10), Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(4.39, -10), Math.toRadians(0),(pose, path, disp) -> {return 100;}, new ProfileAccelConstraint(-120,120))
                     .splineToConstantHeading(new Vector2d(52.71, -35.90), Math.toRadians(0))
 //                    .strafeToConstantHeading(new Vector2d(28.80, -12.17))
 //                    .strafeToConstantHeading(new Vector2d(53.00, -36.00))
