@@ -6,6 +6,8 @@ import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.PoseMap;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -59,7 +61,7 @@ public class BaseRobot implements SubsystemBase{
         addSubsystems(intake,  drive, hopper, shoulder, wrist, slider);
     }
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
-        new BaseRobot(hwMap,startPose,null);
+        this(hwMap,startPose,null);
     }
 
 
@@ -193,7 +195,7 @@ public class BaseRobot implements SubsystemBase{
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
             drive.forward(.5,.5);//drive forward
-            linkage.lower();//lower
+            linkage.stackLevel(4);//lower
             time = new ElapsedTime();
             while(time.seconds() < .25){//give the servo a quick second to lower
 
@@ -222,20 +224,28 @@ public class BaseRobot implements SubsystemBase{
     }
     class offTheTopStackIntake implements Action {
         ElapsedTime time;
+
+        int stackLevel;
+        public offTheTopStackIntake(int stackLevel){
+            this.stackLevel=stackLevel;
+        }
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            wrist.setPosition(Constants.WristConstants.wristRest);
             time = new ElapsedTime();
-            linkage.raise();
+            linkage.stackLevel(stackLevel);
             drive.forward(.4, .4);
             intake.setMode(Intake.INTAKE);
-            linkage.stackLevel(3);
-            time.reset();
-            while(time.seconds()<.5){}
-            AutoUtil.delay(.5);
-            linkage.stackLevel(4);
-            time.reset();
-            while(time.seconds()<.5){}
-            linkage.raise();
+           hopper.intake(Hopper.ALL);
+           time.reset();
+            while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
+                if(hopper.leftHopperSensor.isPixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
+                if(hopper.rightHopperSensor.isPixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
+                wrist.setPosition(Constants.WristConstants.wristRest);
+
+//                if(((int)time.seconds())%2==0)intake.setMode(Intake.INTAKE);
+//                else intake.setMode(Intake.OUTTAKE);
+            }
             intake.setMode(Intake.REST);
             drive.backward(.4,.4);
             drive.updatePoseEstimate();
@@ -283,14 +293,16 @@ public class BaseRobot implements SubsystemBase{
 
 
             if(Math.abs(slider.getPosition() -Constants.SliderConstants.sliderRest)<10){
-                slider.runToPosition(Constants.SliderConstants.sliderTraveling);
-                while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
+                slider.runToPosition(Constants.SliderConstants.sliderTraveling+100);
+                while(slider.getPosition() != Constants.SliderConstants.sliderTraveling+100)  {
                 }
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
                 wrist.setPosition(Constants.WristConstants.wristTraveling);
                 while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderTraveling)>.05){
 
                 }
+                slider.runToPosition(Constants.SliderConstants.sliderTraveling);
+
             }else{
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
                 wrist.setPosition(Constants.WristConstants.wristTraveling);
@@ -301,15 +313,11 @@ public class BaseRobot implements SubsystemBase{
                 while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
                 }
             }
-
-
-
-
-
-
             return false;
         }
     }
+
+
 
     class OuttakeCustom implements Action{
 
@@ -364,8 +372,11 @@ public class BaseRobot implements SubsystemBase{
     public Action traveling(){return new TravelingPosition();}
     public Action midOuttake(){return new MidOuttake();}
     public Action dragAndSuckStackIntake(){return new DragAndSuckStackIntake();}
-    public Action offTheTopStackIntake(){return new offTheTopStackIntake();}
+    public Action offTheTopStackIntake(int stackLevel){return new offTheTopStackIntake(stackLevel);}
 
     public Action customOuttake(double sliderPos){return new OuttakeCustom(sliderPos);}
 
+    public Action outtakeExcessPixels(){
+        return new SequentialAction(traveling(), (p)-> {intake.setMode(Intake.OUTTAKE);return false;}, new SleepAction(1.5), (p)-> {intake.setMode(Intake.REST);return false;});
+    }
 }

@@ -71,7 +71,7 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .477;//.621
+        public static double wristRest = .518;//.621
         public static double wristTraveling = .67; //+.2
         public static double wristOuttake = .411;//rest - .33
         public static double wristOuttakeHigh = .4061;//rest - .09
@@ -115,7 +115,7 @@ public final class Constants{
     }
     @Config
     public static final class LinkageConstants{
-        public static double linkageUp = .726;
+        public static double linkageUp = .7;
         public static double linkageDown = .5;
 
 
