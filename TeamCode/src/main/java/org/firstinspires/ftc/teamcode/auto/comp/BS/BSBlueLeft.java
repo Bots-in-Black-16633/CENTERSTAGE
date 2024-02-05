@@ -26,7 +26,7 @@ public class BSBlueLeft extends SampleAuto {
             pose.position.x, pose.position.y.unaryMinus(), pose.heading.inverse());
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART, xAxisReflection);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART, null);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 

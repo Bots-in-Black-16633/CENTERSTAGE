@@ -35,12 +35,12 @@ public class BSRedRight extends SampleAuto {
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, AutoUtil.RIGHT, zone),new SequentialAction(new SleepAction(1), robot.outtake())));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
-        pen.update();
+
         //Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         //Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, AutoUtil.RIGHT, zone), new SequentialAction(new SleepAction(.5),robot.resetToIntake())));
+        Actions.runBlocking(robot.resetToIntake());
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, AutoUtil.RIGHT, zone)));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(1);return false;});

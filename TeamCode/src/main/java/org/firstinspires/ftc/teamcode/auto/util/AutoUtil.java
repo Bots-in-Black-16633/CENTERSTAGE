@@ -763,11 +763,11 @@ public class AutoUtil {
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(51.8,-37), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,-36), Math.toRadians(180))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(51.8,-37), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,-40), Math.toRadians(180))
                             .build();
             }
             else return null;
@@ -775,7 +775,19 @@ public class AutoUtil {
         }
         else if(color == BLUE){
             if(side == LEFT){
-               return null;
+                if(zone==3){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToLinearHeading(new Vector2d(51.8,29.5), Math.toRadians(180))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToLinearHeading(new Vector2d(51.8,36), Math.toRadians(180))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToLinearHeading(new Vector2d(51.8,40), Math.toRadians(180))
+                            .build();
             }
             else return null;
         }
@@ -796,8 +808,7 @@ public class AutoUtil {
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-
-                            .strafeToConstantHeading(new Vector2d(34 ,-35))
+                            .strafeToConstantHeading(new Vector2d(29,-35))
                             .build();
             }
             else return null;
@@ -805,7 +816,19 @@ public class AutoUtil {
         }
         else if(color == BLUE){
             if(side == LEFT){
-                return null;
+                if(zone==3){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToConstantHeading(new Vector2d(6,35))
+                            .build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToConstantHeading(new Vector2d(22,26))
+                            .build();
+                }
+                else return drive.actionBuilder(drive.pose, transformation)
+                            .strafeToConstantHeading(new Vector2d(29,35))
+                            .build();
             }
             else return null;
         }
