@@ -168,10 +168,17 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
 
+        if(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER) && g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+            robot.slider.reset();
+        }
+
         //Manual Fine adjustent controls
         if(Math.abs(g2.getLeftY())>.01) {
-            sliderPos += g2.getLeftY() * 100;
+            if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){robot.slider.set(g2.getLeftY());sliderPos = robot.slider.getPosition();}
+            else{
+                sliderPos += g2.getLeftY() * 100;
             robot.slider.runToPosition(sliderPos);
+            }
 
             if(wristShoulderAutoAdjust && sliderPos > 400){
                 wristPos = wristCalculator.calculate(sliderPos);
