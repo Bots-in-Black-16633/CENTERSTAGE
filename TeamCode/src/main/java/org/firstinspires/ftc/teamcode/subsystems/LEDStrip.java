@@ -31,6 +31,10 @@ public class LEDStrip implements SubsystemBase{
     public void periodic() {
 
     }
+    public void set(BlinkinPattern blinkinPattern){
+        strip.setPattern(blinkinPattern);
+
+    }
 
     public void updateLEDPattern(Pixel left, Pixel right){
 

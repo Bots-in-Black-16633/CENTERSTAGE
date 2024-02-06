@@ -71,7 +71,7 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .518;//.621
+        public static double wristRest = .498;//.621
         public static double wristTraveling = .67; //+.2
         public static double wristOuttake = .411;//rest - .33
         public static double wristOuttakeHigh = .4061;//rest - .09

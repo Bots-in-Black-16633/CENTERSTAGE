@@ -64,9 +64,8 @@ public class AutoUtil {
             }
             else if(side == AutoUtil.LEFT){
                 return drive.actionBuilder(drive.pose, transformation)
-
-                        .strafeTo(new Vector2d(40,64))
-                        .strafeTo(new Vector2d(48, 64))
+                        .strafeTo(new Vector2d(40,68))
+                        .strafeTo(new Vector2d(54, 66))
                         .build();
             }
             else return null;
@@ -777,16 +776,16 @@ public class AutoUtil {
             if(side == LEFT){
                 if(zone==3){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(51.8,29.5), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,36), Math.toRadians(180))
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(51.8,36), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,40), Math.toRadians(180))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(51.8,40), Math.toRadians(180))
+                            .strafeToLinearHeading(new Vector2d(51.8,47), Math.toRadians(180))
                             .build();
             }
             else return null;
@@ -818,16 +817,16 @@ public class AutoUtil {
             if(side == LEFT){
                 if(zone==3){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToConstantHeading(new Vector2d(6,35))
+                            .strafeToConstantHeading(new Vector2d(10,40))
                             .build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToConstantHeading(new Vector2d(22,26))
+                            .strafeToConstantHeading(new Vector2d(22,30))
                             .build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToConstantHeading(new Vector2d(29,35))
+                            .strafeToConstantHeading(new Vector2d(29,40))
                             .build();
             }
             else return null;

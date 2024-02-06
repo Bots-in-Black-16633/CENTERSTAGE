@@ -8,6 +8,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.hardware.motors.CRServo;
 
+import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -35,6 +36,8 @@ public class Hopper implements SubsystemBase{
 
     boolean leftLocked = false;
     boolean rightLocked = false;
+
+    boolean colorSensorEnabled = true;
 
     public Hopper(HardwareMap hwMap){
         leftHopper = new CRServo(hwMap, "leftHopper");
@@ -70,6 +73,10 @@ public class Hopper implements SubsystemBase{
             return leftHopperSensor.getPixelPresent();
         }
         else return rightHopperSensor.getPixelPresent();
+    }
+
+    public void disableColorSensor(){
+        colorSensorEnabled = false;
     }
 
 
@@ -123,6 +130,7 @@ public class Hopper implements SubsystemBase{
 
     @Override
     public void periodic() {
-        strip.updateLEDPattern(getPixelColor(LEFT_HOPPER), getPixelColor(RIGHT_HOPPER));
+        if(colorSensorEnabled)strip.updateLEDPattern(getPixelColor(LEFT_HOPPER), getPixelColor(RIGHT_HOPPER));
+        else strip.set(RevBlinkinLedDriver.BlinkinPattern.RED);
     }
 }

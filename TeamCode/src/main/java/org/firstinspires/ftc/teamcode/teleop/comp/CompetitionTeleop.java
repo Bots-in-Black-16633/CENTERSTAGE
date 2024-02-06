@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.teleop.comp;
 import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.REST;
 import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.SPINNING;
 
+
+
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.arcrobotics.ftclib.controller.PIDController;
@@ -37,10 +39,12 @@ public class CompetitionTeleop extends SampleTeleop {
     GamepadEx g2;
     Thread driveLoop;
 
+    boolean visionHopperLock = true;
     volatile boolean volStopRequested = false;
 
     boolean wristShoulderAutoAdjust = false;
     boolean prevGuide = false;
+    boolean prevX = false;
 
     static public Line wristCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.WristConstants.wristOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.WristConstants.wristOuttakeHigh);
     static public Line shoulderCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.ShoulderConstants.shoulderOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.ShoulderConstants.shoulderOuttakeHigh);
@@ -73,19 +77,31 @@ public class CompetitionTeleop extends SampleTeleop {
     public void onLoop() {
 
 
+        if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.A)){
+            robot.slider.reset();
+        }
+        if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.X) != prevX){
+            if(visionHopperLock){visionHopperLock = false;robot.hopper.disableColorSensor();}
+            else visionHopperLock = true;
+        }
+        prevX = g2.isDown(GamepadKeys.Button.X);
+
+        pen.addLine("VISION AUTO LOCK: " + visionHopperLock);
+
+
         //A BUTton goes to high outtake
-        if(g2.wasJustPressed(GamepadKeys.Button.A)){
+        if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.A)){
             Actions.runBlocking(robot.highOuttake());
             resetPixelSubsystemTrackingVariables();
         }
         //If the Y button is pressed the robot should go back to intake position
-        if(g2.wasJustPressed(GamepadKeys.Button.Y)){
+        if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.Y)){
             Actions.runBlocking(robot.resetToIntake());
 
             resetPixelSubsystemTrackingVariables();
             //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         }
-        if(g2.wasJustPressed(GamepadKeys.Button.X)){
+        if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.X)){
 
             if(Math.abs(robot.shoulder.getPosition()-Constants.ShoulderConstants.shoulderOuttake)<.05) Actions.runBlocking(robot.distanceOuttake());
             else Actions.runBlocking(robot.outtake());
@@ -93,7 +109,7 @@ public class CompetitionTeleop extends SampleTeleop {
             resetPixelSubsystemTrackingVariables();
         }
 
-        if(g2.wasJustPressed(GamepadKeys.Button.B)){
+        if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.B)){
             if(robot.shooter.getState()==REST){robot.shooter.spinUp();}
             else if(robot.shooter.getState()==SPINNING){robot.shooter.shoot();}
             else robot.shooter.rest();
@@ -113,6 +129,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         pen.addLine("wristShoulderAutoAdjust: " + wristShoulderAutoAdjust);
+
 
 
 
@@ -168,15 +185,13 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
 
-        if(g2.isDown(GamepadKeys.Button.RIGHT_BUMPER) && g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
-            robot.slider.reset();
-        }
+
 
         //Manual Fine adjustent controls
         if(Math.abs(g2.getLeftY())>.01) {
-            if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){robot.slider.set(g2.getLeftY());sliderPos = robot.slider.getPosition();}
+            if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){robot.slider.set(Math.abs(g2.getLeftY())>.1?g2.getLeftY():0);sliderPos = robot.slider.getPosition();}
             else{
-                sliderPos += g2.getLeftY() * 100;
+            sliderPos += g2.getLeftY() * 100;
             robot.slider.runToPosition(sliderPos);
             }
 
