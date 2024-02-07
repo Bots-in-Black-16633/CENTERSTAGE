@@ -51,7 +51,7 @@ public class AutoUtil {
         this.drive = drive;
         startPose = drive.pose;
         if(transformation!= null)this.transformation = transformation;
-        else this.transformation = pose -> pose;
+        //else this.transformation = pose -> pose;
     }
     public  Action getBackStageParkAutoAction(int color, int side){
         if(color == AutoUtil.BLUE){
@@ -311,8 +311,8 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(-36,37))
                             .strafeTo(new Vector2d(-36,15))
                             .strafeToLinearHeading(new Vector2d(40,15),Math.toRadians(-180))
-                            .strafeToConstantHeading(new Vector2d(40, 45))
-                            .strafeToConstantHeading(new Vector2d(50, 48))
+                            .strafeToConstantHeading(new Vector2d(40, 49))
+                            .strafeToConstantHeading(new Vector2d(50, 49))
                             .build();
 
                 }
@@ -325,7 +325,7 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(12, 16))
                             .strafeToConstantHeading(new Vector2d(38,16))
                             .strafeToConstantHeading(new Vector2d(38, 45))
-                            .strafeToConstantHeading(new Vector2d(50, 36))
+                            .strafeToConstantHeading(new Vector2d(50, 41))
                             .build();
                 }
                 //Good
@@ -336,7 +336,7 @@ public class AutoUtil {
                             .strafeTo(new Vector2d(12, 13))
                             .strafeToLinearHeading(new Vector2d(40,15), Math.toRadians(180))
                             .strafeToConstantHeading(new Vector2d(40, 35))
-                            .strafeToConstantHeading(new Vector2d(50, 30))
+                            .strafeToConstantHeading(new Vector2d(50, 35))
                             .build();
             }
             else return null;
