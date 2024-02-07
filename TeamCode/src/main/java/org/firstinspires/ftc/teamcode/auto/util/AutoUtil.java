@@ -51,7 +51,7 @@ public class AutoUtil {
         this.drive = drive;
         startPose = drive.pose;
         if(transformation!= null)this.transformation = transformation;
-        //else this.transformation = pose -> pose;
+        else this.transformation = pose -> pose;
     }
     public  Action getBackStageParkAutoAction(int color, int side){
         if(color == AutoUtil.BLUE){
