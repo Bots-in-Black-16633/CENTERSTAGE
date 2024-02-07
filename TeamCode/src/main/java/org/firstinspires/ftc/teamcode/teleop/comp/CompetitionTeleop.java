@@ -79,6 +79,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
         if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.A)){
             robot.slider.reset();
+            sliderPos = 0;
         }
         if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.X) != prevX){
             if(visionHopperLock){visionHopperLock = false;robot.hopper.disableColorSensor();}
@@ -97,7 +98,7 @@ public class CompetitionTeleop extends SampleTeleop {
         //If the Y button is pressed the robot should go back to intake position
         if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.Y)){
             Actions.runBlocking(robot.resetToIntake());
-
+            sliderPos = Constants.SliderConstants.sliderRest;
             resetPixelSubsystemTrackingVariables();
             //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         }
@@ -117,8 +118,10 @@ public class CompetitionTeleop extends SampleTeleop {
 
         if(g2.wasJustPressed(GamepadKeys.Button.BACK)){
             if(robot.slider.getPosition()>400){
-                robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPosition);
-                wristPos = Constants.WristConstants.wristAdjustingPosition;
+                robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPositionLow);
+                robot.shoulder.setPosition(Constants.ShoulderConstants.shoulderPixelAdjusterLow);
+                wristPos = Constants.WristConstants.wristAdjustingPositionLow;
+                shoulderPos = Constants.ShoulderConstants.shoulderPixelAdjusterLow;
             }
             else{
                 if(wristShoulderAutoAdjust)wristShoulderAutoAdjust=false;
@@ -189,10 +192,11 @@ public class CompetitionTeleop extends SampleTeleop {
 
         //Manual Fine adjustent controls
         if(Math.abs(g2.getLeftY())>.01) {
-            if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){robot.slider.set(Math.abs(g2.getLeftY())>.1?g2.getLeftY():0);sliderPos = robot.slider.getPosition();}
+            if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER)){
+                robot.slider.set(Math.abs(g2.getLeftY())>.3?(g2.getLeftY()/4):0);sliderPos = robot.slider.getPosition();}
             else{
-            sliderPos += g2.getLeftY() * 100;
-            robot.slider.runToPosition(sliderPos);
+                sliderPos += g2.getLeftY() * 100;
+                robot.slider.runToPosition(sliderPos);
             }
 
             if(wristShoulderAutoAdjust && sliderPos > 400){

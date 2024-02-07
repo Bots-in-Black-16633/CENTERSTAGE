@@ -44,7 +44,7 @@ public class BaseRobot implements SubsystemBase{
 
     public AutoUtil autoGenerator;
     public ElapsedTime timeout = new ElapsedTime();
-    public final static double timeOutSec = .1;
+    public final static double timeOutSec = 1;
     public BaseRobot(HardwareMap hwMap, Pose2d startPose, PoseMap transformation){
         hopper = new Hopper(hwMap);
         intake = new Intake(hwMap);
@@ -92,14 +92,14 @@ public class BaseRobot implements SubsystemBase{
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
             AutoUtil.delay(.25);
 
+
             slider.runToPosition(Constants.SliderConstants.sliderRest);
             timeout.reset();
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 100 && timeout.seconds() < 3){
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 20 && timeout.seconds() < 3){
 
             }
+
             shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
-
-
             wrist.setPosition(Constants.WristConstants.wristRest);
             return false;
         }
@@ -126,6 +126,10 @@ public class BaseRobot implements SubsystemBase{
             hopper.rest(Hopper.ALL);
             timeout.reset();
             while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
+
+            }
+            timeout.reset();
+            while(Math.abs(slider.getPosition()- Constants.SliderConstants.sliderOuttake) > 20 && timeout.seconds() < timeOutSec){
 
             }
             return false;
@@ -155,6 +159,10 @@ public class BaseRobot implements SubsystemBase{
             hopper.rest(Hopper.ALL);
             timeout.reset();
             while(Math.abs(shoulder.getPosition()- CompetitionTeleop.shoulderCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid)) > .05 && timeout.seconds() < timeOutSec){
+
+            }
+            timeout.reset();
+            while(Math.abs(slider.getPosition()- Constants.SliderConstants.sliderOuttakeMid) > 20 && timeout.seconds() < timeOutSec){
 
             }
             return false;

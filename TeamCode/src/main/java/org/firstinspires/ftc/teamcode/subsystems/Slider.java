@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 
 public class Slider implements SubsystemBase{
 
-    DcMotor leftSlider;
+    public DcMotor leftSlider;
     DcMotor rightSlider;
 
     public Slider(HardwareMap hwMap){
@@ -27,9 +27,12 @@ public class Slider implements SubsystemBase{
     }
 
     public void runToPosition(double pos){
+//        leftSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        rightSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         pos = MathUtils.clamp(pos, Constants.SliderConstants.sliderMinPosition, Constants.SliderConstants.sliderMaxPosition);
         leftSlider.setTargetPosition((int)pos);
         rightSlider.setTargetPosition((int)pos);
+
         leftSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftSlider.setPower(1);
@@ -39,14 +42,19 @@ public class Slider implements SubsystemBase{
 
 
     public void reset(){
+        leftSlider.setPower(0);
+        rightSlider.setPower(0);
+
         leftSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSlider.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftSlider.setTargetPosition(0);
+        rightSlider.setPower(0);
     }
     public void set(double power){
-        rightSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftSlider.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftSlider.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftSlider.setPower(power);
         rightSlider.setPower(power);
     }

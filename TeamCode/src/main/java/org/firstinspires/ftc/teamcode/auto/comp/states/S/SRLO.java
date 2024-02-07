@@ -14,7 +14,7 @@ public class SRLO extends SampleAuto {
     int zone;
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.REDRIGHTSTART);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.REDLEFTSTART);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 
@@ -27,6 +27,8 @@ public class SRLO extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.LEFT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.RED, AutoUtil.LEFT, zone));
+
 
 
 

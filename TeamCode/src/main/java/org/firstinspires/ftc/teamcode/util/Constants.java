@@ -57,14 +57,15 @@ public final class Constants{
 
         public static double shoulderRest = .224;
         public static double shoulderTraveling = .11;
-        public static double shoulderOuttake = .4734;//.305
+        public static double shoulderOuttake = .44;//.305
 
         public static double shoulderOuttakeHigh = .4073;
 
-        public static double shoulderSafeBackToIntake = .168;
+        public static double shoulderSafeBackToIntake = .163;
 
         public static double shoulderSafeBackToOuttake = .104;
-        public static double shoulderDistanceDeposit = .477;
+        public static double shoulderDistanceDeposit = .53;
+        public static double shoulderPixelAdjusterLow= .625;
     }
     @Config
     public static final class WristConstants{
@@ -79,8 +80,8 @@ public final class Constants{
         public static double wristSafeBackToIntake = .82; //+.17
 
         public static double wristSafeBackToOuttake = .65;//+.18
-        public static double wristDistanceDeposit = .434;//-.036
-        public static double wristAdjustingPosition = .14;//-.33
+        public static double wristDistanceDeposit = .400;//-.036
+        public static double wristAdjustingPositionLow = .363;//-.33
     }
     @Config
     public static final class IntakeConstants{
