@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto.comp.states.BS;
+package org.firstinspires.ftc.teamcode.auto.comp.states.S;
 
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,9 +8,8 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBBROD", group="BS")
-
-public class SBBROD extends SampleAuto {
+@Autonomous(name="SBRID", group="S")
+public class SBRID extends SampleAuto {
     BaseRobot robot;
     int zone;
 
@@ -29,18 +28,7 @@ public class SBBROD extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-
-        Actions.runBlocking(robot.autoGenerator.getBackdropAutoActionNoAprilTag(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
-        robot.drive.updatePoseEstimate();
-        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-
-        Actions.runBlocking(robot.outtake());
-        Actions.runBlocking(robot.hopper.hopperOutake());
-        Actions.runBlocking(robot.resetToIntake());
-        robot.drive.updatePoseEstimate();
-        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, false));
+        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
 
     }
 
@@ -49,4 +37,6 @@ public class SBBROD extends SampleAuto {
     public void onStop() {
 
     }
+
+
 }

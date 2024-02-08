@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto.comp.states.BS;
 
 import com.acmerobotics.roadrunner.ParallelAction;
-import com.acmerobotics.roadrunner.SequentialAction;
-import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -28,7 +26,7 @@ public class BSRRO extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, AutoUtil.RIGHT, zone)));
-        Actions.runBlocking(robot.outtake());
+        Actions.runBlocking(robot.midOuttake());
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking((t)->{AutoUtil.delay(.5);return false;});
@@ -42,7 +40,7 @@ public class BSRRO extends SampleAuto {
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(1);return false;});
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.RIGHT));
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.RIGHT, false));
 
 
     }

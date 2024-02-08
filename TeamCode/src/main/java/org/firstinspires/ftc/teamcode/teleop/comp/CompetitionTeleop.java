@@ -98,8 +98,9 @@ public class CompetitionTeleop extends SampleTeleop {
         //If the Y button is pressed the robot should go back to intake position
         if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.Y)){
             Actions.runBlocking(robot.resetToIntake());
-            sliderPos = Constants.SliderConstants.sliderRest;
             resetPixelSubsystemTrackingVariables();
+            sliderPos = Constants.SliderConstants.sliderRest;
+
             //AprilTagProcessorWrapper.pauseAprilTagDetectionAsync(pen);
         }
         if(!g2.isDown(GamepadKeys.Button.LEFT_BUMPER)&&g2.wasJustPressed(GamepadKeys.Button.X)){
@@ -117,7 +118,7 @@ public class CompetitionTeleop extends SampleTeleop {
         }
 
         if(g2.wasJustPressed(GamepadKeys.Button.BACK)){
-            if(robot.slider.getPosition()>400){
+            if(robot.slider.getPosition()>300){
                 robot.wrist.setPosition(Constants.WristConstants.wristAdjustingPositionLow);
                 robot.shoulder.setPosition(Constants.ShoulderConstants.shoulderPixelAdjusterLow);
                 wristPos = Constants.WristConstants.wristAdjustingPositionLow;
@@ -199,7 +200,7 @@ public class CompetitionTeleop extends SampleTeleop {
                 robot.slider.runToPosition(sliderPos);
             }
 
-            if(wristShoulderAutoAdjust && sliderPos > 400){
+            if(wristShoulderAutoAdjust && sliderPos > 400 && wristPos < Constants.WristConstants.wristOuttake){
                 wristPos = wristCalculator.calculate(sliderPos);
                 shoulderPos = shoulderCalculator.calculate(sliderPos);
             }

@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBBROD", group="BS")
+@Autonomous(name="SBBRID", group="BS")
 
 public class SBBRID extends SampleAuto {
     BaseRobot robot;

@@ -8,9 +8,9 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBRLOD", group="BS")
+@Autonomous(name="SBRLID", group="BS")
 
-public class SBRLOD extends SampleAuto {
+public class SBRLID extends SampleAuto {
     BaseRobot robot;
     int zone;
 
@@ -40,7 +40,7 @@ public class SBRLOD extends SampleAuto {
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
 
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.LEFT, false));
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.RED, AutoUtil.LEFT, true));
 
     }
 
