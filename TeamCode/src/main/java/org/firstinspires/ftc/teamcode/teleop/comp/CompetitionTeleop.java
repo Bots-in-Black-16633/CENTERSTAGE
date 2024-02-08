@@ -133,7 +133,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
         pen.addLine("wristShoulderAutoAdjust: " + wristShoulderAutoAdjust);
-
+        pen.addLine("SliderTargetPos" + sliderPos);
 
 
 
@@ -188,6 +188,7 @@ public class CompetitionTeleop extends SampleTeleop {
 
 
 
+        if(sliderPos <1){robot.slider.set(0);pen.addLine("REST");}
 
 
 
@@ -197,7 +198,8 @@ public class CompetitionTeleop extends SampleTeleop {
                 robot.slider.set(Math.abs(g2.getLeftY())>.3?(g2.getLeftY()/4):0);sliderPos = robot.slider.getPosition();}
             else{
                 sliderPos += g2.getLeftY() * 100;
-                robot.slider.runToPosition(sliderPos);
+                if(sliderPos <1){robot.slider.set(0);pen.addLine("REST");}
+               else robot.slider.runToPosition(sliderPos);
             }
 
             if(wristShoulderAutoAdjust && sliderPos > 400 && wristPos < Constants.WristConstants.wristOuttake){

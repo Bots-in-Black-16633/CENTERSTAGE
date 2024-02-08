@@ -32,7 +32,6 @@ public class Slider implements SubsystemBase{
         pos = MathUtils.clamp(pos, Constants.SliderConstants.sliderMinPosition, Constants.SliderConstants.sliderMaxPosition);
         leftSlider.setTargetPosition((int)pos);
         rightSlider.setTargetPosition((int)pos);
-
         leftSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightSlider.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftSlider.setPower(1);
@@ -66,8 +65,8 @@ public class Slider implements SubsystemBase{
     public void printTelemetry(ColorfulTelemetry t) {
         t.addLine();
         t.addLine("____SLIDER_____");
-        t.addLine("LEFT SLIDER : " + leftSlider.getCurrentPosition());
-        t.addLine("RIGHT SLIDER (FOLLOWER)" + rightSlider.getCurrentPosition());
+        t.addLine("LEFT SLIDER : " + leftSlider.getCurrentPosition() + " Power: " + leftSlider.getPower());
+        t.addLine("RIGHT SLIDER (FOLLOWER)" + rightSlider.getCurrentPosition() + " Power: " + rightSlider.getPower());
 
     }
 

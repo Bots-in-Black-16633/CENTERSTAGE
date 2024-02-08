@@ -95,7 +95,7 @@ public class BaseRobot implements SubsystemBase{
             drive.updatePoseEstimate();
             slider.runToPosition(Constants.SliderConstants.sliderRest);
             timeout.reset();
-            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 20 && timeout.seconds() < 3){
+            while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 100 && timeout.seconds() < 3){
                 drive.updatePoseEstimate();
             }
 
