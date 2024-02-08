@@ -9,8 +9,8 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBLID", group="S")
-public class SBLID extends SampleAuto {
+@Autonomous(name="SBLI", group="S")
+public class SBLI extends SampleAuto {
     BaseRobot robot;
     int zone;
 

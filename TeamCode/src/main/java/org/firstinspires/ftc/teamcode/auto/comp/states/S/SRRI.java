@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SRROD", group="S")
-public class SRROD extends SampleAuto {
+@Autonomous(name="SRRI", group="S")
+public class SRRI extends SampleAuto {
     BaseRobot robot;
     int zone;
     @Override
@@ -27,7 +27,7 @@ public class SRROD extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.RED, AutoUtil.RIGHT, zone, false));
+        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.RED, AutoUtil.RIGHT, zone));
 
 
 

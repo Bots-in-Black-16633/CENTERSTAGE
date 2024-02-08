@@ -92,11 +92,11 @@ public class BaseRobot implements SubsystemBase{
             shoulder.setPosition(Constants.ShoulderConstants.shoulderSafeBackToIntake);
             AutoUtil.delay(.25);
 
-
+            drive.updatePoseEstimate();
             slider.runToPosition(Constants.SliderConstants.sliderRest);
             timeout.reset();
             while(Math.abs(slider.getPosition()-Constants.SliderConstants.sliderRest) > 20 && timeout.seconds() < 3){
-
+                drive.updatePoseEstimate();
             }
 
             shoulder.setPosition(Constants.ShoulderConstants.shoulderRest);
@@ -119,18 +119,18 @@ public class BaseRobot implements SubsystemBase{
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
-
+            drive.updatePoseEstimate();
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
             hopper.rest(Hopper.ALL);
             timeout.reset();
             while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
-
+                drive.updatePoseEstimate();
             }
             timeout.reset();
             while(Math.abs(slider.getPosition()- Constants.SliderConstants.sliderOuttake) > 20 && timeout.seconds() < timeOutSec){
-
+                drive.updatePoseEstimate();
             }
             return false;
         }
@@ -150,6 +150,7 @@ public class BaseRobot implements SubsystemBase{
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttakeMid);
+            drive.updatePoseEstimate();
 
 
 
@@ -159,10 +160,12 @@ public class BaseRobot implements SubsystemBase{
             hopper.rest(Hopper.ALL);
             timeout.reset();
             while(Math.abs(shoulder.getPosition()- CompetitionTeleop.shoulderCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid)) > .05 && timeout.seconds() < timeOutSec){
+                drive.updatePoseEstimate();
 
             }
             timeout.reset();
             while(Math.abs(slider.getPosition()- Constants.SliderConstants.sliderOuttakeMid) > 20 && timeout.seconds() < timeOutSec){
+                drive.updatePoseEstimate();
 
             }
             return false;
@@ -204,10 +207,7 @@ public class BaseRobot implements SubsystemBase{
 
             drive.forward(.5,.5);//drive forward
             linkage.stackLevel(4);//lower
-            time = new ElapsedTime();
-            while(time.seconds() < .25){//give the servo a quick second to lower
-
-            }
+            AutoUtil.delay(.25);
             drive.backward(.3,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
@@ -222,11 +222,7 @@ public class BaseRobot implements SubsystemBase{
             //bring slider up
             intake.setMode(Intake.REST);
             hopper.rest(Hopper.ALL);
-
             drive.updatePoseEstimate();
-
-
-
             return false;
         }
     }

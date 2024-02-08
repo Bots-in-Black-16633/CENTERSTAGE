@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto.comp.states.S;
 
-
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -9,30 +8,31 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBLOD", group="S")
-public class SBLOD extends SampleAuto {
+@Autonomous(name="SRRO", group="S")
+public class SRRO extends SampleAuto {
     BaseRobot robot;
     int zone;
-
     @Override
     public void onInit() {
-        robot  = new BaseRobot(hardwareMap, AutoUtil.BLUELEFTSTART);
+        robot  = new BaseRobot(hardwareMap, AutoUtil.REDRIGHTSTART);
         TeamPropPartitionDetector.startPropDetection(robot.camera, pen);
     }
 
     @Override
     public void onStart() {
-        zone = TeamPropPartitionDetector.getBluePropZone();
+        zone = TeamPropPartitionDetector.getRedPropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
-        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, zone));
+        Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.RED, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.BLUE, AutoUtil.LEFT, zone, false));
+        Actions.runBlocking(robot.autoGenerator.getSpikeParkAction(AutoUtil.RED, AutoUtil.RIGHT, zone, false));
+
 
 
     }
+
 
 
     @Override
@@ -40,6 +40,4 @@ public class SBLOD extends SampleAuto {
 
     }
 
-
 }
-

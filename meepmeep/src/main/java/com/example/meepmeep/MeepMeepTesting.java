@@ -32,10 +32,12 @@ public class MeepMeepTesting {
 //        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(54,-34, Math.toRadians(180)))
 //                .splineToConstantHeading(new Vector2d(26.16, -5.35), Math.toRadians(180.00))
 //                .splineToConstantHeading(new Vector2d(-61.69, -12.60), Math.toRadians(180.00)).build());
-               myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-60,-12, Math.toRadians(180))).setReversed(true).setReversed(true)
+               myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-38.01, 38, Math.toRadians(270)))
                                .setReversed(true)
-                               .splineToConstantHeading(new Vector2d(4.39, -10), Math.toRadians(0), (pose, path, disp) -> {return 100;}, new ProfileAccelConstraint(-120,120))
-                               .splineToConstantHeading(new Vector2d(52.71, -35.90), Math.toRadians(0)).build());
+                       .splineToConstantHeading(new Vector2d(35.33, 58), Math.toRadians(0))
+                       .strafeToLinearHeading(new Vector2d(40, 23), Math.toRadians(-180))
+                       .strafeTo(new Vector2d(40, 27))
+                       .strafeToConstantHeading(new Vector2d(50, 32)).build());
 
 
         //myBot.runAction(auto.getQuickBackdropAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 3));

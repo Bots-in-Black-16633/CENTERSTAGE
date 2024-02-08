@@ -1,8 +1,5 @@
 package org.firstinspires.ftc.teamcode.auto.comp.states.BSS;
 
-import static org.firstinspires.ftc.teamcode.auto.util.AutoUtil.RED;
-import static org.firstinspires.ftc.teamcode.auto.util.AutoUtil.RIGHT;
-
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -14,8 +11,8 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="BSSBLO", group="BSS")
-public class BSSBLO extends SampleAuto {
+@Autonomous(name="BSSBLI", group="BSS")
+public class BSSBLI extends SampleAuto {
     BaseRobot robot;
     int zone;
     @Override
@@ -48,7 +45,7 @@ public class BSSBLO extends SampleAuto {
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, false));
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, true));
 
 
 
