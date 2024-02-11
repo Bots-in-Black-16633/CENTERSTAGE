@@ -19,10 +19,12 @@ import java.util.Arrays;
 public class ColorSensorWrapper implements  SubsystemBase{
 
     NormalizedColorSensor colorSensor;
+    boolean leftSide = false;
     double[] lastDistances = {0,0,0,0,0,0};//PURPLE, gren, yellow, blac whit
 
     public ColorSensorWrapper(String name, HardwareMap hwMap){
         colorSensor= hwMap.get(NormalizedColorSensor.class, name);
+        if(name.contains("left"))leftSide = true;
 
     }
 
@@ -40,20 +42,49 @@ public class ColorSensorWrapper implements  SubsystemBase{
     public Pixel getPixelPresent(){
         //if the hsv colors from the scanner are different enough form the expected default than a pixel is present
         Scalar curHSVColor = new Scalar(getHSVValues()[0], getHSVValues()[1], getHSVValues()[2]);
+        if(leftSide){
+            double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purpleLeftHSV);
+            double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenLeftHSV);
+            double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowLeftHSV);
+            double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whiteLeftHSV);
+            double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyLeftHSV);
+            double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
 
-        double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purplePixelHSV);
-        double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenPixelHSV);
-        double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowPixelHSV);
-        double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whitePixelHSV);
-        double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyHopperHSV);
-        double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
+            lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
+            if(min == purpleDistance)return Pixel.PURPLE;
+            else if(min == greenDistance)return Pixel.GREEN;
+            else if (min == yellowDistance)return Pixel.YELLOW;
+            else if(min == whiteDistance)return Pixel.WHITE;
+            else return Pixel.NONE;
+        }
+        else{
+            double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purpleRightHSV);
+            double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenRightHSV);
+            double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowRightHSV);
+            double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whiteRightHSV);
+            double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyRightHSV);
+            double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
 
-        lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
-        if(min == purpleDistance)return Pixel.PURPLE;
-        else if(min == greenDistance)return Pixel.GREEN;
-        else if (min == yellowDistance)return Pixel.YELLOW;
-        else if(min == whiteDistance)return Pixel.WHITE;
-        else return Pixel.NONE;
+            lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
+            if(min == purpleDistance)return Pixel.PURPLE;
+            else if(min == greenDistance)return Pixel.GREEN;
+            else if (min == yellowDistance)return Pixel.YELLOW;
+            else if(min == whiteDistance)return Pixel.WHITE;
+            else return Pixel.NONE;
+        }
+//        double purpleDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.purplePixelHSV);
+//        double greenDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.greenPixelHSV);
+//        double yellowDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.yellowPixelHSV);
+//        double whiteDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.whitePixelHSV);
+//        double emptyDistance = distance3D(curHSVColor, Constants.ColorSensorWrapperConstants.emptyHopperHSV);
+//        double min = Math.min(purpleDistance, Math.min(greenDistance, Math.min(yellowDistance, Math.min(whiteDistance, emptyDistance))));
+//
+//        lastDistances = new double[]{purpleDistance, greenDistance, yellowDistance, whiteDistance, emptyDistance};
+//        if(min == purpleDistance)return Pixel.PURPLE;
+//        else if(min == greenDistance)return Pixel.GREEN;
+//        else if (min == yellowDistance)return Pixel.YELLOW;
+//        else if(min == whiteDistance)return Pixel.WHITE;
+//        else return Pixel.NONE;
     }
     public Pixel getPixelPresentRGB(){
         //if the hsv colors from the scanner are different enough form the expected default than a pixel is present

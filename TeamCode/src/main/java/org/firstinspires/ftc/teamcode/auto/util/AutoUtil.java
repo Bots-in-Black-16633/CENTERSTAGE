@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Pose2dDual;
 import com.acmerobotics.roadrunner.PoseMap;
 import com.acmerobotics.roadrunner.ProfileAccelConstraint;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -102,8 +103,8 @@ public class AutoUtil {
             }
             else if(side == AutoUtil.RIGHT){
                 if(innerSide)return drive.actionBuilder(drive.pose, transformation)
-                        .strafeTo(new Vector2d(37,-13))
-                        .strafeTo(new Vector2d(58, -13))
+                        .strafeTo(new Vector2d(37,-10))
+                        .strafeTo(new Vector2d(58, -10))
                         .build();
                 return drive.actionBuilder(drive.pose, transformation)
                         .strafeTo(new Vector2d(45,-60))
@@ -728,10 +729,10 @@ public class AutoUtil {
             return drive.actionBuilder(drive.pose, transformation)
                     .setReversed(true)
                     .splineToConstantHeading(new Vector2d(4.39, 0), Math.toRadians(0),(pose, path, disp) -> {return 100;}, new ProfileAccelConstraint(-120,120))
-                    .splineToConstantHeading(new Vector2d(50, -35), Math.toRadians(0))
-//                    .strafeToConstantHeading(new Vector2d(28.80, -12.17))
-//                    .strafeToConstantHeading(new Vector2d(53.00, -36.00))
+                    .splineToConstantHeading(new Vector2d(53.5, -34), Math.toRadians(0))
+
                     .build();
+
 
 
         }
@@ -887,29 +888,31 @@ public class AutoUtil {
                         .strafeToConstantHeading(new Vector2d(30.00, 12))
                         .strafeToConstantHeading(new Vector2d(-55, 12))
                         .build();
+
             }
         }
         return null;
     }
 
-    //go straight to depositing on the backdrop skipping stack
     public Action getBSSStartToBackdrop(int color, int side, int zone){
+        return getBSSStartToBackdropRaw(color, side, zone).build();
+    }
+
+    //go straight to depositing on the backdrop skipping stack
+    public TrajectoryActionBuilder getBSSStartToBackdropRaw(int color, int side, int zone){
         if(color == RED){
             if(side == RIGHT)
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(53,-32), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(53,-32), Math.toRadians(180));
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(53,-36.75), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(53,-36.75), Math.toRadians(180));
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(53,-41.5), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(53,-41.5), Math.toRadians(180));
             }
             else return null;
 
@@ -918,17 +921,14 @@ public class AutoUtil {
             if(side == LEFT){
                 if(zone==3){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(54,36), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(54,36), Math.toRadians(180));
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(53,42), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(53,42), Math.toRadians(180));
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToLinearHeading(new Vector2d(53,48), Math.toRadians(180))
-                            .build();
+                            .strafeToLinearHeading(new Vector2d(53,48), Math.toRadians(180));
             }
             else return null;
         }
@@ -983,25 +983,40 @@ public class AutoUtil {
                     return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
                             .splineToConstantHeading(new Vector2d(15, -14), Math.toRadians(90))
-                            .splineToLinearHeading(new Pose2d(-55,-14, Math.toRadians(180)), Math.toRadians(180)).build();
+                            .splineToLinearHeading(new Pose2d(-54,-15, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
                             .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
-                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
+                            .splineToLinearHeading(new Pose2d(-54,-15, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
                             .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
-                            .splineToLinearHeading(new Pose2d(-53.5,-20, Math.toRadians(180)), Math.toRadians(180)).build();
+                            .splineToLinearHeading(new Pose2d(-54,-15, Math.toRadians(180)), Math.toRadians(180)).build();
             }
             else return null;
 
         }
         else if(color == BLUE){
             if(side == LEFT){
-                return null;
+                if(zone==1){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(15, 14), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-52.8,15.8, Math.toRadians(180)), Math.toRadians(180)).build();
+                }
+                else if(zone==2){
+                    return drive.actionBuilder(drive.pose, transformation)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, 25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-52.8,15.8, Math.toRadians(180)), Math.toRadians(180)).build();
+                }
+                else return drive.actionBuilder(drive.pose, transformation)
+                            .setReversed(true)
+                            .splineToConstantHeading(new Vector2d(25, 25), Math.toRadians(90))
+                            .splineToLinearHeading(new Pose2d(-52.8,15.8, Math.toRadians(180)), Math.toRadians(180)).build();
             }
             else return null;
         }

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
 
+import com.outoftheboxrobotics.photoncore.hardware.PhotonLynxVoltageSensor;
+import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,6 +19,8 @@ public class Shooter implements SubsystemBase{
     public DcMotor shooter;
     public CRServo kicker;
     public InterpLUT shooterVals;
+
+    PhotonLynxVoltageSensor sensor;
     public enum ShooterState{
         SPINNING,SHOOTING,REST
     }
@@ -25,12 +29,14 @@ public class Shooter implements SubsystemBase{
     public Shooter(HardwareMap hwMap){
         shooter = hwMap.dcMotor.get("shooter");
         kicker = hwMap.crservo.get("kicker");
+        sensor = hwMap.getAll(PhotonLynxVoltageSensor.class).iterator().next();
         state = ShooterState.REST;
-        for(int i = 0; i< Constants.ShooterConstants.testedDistances.length; i++)
-        {
-            shooterVals.add(Constants.ShooterConstants.testedDistances[i][0], Constants.ShooterConstants.testedDistances[i][1]);
-            shooterVals.createLUT();
-        }
+//        for(int i = 0; i< Constants.ShooterConstants.testedVoltages.length; i++)
+//        {
+//            shooterVals.add(Constants.ShooterConstants.testedVoltages[i][0], Constants.ShooterConstants.testedVoltages[i][1]);
+//            shooterVals.createLUT();
+//        }
+
     }
     public void spinUp(){
         shooter.setPower(Constants.ShooterConstants.shooterSpeed);
@@ -55,9 +61,13 @@ public class Shooter implements SubsystemBase{
         return state;
     }
 
+    public double getRecommendedShooterPower(){
+        return 0;
+    }
+
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
-
+        t.addLine("Voltage: " + sensor.getCachedVoltage());
     }
 
     @Override

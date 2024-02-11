@@ -23,7 +23,7 @@ public class StackIntakeTester extends SampleAuto {
     @Override
     public void onStart() {
         Actions.runBlocking(robot.offTheTopStackIntake(4));
-        Actions.runBlocking(robot.outtakeExcessPixels());
+        //Actions.runBlocking(robot.outtakeExcessPixels());
 
 
     }

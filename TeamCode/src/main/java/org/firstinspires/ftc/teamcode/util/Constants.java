@@ -48,7 +48,7 @@ public final class Constants{
 
         public static double sliderDistanceDeposit = 800;//low distanc
 
-        public static double sliderOuttakeMid = 1200;
+        public static double sliderOuttakeMid = 1365;
     }
     @Config
     public static final class ShoulderConstants{
@@ -72,16 +72,18 @@ public final class Constants{
         public static double wristMax =1;
         public static double wristMin = 0;
 
-        public static double wristRest = .498;//.621
+        public static double wristRest = .544;//.498;//.621
         public static double wristTraveling = .67; //+.2
-        public static double wristOuttake = .411;//rest - .33
-        public static double wristOuttakeHigh = .4061;//rest - .09
+        public static double wristOuttake = .500;//.411;//rest - .33
+        public static double wristOuttakeHigh = .479;//.4061;//rest - .09
 
-        public static double wristSafeBackToIntake = .82; //+.17
+        //update our hardare, turn down brightness
 
-        public static double wristSafeBackToOuttake = .65;//+.18
-        public static double wristDistanceDeposit = .400;//-.036
-        public static double wristAdjustingPositionLow = .363;//-.33
+        public static double wristSafeBackToIntake = .544+.17;//.82; //+.17
+
+        public static double wristSafeBackToOuttake = .544+.18;//.65;//.+.18
+        public static double wristDistanceDeposit = .484;//.400;//-.036
+        public static double wristAdjustingPositionLow = .442;//.363;//-.33
     }
     @Config
     public static final class IntakeConstants{
@@ -98,12 +100,12 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterSpeed =-.43;
+        public static double shooterSpeed =-.36;//constants -.43
         public static double kickerSpeed =1;
 
         //TODO add these values
-        //Put speed that worked first in a pair of points, then the distance
-        public static double [][] testedDistances = new double[][] {};
+        //Put speed that worked first in a pair of points, then the voltage
+        public static double [][] testedVoltages = new double[][] {{12.27,-.39},{13.58,-.36}};
 
     }
     @Config
@@ -141,11 +143,41 @@ public final class Constants{
         public static Scalar yellowPixelHSV = new Scalar(90,.6,0);
         public static Scalar whitePixelHSV = new Scalar(160,.4,0);
 
+        public static Scalar emptyLeftHSV = new Scalar(0,0,0);
+
+        public static Scalar purpleLeftHSV = new Scalar(210,.5,0);
+        public static Scalar greenLeftHSV = new Scalar(120,.6,0);
+        public static Scalar yellowLeftHSV = new Scalar(90,.6,0);
+        public static Scalar whiteLeftHSV = new Scalar(160,.4,0);
+
+
+        public static Scalar emptyRightHSV = new Scalar(0,0,0);
+
+        public static Scalar purpleRightHSV = new Scalar(210,.5,0);
+        public static Scalar greenRightHSV = new Scalar(120,.6,0);
+        public static Scalar yellowRightHSV = new Scalar(90,.6,0);
+        public static Scalar whiteRightHSV = new Scalar(160,.4,0);
+
+
         public static Scalar emptyHopperRGB = new Scalar(0.08392,.14801252,.155642);
         public static Scalar purplePixelRGB = new Scalar(.91554,1.6449,1.2573);
         public static Scalar greenPixelRGB = new Scalar(.58747,.74464,1.471);
         public static Scalar yellowPixelRGB = new Scalar(1.04219,.500495,1.54726);
         public static Scalar whitePixelRGB = new Scalar(1.8219,3.1006,3.31884);
+
+
+        public static Scalar leftEmptyHopperRGB = new Scalar(.07935, .1358, .1465);
+        public static Scalar rightEmptyHopperRGB = new Scalar(.14191, .20752, .2411);
+        public static Scalar leftGreenRGB = new Scalar(.2121, .3235, .622568);
+        public static Scalar rightGreenRGB = new Scalar(.48676, .61952, 1.268);
+
+        public static Scalar leftPurpleRGB = new Scalar(.4715, 1.03, .7614);
+        public static Scalar rightPurpleRGB = new Scalar(1.05, 1.9867, 1.4496);
+        public static Scalar leftYellowRGB = new Scalar(.4715, 1.03, .7614);//untuned
+        public static Scalar rightYellowRGB = new Scalar(1.05, 1.9867, 1.4496);//untuned
+        public static Scalar leftWhiteRGB = new Scalar(.4715, 1.03, .7614);//untunes
+        public static Scalar rightWhiteRGB = new Scalar(1.05, 1.9867, 1.4496);//untuned
+
         public static double maxDistanceFromEmptyHopperColor = 1;
         public enum Pixel{
              GREEN, PURPLE, YELLOW, NONE, WHITE;

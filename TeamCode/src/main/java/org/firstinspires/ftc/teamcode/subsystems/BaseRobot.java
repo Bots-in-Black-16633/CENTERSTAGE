@@ -58,7 +58,7 @@ public class BaseRobot implements SubsystemBase{
         camera = hwMap.get(WebcamName.class, "camera");
 
 
-        addSubsystems(intake,  drive, hopper, shoulder, wrist, slider);
+        addSubsystems(intake,  drive, hopper, shoulder, wrist, slider, shooter);
     }
     public BaseRobot(HardwareMap hwMap, Pose2d startPose){
         this(hwMap,startPose,null);
@@ -113,24 +113,20 @@ public class BaseRobot implements SubsystemBase{
                 slider.runToPosition(Constants.SliderConstants.sliderSafeBackToOuttake);
                 AutoUtil.delay(.25);
                 wrist.setPosition(Constants.WristConstants.wristSafeBackToIntake);
-
             }
             intake.setMode(Intake.REST);
 
             AutoUtil.delay(.25);
             slider.runToPosition(Constants.SliderConstants.sliderOuttake);
-            drive.updatePoseEstimate();
 
             wrist.setPosition(Constants.WristConstants.wristOuttake);
             shoulder.setPosition(Constants.ShoulderConstants.shoulderOuttake);
             hopper.rest(Hopper.ALL);
             timeout.reset();
             while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderOuttake) > .05 && timeout.seconds() < timeOutSec){
-                drive.updatePoseEstimate();
             }
             timeout.reset();
             while(Math.abs(slider.getPosition()- Constants.SliderConstants.sliderOuttake) > 20 && timeout.seconds() < timeOutSec){
-                drive.updatePoseEstimate();
             }
             return false;
         }
@@ -154,8 +150,8 @@ public class BaseRobot implements SubsystemBase{
 
 
 
-            wrist.setPosition(CompetitionTeleop.wristCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid));
-            shoulder.setPosition(CompetitionTeleop.shoulderCalculator.calculate(Constants.SliderConstants.sliderOuttakeMid));
+            wrist.setPosition(.447);
+            shoulder.setPosition(.4389);
             AutoUtil.delay(.25);
             hopper.rest(Hopper.ALL);
             timeout.reset();
@@ -204,9 +200,10 @@ public class BaseRobot implements SubsystemBase{
         ElapsedTime time;
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
+            time = new ElapsedTime();
+            linkage.raise();
             drive.forward(.5,.5);//drive forward
-            linkage.stackLevel(4);//lower
+            linkage.stackLevel(0);//lower
             AutoUtil.delay(.25);
             drive.backward(.3,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
@@ -299,11 +296,13 @@ public class BaseRobot implements SubsystemBase{
             if(Math.abs(slider.getPosition() -Constants.SliderConstants.sliderRest)<10){
                 slider.runToPosition(Constants.SliderConstants.sliderTraveling+100);
                 while(slider.getPosition() != Constants.SliderConstants.sliderTraveling+100)  {
+                    drive.updatePoseEstimate();
                 }
                 shoulder.setPosition(Constants.ShoulderConstants.shoulderTraveling);
                 wrist.setPosition(Constants.WristConstants.wristTraveling);
+                drive.updatePoseEstimate();
                 while(Math.abs(shoulder.getPosition()- Constants.ShoulderConstants.shoulderTraveling)>.05){
-
+                    drive.updatePoseEstimate();
                 }
                 slider.runToPosition(Constants.SliderConstants.sliderTraveling);
 

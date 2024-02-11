@@ -37,7 +37,7 @@ public class Hopper implements SubsystemBase{
     boolean leftLocked = false;
     boolean rightLocked = false;
 
-    boolean colorSensorEnabled = true;
+     volatile boolean colorSensorEnabled = true;
 
     public Hopper(HardwareMap hwMap){
         leftHopper = new CRServo(hwMap, "leftHopper");
@@ -54,7 +54,7 @@ public class Hopper implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             outtake(Hopper.ALL);
-            AutoUtil.delay(.5);
+            AutoUtil.delay(1);
             rest(Hopper.ALL);
             return false;
         }
@@ -65,10 +65,12 @@ public class Hopper implements SubsystemBase{
 
 
     public boolean hoppersFull(){
-        return leftHopperSensor.isPixelPresent() && rightHopperSensor.isPixelPresent();
+        return colorSensorEnabled && leftHopperSensor.isPixelPresent() && rightHopperSensor.isPixelPresent();
     }
 
     public Pixel getPixelColor(int hopperType){
+
+        if(!colorSensorEnabled)return Pixel.NONE;
         if(hopperType == LEFT_HOPPER){
             return leftHopperSensor.getPixelPresent();
         }
@@ -119,9 +121,9 @@ public class Hopper implements SubsystemBase{
         t.addLine();
         t.addLine("____HOPPER_____");
 
-        t.addLine("LEFT HOPPER: HSV " + leftHopperSensor.getPixelPresent().name() + "RGB "  + leftHopperSensor.getPixelPresentRGB().name());
+        t.addLine("LEFT HOPPER: HSV " + getPixelColor(Hopper.LEFT_HOPPER).name() + "RGB "  + leftHopperSensor.getPixelPresentRGB().name());
         t.addLine("     VAlue" + leftHopperSensor.toString());
-        t.addLine("RIGHT HOPPER: HSV " + rightHopperSensor.getPixelPresent().name() + "RGB "  + rightHopperSensor.getPixelPresentRGB().name());
+        t.addLine("RIGHT HOPPER: HSV " + getPixelColor(Hopper.RIGHT_HOPPER).name() + "RGB "  + rightHopperSensor.getPixelPresentRGB().name());
         t.addLine("     VAlue" + rightHopperSensor.toString());
 
 //        t.addLine("LEFT Sensor: " + leftHopperSensor.toString());

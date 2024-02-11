@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.teleop.comp;
 
 import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.REST;
 import static org.firstinspires.ftc.teamcode.subsystems.Shooter.ShooterState.SPINNING;
-
+import org.firstinspires.ftc.teamcode.util.Constants.ColorSensorWrapperConstants.Pixel;
 
 
 import com.acmerobotics.roadrunner.Pose2d;
@@ -24,6 +24,7 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Line;
 import org.firstinspires.ftc.teamcode.util.SampleTeleop;
 
+@Photon
 @TeleOp
 public class CompetitionTeleop extends SampleTeleop {
     Pose2d startPos = AutoUtil.REDRIGHTSTART;
@@ -45,6 +46,8 @@ public class CompetitionTeleop extends SampleTeleop {
     boolean wristShoulderAutoAdjust = false;
     boolean prevGuide = false;
     boolean prevX = false;
+    boolean prevY = false;
+
 
     static public Line wristCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.WristConstants.wristOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.WristConstants.wristOuttakeHigh);
     static public Line shoulderCalculator = new Line(Constants.SliderConstants.sliderOuttake, Constants.ShoulderConstants.shoulderOuttake, Constants.SliderConstants.sliderOuttakeHigh, Constants.ShoulderConstants.shoulderOuttakeHigh);
@@ -82,10 +85,16 @@ public class CompetitionTeleop extends SampleTeleop {
             sliderPos = 0;
         }
         if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.X) != prevX){
-            if(visionHopperLock){visionHopperLock = false;robot.hopper.disableColorSensor();}
+            if(visionHopperLock){visionHopperLock = false;robot.hopper.disableColorSensor();robot.hopper.unLock(Hopper.ALL);}
             else visionHopperLock = true;
         }
         prevX = g2.isDown(GamepadKeys.Button.X);
+
+        if(g2.isDown(GamepadKeys.Button.LEFT_BUMPER) && g2.isDown(GamepadKeys.Button.Y) != prevY){
+            Actions.runBlocking(robot.midOuttake());
+            resetPixelSubsystemTrackingVariables();
+        }
+        prevY = g2.isDown(GamepadKeys.Button.Y);
 
         pen.addLine("VISION AUTO LOCK: " + visionHopperLock);
 
@@ -142,9 +151,9 @@ public class CompetitionTeleop extends SampleTeleop {
         //HOPPER OUTTAKE
         //IF YOU ARE INTAKING AND THE RIGHT BUMPER IS PRESSED
 
-        if((sliderPos < 20) && robot.hopper.rightHopperSensor.isPixelPresent()){robot.hopper.rest(Hopper.RIGHT_HOPPER);robot.hopper.lock(Hopper.RIGHT_HOPPER);}
+        if((sliderPos < 20) && robot.hopper.getPixelColor(Hopper.RIGHT_HOPPER)!= Pixel.NONE){robot.hopper.rest(Hopper.RIGHT_HOPPER);robot.hopper.lock(Hopper.RIGHT_HOPPER);}
         else{robot.hopper.unLock(Hopper.RIGHT_HOPPER);}
-         if((sliderPos < 20) && robot.hopper.leftHopperSensor.isPixelPresent()){robot.hopper.rest(Hopper.LEFT_HOPPER);robot.hopper.lock(Hopper.LEFT_HOPPER);}
+         if((sliderPos < 20) && robot.hopper.getPixelColor(Hopper.LEFT_HOPPER)!= Pixel.NONE){robot.hopper.rest(Hopper.LEFT_HOPPER);robot.hopper.lock(Hopper.LEFT_HOPPER);}
          else{robot.hopper.unLock(Hopper.LEFT_HOPPER);}
 
 
