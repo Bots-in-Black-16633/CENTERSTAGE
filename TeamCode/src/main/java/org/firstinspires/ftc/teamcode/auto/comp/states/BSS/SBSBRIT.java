@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto.comp.states.BS;
+package org.firstinspires.ftc.teamcode.auto.comp.states.BSS;
 
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -8,9 +8,9 @@ import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
-@Autonomous(name="SBBROD", group="BS")
+@Autonomous(name="SBSBRIT", group="BSS")
 
-public class SBBROD extends SampleAuto {
+public class SBSBRIT extends SampleAuto {
     BaseRobot robot;
     int zone;
 
@@ -22,7 +22,7 @@ public class SBBROD extends SampleAuto {
 
     @Override
     public void onStart() {
-        zone = TeamPropPartitionDetector.getBluePropZone();
+        zone = TeamPropPartitionDetector.getRedPropZone();
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
@@ -30,7 +30,7 @@ public class SBBROD extends SampleAuto {
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
 
-        Actions.runBlocking(robot.autoGenerator.getBackdropAutoActionNoAprilTag(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
+        Actions.runBlocking(robot.autoGenerator.getBackdropAutoActionNoAprilTag(AutoUtil.BLUE, AutoUtil.RIGHT, zone, false));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
 
@@ -39,8 +39,13 @@ public class SBBROD extends SampleAuto {
         Actions.runBlocking(robot.resetToIntake());
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, false));
+        Actions.runBlocking(robot.autoGenerator.getBackdropToStackAutoAction(AutoUtil.BLUE));
+        Actions.runBlocking(robot.dragAndSuckStackIntake());
+        Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT));
+        Actions.runBlocking(robot.midOuttake());
+        Actions.runBlocking(robot.hopper.hopperOutake());
+        Actions.runBlocking(robot.resetToIntake());
+        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, true));
 
     }
 

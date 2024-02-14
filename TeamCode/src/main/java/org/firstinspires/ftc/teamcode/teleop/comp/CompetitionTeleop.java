@@ -24,7 +24,6 @@ import org.firstinspires.ftc.teamcode.util.Constants;
 import org.firstinspires.ftc.teamcode.util.Line;
 import org.firstinspires.ftc.teamcode.util.SampleTeleop;
 
-@Photon
 @TeleOp
 public class CompetitionTeleop extends SampleTeleop {
     Pose2d startPos = AutoUtil.REDRIGHTSTART;

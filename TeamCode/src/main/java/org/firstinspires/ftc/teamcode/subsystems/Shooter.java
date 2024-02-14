@@ -29,7 +29,7 @@ public class Shooter implements SubsystemBase{
     public Shooter(HardwareMap hwMap){
         shooter = hwMap.dcMotor.get("shooter");
         kicker = hwMap.crservo.get("kicker");
-        sensor = hwMap.getAll(PhotonLynxVoltageSensor.class).iterator().next();
+        //sensor = hwMap.getAll(PhotonLynxVoltageSensor.class).iterator().next();
         state = ShooterState.REST;
 //        for(int i = 0; i< Constants.ShooterConstants.testedVoltages.length; i++)
 //        {
@@ -67,7 +67,7 @@ public class Shooter implements SubsystemBase{
 
     @Override
     public void printTelemetry(ColorfulTelemetry t) {
-        t.addLine("Voltage: " + sensor.getCachedVoltage());
+        t.addLine("Shooter Power: " + shooter.getPower());
     }
 
     @Override

@@ -32,11 +32,14 @@ public class MeepMeepTesting {
 //        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(54,-34, Math.toRadians(180)))
 //                .splineToConstantHeading(new Vector2d(26.16, -5.35), Math.toRadians(180.00))
 //                .splineToConstantHeading(new Vector2d(-61.69, -12.60), Math.toRadians(180.00)).build());
-               myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(12, -63, Math.toRadians(270)))
-                       .strafeTo(new Vector2d(-6,-60))
-                       .strafeToLinearHeading(new Vector2d(-40,-24), Math.toRadians(0))
-                       .strafeToLinearHeading(new Vector2d(-6,-60), Math.toRadians(270))
-                       .build());
+               myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-47, -40, Math.toRadians(270)))
+                               .strafeTo(new Vector2d(-37, -38))
+                               .setReversed(true)
+                       .splineToConstantHeading(new Vector2d(-37, -58), Math.toRadians(0))
+                       .splineToConstantHeading(new Vector2d(35.33, -58), Math.toRadians(0))
+                               .strafeToLinearHeading(new Vector2d(40, -23), Math.toRadians(-180))
+                               .strafeTo(new Vector2d(40, -27))
+                               .strafeToConstantHeading(new Vector2d(50, -32)).build());
 
 
         //myBot.runAction(auto.getQuickBackdropAutoAction(MeepMeepAutoUtil.RED, MeepMeepAutoUtil.LEFT, 3));

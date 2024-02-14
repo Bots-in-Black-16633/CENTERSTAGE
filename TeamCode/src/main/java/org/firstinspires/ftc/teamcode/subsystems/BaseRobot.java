@@ -203,7 +203,7 @@ public class BaseRobot implements SubsystemBase{
             time = new ElapsedTime();
             linkage.raise();
             drive.forward(.5,.5);//drive forward
-            linkage.stackLevel(0);//lower
+            linkage.lower();//lower
             AutoUtil.delay(.25);
             drive.backward(.3,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
@@ -219,6 +219,7 @@ public class BaseRobot implements SubsystemBase{
             //bring slider up
             intake.setMode(Intake.REST);
             hopper.rest(Hopper.ALL);
+            drive.backward(.5,.5);
             drive.updatePoseEstimate();
             return false;
         }

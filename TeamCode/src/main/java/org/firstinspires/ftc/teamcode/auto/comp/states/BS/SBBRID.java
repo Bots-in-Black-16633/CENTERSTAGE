@@ -34,7 +34,7 @@ public class SBBRID extends SampleAuto {
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
 
-        Actions.runBlocking(robot.outtake());
+        Actions.runBlocking(robot.midOuttake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         Actions.runBlocking(robot.resetToIntake());
         robot.drive.updatePoseEstimate();

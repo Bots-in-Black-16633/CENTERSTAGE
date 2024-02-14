@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
 
@@ -30,15 +31,16 @@ public class BSSRRO extends SampleAuto {
         TeamPropPartitionDetector.endPropDetection();
         pen.addLine("ZONE: " + zone);
         pen.update();
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, RIGHT, zone),new SequentialAction(new SleepAction(1), robot.outtake())));
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, RIGHT, zone)));
+        Actions.runBlocking(robot.outtake());
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
         pen.update();
         //Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
-        //Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, RIGHT, zone), new SequentialAction(new SleepAction(.5),robot.resetToIntake())));
+        Actions.runBlocking(robot.resetToIntake());
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.RED, RIGHT, zone)));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket ->{robot.linkage.raise();return false;});
@@ -47,7 +49,11 @@ public class BSSRRO extends SampleAuto {
         //Actions.runBlocking(robot.offTheTopStackIntake(5));
         Actions.runBlocking(robot.dragAndSuckStackIntake());
         robot.drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone), new SequentialAction( robot.outtakeExcessPixels(), new SleepAction(2), robot.midOuttake())));
+        robot.intake.setMode(Intake.OUTTAKE);
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone)));
+        robot.intake.setMode(Intake.REST);
+        Actions.runBlocking(robot.midOuttake());
+
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());
