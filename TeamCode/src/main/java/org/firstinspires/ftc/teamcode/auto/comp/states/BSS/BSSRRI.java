@@ -63,11 +63,9 @@ public class BSSRRI extends SampleAuto {
         //Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone));
         //robot.intake.setMode(Intake.REST);
 
-        Actions.runBlocking(robot.drive.actionBuilder(robot.drive.pose)
-                .setReversed(true)
-                .splineToLinearHeading(new Pose2d(4.39, -10, Math.toRadians(180)), Math.toRadians(0),(pose, path, disp) -> {return 100;}, new ProfileAccelConstraint(-120,120))
-                        .afterTime(.5, robot.midOuttake())
-                .splineToConstantHeading(new Vector2d(53.5, -34), Math.toRadians(0)));
+        Actions.runBlocking(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, RIGHT));
+        Actions.runBlocking(robot.midOuttake());
+
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());

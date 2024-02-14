@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.auto.util.AutoUtil;
 import org.firstinspires.ftc.teamcode.subsystems.BaseRobot;
+import org.firstinspires.ftc.teamcode.subsystems.Hopper;
 import org.firstinspires.ftc.teamcode.subsystems.Intake;
 import org.firstinspires.ftc.teamcode.util.SampleAuto;
 import org.firstinspires.ftc.teamcode.vision.TeamPropPartitionDetector;
@@ -44,10 +45,14 @@ public class BSSRRO extends SampleAuto {
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket ->{robot.linkage.raise();return false;});
+        AutoUtil.delay(1);
         Actions.runBlocking(robot.autoGenerator.getBSSSpikeToStack(AutoUtil.RED, RIGHT, zone));
         Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.5);return false;});
         //Actions.runBlocking(robot.offTheTopStackIntake(5));
         Actions.runBlocking(robot.dragAndSuckStackIntake());
+        Actions.runBlocking(robot.outtakeExcessPixels());
+        robot.hopper.rest(Hopper.ALL);
+        robot.intake.setMode(Intake.OUTTAKE);
         robot.drive.updatePoseEstimate();
         robot.intake.setMode(Intake.OUTTAKE);
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.RED, zone)));

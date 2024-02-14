@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto.comp.states.BSS;
 
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -28,25 +29,29 @@ public class BSSBLI extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.BLUE, AutoUtil.LEFT, zone)));
-        Actions.runBlocking(robot.resetToIntake());
-        robot.drive.updatePoseEstimate();
-        robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
-        pen.addLine("POSE: " + robot.drive.pose.position + " Heading "+ robot.drive.pose.heading);
-        pen.update();
+        Actions.runBlocking(robot.outtake());
         Actions.runBlocking(robot.hopper.hopperOutake());
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.BLUE, AutoUtil.LEFT, zone), new SequentialAction(new SleepAction(.5),robot.resetToIntake())));
+        Actions.runBlocking(robot.resetToIntake());
+
+
+        robot.drive.updatePoseEstimate();
+
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSBackToSpike(AutoUtil.BLUE, AutoUtil.LEFT, zone)));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket ->{robot.linkage.raise();return false;});
+        AutoUtil.delay(1);
         Actions.runBlocking(robot.autoGenerator.getBSSSpikeToStack(AutoUtil.BLUE, AutoUtil.LEFT, zone));
         Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.5);return false;});
         Actions.runBlocking(robot.dragAndSuckStackIntake());
         robot.drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone), new SequentialAction( robot.outtakeExcessPixels(), new SleepAction(2), robot.midOuttake())));
+        Actions.runBlocking(robot.outtakeExcessPixels());
+        Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone)));
+        Actions.runBlocking(robot.midOuttake());
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, true));
+        //Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, true));
 
 
 

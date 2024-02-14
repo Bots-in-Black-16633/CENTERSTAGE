@@ -201,11 +201,12 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             time = new ElapsedTime();
+            intake.setPower(.6);
             linkage.raise();
-            drive.forward(.5,.5);//drive forward
+            drive.forward(.6,.5);//drive forward
             linkage.lower();//lower
-            AutoUtil.delay(.25);
-            drive.backward(.3,.5);//drive backward knocking over the stack
+            AutoUtil.delay(.5);
+            drive.backward(.6,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
             hopper.intake(Hopper.ALL);
@@ -218,7 +219,7 @@ public class BaseRobot implements SubsystemBase{
             }
             //bring slider up
             intake.setMode(Intake.REST);
-            hopper.rest(Hopper.ALL);
+            hopper.intake(Hopper.ALL);
             drive.backward(.5,.5);
             drive.updatePoseEstimate();
             return false;
@@ -292,7 +293,7 @@ public class BaseRobot implements SubsystemBase{
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             //if we are at rest
-
+            hopper.intake(Hopper.ALL);
 
             if(Math.abs(slider.getPosition() -Constants.SliderConstants.sliderRest)<10){
                 slider.runToPosition(Constants.SliderConstants.sliderTraveling+100);
@@ -317,6 +318,8 @@ public class BaseRobot implements SubsystemBase{
                 while(slider.getPosition() != Constants.SliderConstants.sliderTraveling)  {
                 }
             }
+            hopper.rest(Hopper.ALL);
+
             return false;
         }
     }
