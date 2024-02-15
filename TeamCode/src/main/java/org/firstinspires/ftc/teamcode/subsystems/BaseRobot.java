@@ -205,7 +205,7 @@ public class BaseRobot implements SubsystemBase{
             linkage.raise();
             drive.forward(.6,.5);//drive forward
             linkage.lower();//lower
-            AutoUtil.delay(.5);
+            AutoUtil.delay(.52);
             drive.backward(.6,.5);//drive backward knocking over the stack
             //intake the pixels while driving forward
             intake.setMode(Intake.INTAKE);
@@ -213,7 +213,7 @@ public class BaseRobot implements SubsystemBase{
             drive.forward(.7,.4);
 
             time.reset();//while the hoppers arent full keep intaking or the timeout seconds havent elapsed
-            while(!hopper.hoppersFull() && time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout){
+            while( time.seconds() < Constants.IntakeConstants.autoStackIntakeTimeout && !hopper.hoppersFull()){
                 if(hopper.leftHopperSensor.isPixelPresent())hopper.rest(Hopper.LEFT_HOPPER);
                 if(hopper.rightHopperSensor.isPixelPresent())hopper.rest(Hopper.RIGHT_HOPPER);
             }
@@ -384,6 +384,6 @@ public class BaseRobot implements SubsystemBase{
     public Action customOuttake(double sliderPos){return new OuttakeCustom(sliderPos);}
 
     public Action outtakeExcessPixels(){
-        return new SequentialAction(traveling(), (p)-> {intake.setMode(Intake.OUTTAKE);return false;}, new SleepAction(1.5), (p)-> {intake.setMode(Intake.REST);return false;});
+        return new SequentialAction(traveling(), (p)-> {intake.setMode(Intake.OUTTAKE);return false;}, new SleepAction(1), (p)-> {intake.setMode(Intake.REST);return false;});
     }
 }

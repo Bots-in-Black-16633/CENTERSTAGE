@@ -389,16 +389,16 @@ public class AutoUtil {
                                 .strafeToConstantHeading(new Vector2d(50, 51)).build();
                     } else if (zone == 2) {
                         return drive.actionBuilder(drive.pose, transformation)
-                                .splineToConstantHeading(new Vector2d(-36, 53), Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(-36, 54), Math.toRadians(0))
                                 .splineToConstantHeading(new Vector2d(35.33, 53), Math.toRadians(0))
                                 .strafeToLinearHeading(new Vector2d(40, 38), Math.toRadians(-180))
-                                .strafeToConstantHeading(new Vector2d(50, 38))
+                                .strafeToConstantHeading(new Vector2d(50, 43))
                                 .build();
                     } else return drive.actionBuilder(drive.pose, transformation)
-                            .splineToConstantHeading(new Vector2d(-36, 53), Math.toRadians(0))
-                            .splineToConstantHeading(new Vector2d(35.33, 53), Math.toRadians(0))
+                            .splineToConstantHeading(new Vector2d(-36, 56), Math.toRadians(0))
+                            .splineToConstantHeading(new Vector2d(35.33, 54), Math.toRadians(0))
                             .strafeToLinearHeading(new Vector2d(40, 40), Math.toRadians(-180))
-                            .strafeToConstantHeading(new Vector2d(50, 40))
+                            .strafeToConstantHeading(new Vector2d(49, 42))
                             .build();
                 }
 
@@ -736,7 +736,7 @@ public class AutoUtil {
         {
             return drive.actionBuilder(drive.pose, transformation)
                     .strafeToConstantHeading(new Vector2d(28.80, 12.17))
-                    .strafeToConstantHeading(new Vector2d(57, 38));
+                    .strafeToConstantHeading(new Vector2d(55, 36));
         }
     }
 
@@ -998,18 +998,18 @@ public class AutoUtil {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(15, 18, Math.toRadians(180)), Math.toRadians(270))
+                            .splineToLinearHeading(new Pose2d(25, 15, Math.toRadians(180)), Math.toRadians(270))
                             .splineToLinearHeading(new Pose2d(-52.8,15, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else if(zone==2){
                     return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(25, 18, Math.toRadians(180)), Math.toRadians(270))
+                            .splineToLinearHeading(new Pose2d(25, 15, Math.toRadians(180)), Math.toRadians(270))
                             .splineToLinearHeading(new Pose2d(-52.8,15, Math.toRadians(180)), Math.toRadians(180)).build();
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
-                            .splineToLinearHeading(new Pose2d(25, 18, Math.toRadians(180)), Math.toRadians(270))
+                            .splineToLinearHeading(new Pose2d(25, 15, Math.toRadians(180)), Math.toRadians(270))
                             .splineToLinearHeading(new Pose2d(-52.8,15, Math.toRadians(180)), Math.toRadians(180)).build();
             }
             else return null;

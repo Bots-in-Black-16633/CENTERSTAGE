@@ -29,6 +29,7 @@ public class SBBROT extends SampleAuto {
         Actions.runBlocking(robot.autoGenerator.getSpikeAutoAction(AutoUtil.BLUE, AutoUtil.RIGHT, zone));
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
+        AutoUtil.delay(5);
 
         Actions.runBlocking(robot.autoGenerator.getBackdropAutoActionNoAprilTag(AutoUtil.BLUE, AutoUtil.RIGHT, zone, false));
         robot.drive.updatePoseEstimate();

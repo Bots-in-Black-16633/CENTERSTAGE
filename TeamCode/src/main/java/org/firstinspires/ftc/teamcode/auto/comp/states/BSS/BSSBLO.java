@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.auto.util.AutoUtil.RIGHT;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -42,14 +43,15 @@ public class BSSBLO extends SampleAuto {
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking(telemetryPacket ->{robot.linkage.raise();return false;});
         Actions.runBlocking(robot.autoGenerator.getBSSSpikeToStack(AutoUtil.BLUE, AutoUtil.LEFT, zone));
-        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.5);return false;});
+        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.25);return false;});
         Actions.runBlocking(robot.dragAndSuckStackIntake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getStackToBackdropAutoAction(AutoUtil.BLUE, zone), new SequentialAction( robot.outtakeExcessPixels(), new SleepAction(2), robot.midOuttake())));
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());
-        Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, false));
+
+        Actions.runBlocking(robot.drive.actionBuilder(robot.drive.pose).strafeTo(new Vector2d(55,1)).build());
 
 
 

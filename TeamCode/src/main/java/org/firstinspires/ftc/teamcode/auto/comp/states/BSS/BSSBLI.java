@@ -4,6 +4,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -42,7 +43,7 @@ public class BSSBLI extends SampleAuto {
         Actions.runBlocking(telemetryPacket ->{robot.linkage.raise();return false;});
         AutoUtil.delay(1);
         Actions.runBlocking(robot.autoGenerator.getBSSSpikeToStack(AutoUtil.BLUE, AutoUtil.LEFT, zone));
-        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.5);return false;});
+        Actions.runBlocking(telemetryPacket -> {robot.linkage.raise();AutoUtil.delay(.52);return false;});
         Actions.runBlocking(robot.dragAndSuckStackIntake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.outtakeExcessPixels());
@@ -51,7 +52,7 @@ public class BSSBLI extends SampleAuto {
         Actions.runBlocking(robot.hopper.hopperOutake());
         robot.drive.updatePoseEstimate();
         Actions.runBlocking(robot.resetToIntake());
-        //Actions.runBlocking(robot.autoGenerator.getBackStageParkAutoAction(AutoUtil.BLUE, AutoUtil.LEFT, true));
+        Actions.runBlocking(robot.drive.actionBuilder(robot.drive.pose).strafeTo(new Vector2d(55,1)).build());
 
 
 

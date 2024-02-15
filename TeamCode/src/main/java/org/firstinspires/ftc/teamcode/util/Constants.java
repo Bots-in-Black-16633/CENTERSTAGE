@@ -100,7 +100,7 @@ public final class Constants{
 
     }@Config
     public static final class ShooterConstants{
-        public static double shooterSpeed =-.36;//constants -.43
+        public static double shooterSpeed =-.5;//constants -.43
         public static double kickerSpeed =1;
 
         //TODO add these values
