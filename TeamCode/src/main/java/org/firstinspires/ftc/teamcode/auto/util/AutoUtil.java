@@ -730,13 +730,13 @@ public class AutoUtil {
             return drive.actionBuilder(drive.pose, transformation)
                     .setReversed(true)
                     .splineToLinearHeading(new Pose2d(4.39, -10, Math.toRadians(180)), Math.toRadians(0),(pose, path, disp) -> {return 100;}, new ProfileAccelConstraint(-120,120))
-                    .splineToConstantHeading(new Vector2d(53.5, -34), Math.toRadians(0));
+                    .splineToConstantHeading(new Vector2d(56, -34), Math.toRadians(0));
         }
         else
         {
             return drive.actionBuilder(drive.pose, transformation)
                     .strafeToConstantHeading(new Vector2d(28.80, 12.17))
-                    .strafeToConstantHeading(new Vector2d(57, 42));
+                    .strafeToConstantHeading(new Vector2d(57, 38));
         }
     }
 
@@ -934,7 +934,7 @@ public class AutoUtil {
             {
                 if(zone==1){
                     return drive.actionBuilder(drive.pose, transformation)
-                            .strafeToConstantHeading(new Vector2d(8,-38))
+                            .strafeToConstantHeading(new Vector2d(9,-38))
                             .build();
                 }
                 else if(zone==2){
@@ -987,7 +987,7 @@ public class AutoUtil {
                 }
                 else return drive.actionBuilder(drive.pose, transformation)
                             .setReversed(true)
-                            .splineToConstantHeading(new Vector2d(25, -25), Math.toRadians(90))
+                            .splineToConstantHeading(new Vector2d(29, -25), Math.toRadians(90))
                             .splineToLinearHeading(new Pose2d(-54,-15, Math.toRadians(180)), Math.toRadians(180)).build();
             }
             else return null;
