@@ -37,6 +37,7 @@ public class LEDStrip implements SubsystemBase{
     }
     public void set(BlinkinPattern blinkinPattern){
         strip.setPattern(blinkinPattern);
+        strip2.setPattern(blinkinPattern);
 
     }
     public void updateLEDPattern(Pixel left, Pixel right){
@@ -44,11 +45,12 @@ public class LEDStrip implements SubsystemBase{
         else if(left == Pixel.PURPLE)strip.setPattern(BlinkinPattern.VIOLET);
         else if(left == Pixel.YELLOW)strip.setPattern(BlinkinPattern.YELLOW);
         else if(left == Pixel.WHITE)strip.setPattern(BlinkinPattern.WHITE);
-
+        else strip.setPattern(BlinkinPattern.BLACK);
         if(right==Pixel.GREEN)strip2.setPattern(BlinkinPattern.GREEN);
         else if(right == Pixel.PURPLE)strip2.setPattern(BlinkinPattern.VIOLET);
         else if(right == Pixel.YELLOW)strip2.setPattern(BlinkinPattern.YELLOW);
         else if(right == Pixel.WHITE)strip2.setPattern(BlinkinPattern.WHITE);
+        else strip2.setPattern(BlinkinPattern.BLACK);
     }
 
 //    public void updateLEDPattern(Pixel left, Pixel right){

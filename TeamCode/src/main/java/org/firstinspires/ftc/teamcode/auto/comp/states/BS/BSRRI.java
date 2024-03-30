@@ -26,7 +26,7 @@ public class BSRRI extends SampleAuto {
         pen.addLine("ZONE: " + zone);
         pen.update();
         Actions.runBlocking(new ParallelAction(robot.autoGenerator.getBSSStartToBackdrop(AutoUtil.RED, AutoUtil.RIGHT, zone)));
-        Actions.runBlocking(robot.midOuttake());
+        Actions.runBlocking(robot.outtake());
         robot.drive.updatePoseEstimate();
         robot.drive.drawPoseHistory(pen.getPacket().fieldOverlay());
         Actions.runBlocking((t)->{AutoUtil.delay(.5);return false;});
